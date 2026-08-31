@@ -1,35 +1,11 @@
 {
-  "version": 2,
-  "builds": [
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
     {
-      "src": "package.json",
-      "use": "@vercel/vite"
-    },
-    {
-      "src": "api/**/*.ts",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/payments/create",
-      "dest": "/api/payments/create.ts"
-    },
-    {
-      "src": "/api/payments/callback",
-      "dest": "/api/payments/callback.ts"
-    },
-    {
-      "src": "/api/payments/webhook",
-      "dest": "/api/payments/webhook.ts"
-    },
-    {
-      "src": "/api/email/send",
-      "dest": "/api/email/send.ts"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/((?!api/.*).*)",
+      "destination": "/index.html"
     }
   ]
 }
+
