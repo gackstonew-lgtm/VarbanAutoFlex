@@ -20,7 +20,7 @@ import {
   BarChart2
 } from 'lucide-react';
 import { Navbar } from '../components/navigation/Navbar';
-import { VehicleService, InquiryService } from '../lib/supabase/client';
+import { VehicleService, InquiryService, InspectionService, RealtimeService } from '../lib/supabase/client';
 import { Vehicle, VehicleImage } from '../types/database';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
@@ -66,6 +66,14 @@ export const VehicleDetails: React.FC = () => {
       }
     }
     loadVehicle();
+
+    const unsub = RealtimeService.subscribeToTable('vehicles', () => {
+      loadVehicle();
+    });
+
+    return () => {
+      unsub();
+    };
   }, [id]);
 
   if (loading) {
@@ -122,9 +130,20 @@ export const VehicleDetails: React.FC = () => {
         message: inquiryMsg,
         source: 'inspection_request'
       });
+      await InspectionService.create({
+        vehicle_id: vehicle.id,
+        seller_id: vehicle.seller_id,
+        buyer_name: inquiryName,
+        buyer_phone: inquiryPhone,
+        buyer_email: inquiryEmail,
+        preferred_date: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+        preferred_time: '10:00 AM',
+        location: vehicle.location || 'Nairobi',
+        notes: inquiryMsg
+      });
       setInquirySuccess(true);
     } catch (err) {
-      console.error(err);
+      console.error('Inspection submission error:', err);
     } finally {
       setInquiryLoading(false);
     }

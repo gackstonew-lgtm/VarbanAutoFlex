@@ -40,6 +40,7 @@ import {
   ImportService, 
   BuyerService, 
   SellerService, 
+  RealtimeService,
   AuthUser 
 } from '../lib/supabase/client';
 import { 
@@ -180,6 +181,21 @@ export const AdminDashboard: React.FC = () => {
 
   useEffect(() => {
     loadData();
+
+    // Subscribe to multi-device Realtime events on core marketplace tables
+    const unsubVehicles = RealtimeService.subscribeToTable('vehicles', () => loadData());
+    const unsubReservations = RealtimeService.subscribeToTable('reservations', () => loadData());
+    const unsubInquiries = RealtimeService.subscribeToTable('vehicle_inquiries', () => loadData());
+    const unsubInspections = RealtimeService.subscribeToTable('inspection_requests', () => loadData());
+    const unsubSubmissions = RealtimeService.subscribeToTable('seller_listings', () => loadData());
+
+    return () => {
+      unsubVehicles();
+      unsubReservations();
+      unsubInquiries();
+      unsubInspections();
+      unsubSubmissions();
+    };
   }, []);
 
   const handleSignOut = async () => {
@@ -908,8 +924,8 @@ export const AdminDashboard: React.FC = () => {
 
       {/* Add / Edit Vehicle Modal */}
       {showVehicleModal && (
-        <div className="fixed inset-0 z-50 bg-[#10233F]/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-3xl border border-[#D9EAFF] max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-6 relative my-8">
+        <div className="fixed inset-0 z-50 bg-[#10233F]/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+          <div className="bg-white rounded-3xl border border-[#D9EAFF] max-w-xl w-full p-5 sm:p-8 shadow-2xl space-y-5 relative my-auto max-h-[92vh] overflow-y-auto">
             <button
               onClick={() => setShowVehicleModal(false)}
               className="absolute top-4 right-4 text-sm font-bold text-[#64748B] hover:text-[#10233F]"
@@ -922,7 +938,7 @@ export const AdminDashboard: React.FC = () => {
             </h3>
 
             <form onSubmit={handleSaveVehicle} className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Input label="Make *" value={vMake} onChange={(e) => setVMake(e.target.value)} required />
                 <Input label="Model *" value={vModel} onChange={(e) => setVModel(e.target.value)} required />
                 <Input label="Year *" type="number" value={vYear} onChange={(e) => setVYear(parseInt(e.target.value) || 2022)} required />
@@ -931,7 +947,7 @@ export const AdminDashboard: React.FC = () => {
                 <Input label="Engine (CC) *" type="number" value={vEngineCc} onChange={(e) => setVEngineCc(parseInt(e.target.value) || 2000)} required />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-bold text-[#10233F] mb-1">Transmission</label>
                   <select value={vTransmission} onChange={(e) => setVTransmission(e.target.value as TransmissionType)} className="w-full p-2.5 rounded-xl border border-[#D9EAFF] text-xs font-bold">

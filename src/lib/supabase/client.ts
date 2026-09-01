@@ -1130,6 +1130,17 @@ export const NotificationService = {
 // Payment & Reservation Services
 export const ReservationService = {
   async getAll(): Promise<Reservation[]> {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('reservations')
+          .select('*, vehicle:vehicles(make, model, year, price)')
+          .order('created_at', { ascending: false });
+        if (!error && data) return data as Reservation[];
+      } catch (err) {
+        console.warn('Supabase reservation fetch notice:', err);
+      }
+    }
     return getStored<Reservation[]>(LOCAL_STORAGE_KEY_RESERVATIONS, INITIAL_MOCK_RESERVATIONS);
   },
 
@@ -1140,6 +1151,33 @@ export const ReservationService = {
       status: 'pending',
       created_at: new Date().toISOString()
     };
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('reservations')
+          .insert([{
+            vehicle_id: res.vehicle_id,
+            user_id: res.user_id,
+            buyer_name: res.buyer_name,
+            buyer_phone: res.buyer_phone,
+            buyer_email: res.buyer_email,
+            amount: res.amount,
+            currency: res.currency || 'KES',
+            status: 'pending',
+            expires_at: res.expires_at
+          }])
+          .select()
+          .single();
+
+        if (!error && data) {
+          record.id = data.id;
+        }
+      } catch (err) {
+        console.warn('Supabase reservation insert notice:', err);
+      }
+    }
+
     const list = getStored<Reservation[]>(LOCAL_STORAGE_KEY_RESERVATIONS, INITIAL_MOCK_RESERVATIONS);
     list.unshift(record);
     setStored(LOCAL_STORAGE_KEY_RESERVATIONS, list);
@@ -1149,6 +1187,17 @@ export const ReservationService = {
   },
 
   async updateStatus(id: string, status: Reservation['status']): Promise<void> {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase
+          .from('reservations')
+          .update({ status })
+          .eq('id', id);
+      } catch (err) {
+        console.warn('Supabase reservation status update notice:', err);
+      }
+    }
+
     const list = getStored<Reservation[]>(LOCAL_STORAGE_KEY_RESERVATIONS, INITIAL_MOCK_RESERVATIONS);
     const item = list.find(r => r.id === id);
     if (item) {
@@ -1179,6 +1228,17 @@ export const PaymentService = {
 
 export const InquiryService = {
   async getAll(): Promise<VehicleInquiry[]> {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('vehicle_inquiries')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (!error && data) return data as VehicleInquiry[];
+      } catch (err) {
+        console.warn('Supabase inquiry fetch notice:', err);
+      }
+    }
     return getStored<VehicleInquiry[]>(LOCAL_STORAGE_KEY_INQUIRIES, INITIAL_MOCK_INQUIRIES);
   },
 
@@ -1189,6 +1249,32 @@ export const InquiryService = {
       status: 'new',
       created_at: new Date().toISOString()
     };
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('vehicle_inquiries')
+          .insert([{
+            vehicle_id: inquiry.vehicle_id,
+            buyer_id: inquiry.buyer_id,
+            name: inquiry.name,
+            phone: inquiry.phone,
+            email: inquiry.email,
+            message: inquiry.message,
+            source: inquiry.source || 'web',
+            status: 'new'
+          }])
+          .select()
+          .single();
+
+        if (!error && data) {
+          record.id = data.id;
+        }
+      } catch (err) {
+        console.warn('Supabase inquiry insert notice:', err);
+      }
+    }
+
     const list = getStored<VehicleInquiry[]>(LOCAL_STORAGE_KEY_INQUIRIES, INITIAL_MOCK_INQUIRIES);
     list.unshift(record);
     setStored(LOCAL_STORAGE_KEY_INQUIRIES, list);
@@ -1196,11 +1282,138 @@ export const InquiryService = {
   },
 
   async updateStatus(id: string, status: VehicleInquiry['status']): Promise<void> {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase
+          .from('vehicle_inquiries')
+          .update({ status })
+          .eq('id', id);
+      } catch (err) {
+        console.warn('Supabase inquiry status update notice:', err);
+      }
+    }
+
     const list = getStored<VehicleInquiry[]>(LOCAL_STORAGE_KEY_INQUIRIES, INITIAL_MOCK_INQUIRIES);
     const item = list.find(i => i.id === id);
     if (item) {
       item.status = status;
       setStored(LOCAL_STORAGE_KEY_INQUIRIES, list);
     }
+  }
+};
+
+const LOCAL_STORAGE_KEY_INSPECTIONS = 'yardly_demo_inspections';
+
+export const InspectionService = {
+  async getAll(): Promise<any[]> {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('inspection_requests')
+          .select('*, vehicle:vehicles(make, model, year, price, location)')
+          .order('created_at', { ascending: false });
+        if (!error && data) return data;
+      } catch (err) {
+        console.warn('Supabase inspection fetch notice:', err);
+      }
+    }
+    return getStored<any[]>(LOCAL_STORAGE_KEY_INSPECTIONS, []);
+  },
+
+  async create(req: {
+    vehicle_id: string;
+    buyer_id?: string;
+    seller_id?: string;
+    buyer_name: string;
+    buyer_phone: string;
+    buyer_email: string;
+    preferred_date: string;
+    preferred_time: string;
+    location?: string;
+    notes?: string;
+  }): Promise<any> {
+    const record = {
+      ...req,
+      id: 'insp-' + Date.now(),
+      location: req.location || 'Nairobi',
+      status: 'requested',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('inspection_requests')
+          .insert([{
+            vehicle_id: req.vehicle_id,
+            buyer_id: req.buyer_id,
+            seller_id: req.seller_id,
+            buyer_name: req.buyer_name,
+            buyer_phone: req.buyer_phone,
+            buyer_email: req.buyer_email,
+            preferred_date: req.preferred_date,
+            preferred_time: req.preferred_time,
+            location: req.location || 'Nairobi',
+            notes: req.notes,
+            status: 'requested'
+          }])
+          .select()
+          .single();
+
+        if (!error && data) {
+          record.id = data.id;
+        }
+      } catch (err) {
+        console.warn('Supabase inspection insert notice:', err);
+      }
+    }
+
+    const list = getStored<any[]>(LOCAL_STORAGE_KEY_INSPECTIONS, []);
+    list.unshift(record);
+    setStored(LOCAL_STORAGE_KEY_INSPECTIONS, list);
+    return record;
+  },
+
+  async updateStatus(id: string, status: string, sellerNotes?: string): Promise<void> {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase
+          .from('inspection_requests')
+          .update({ status, seller_notes: sellerNotes, updated_at: new Date().toISOString() })
+          .eq('id', id);
+      } catch (err) {
+        console.warn('Supabase inspection status update notice:', err);
+      }
+    }
+
+    const list = getStored<any[]>(LOCAL_STORAGE_KEY_INSPECTIONS, []);
+    const found = list.find(i => i.id === id);
+    if (found) {
+      found.status = status;
+      if (sellerNotes) found.seller_notes = sellerNotes;
+      found.updated_at = new Date().toISOString();
+      setStored(LOCAL_STORAGE_KEY_INSPECTIONS, list);
+    }
+  }
+};
+
+export const RealtimeService = {
+  subscribeToTable(table: string, onPayload: (payload: any) => void): () => void {
+    if (!isSupabaseConfigured || !supabase) {
+      return () => {};
+    }
+
+    const channelName = `realtime_${table}_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    const channel = supabase
+      .channel(channelName)
+      .on('postgres_changes', { event: '*', schema: 'public', table }, (payload) => {
+        onPayload(payload);
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }
 };

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from '../components/navigation/Navbar';
 import { PopularBrandsBar } from '../components/brand/PopularBrandsBar';
 import { VehicleCard } from '../components/vehicle/VehicleCard';
-import { VehicleService } from '../lib/supabase/client';
+import { VehicleService, RealtimeService } from '../lib/supabase/client';
 import { Vehicle, FuelType, TransmissionType, BodyType } from '../types/database';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -27,7 +27,7 @@ export const BuyCars: React.FC = () => {
   const [maxPrice, setMaxPrice] = useState(searchParams.get('maxPrice') || '');
   const [sortBy, setSortBy] = useState(searchParams.get('sortBy') || 'newest');
 
-  // Load Vehicles based on filters
+  // Load Vehicles based on filters & subscribe to multi-device Realtime updates
   useEffect(() => {
     async function loadFilteredVehicles() {
       setLoading(true);
@@ -58,14 +58,21 @@ export const BuyCars: React.FC = () => {
         const results = await VehicleService.filterVehicles(filters);
         setVehicles(results);
       } catch (err) {
-        console.error('Failed to load vehicles', err);
+        console.error('Error fetching filtered vehicles:', err);
       } finally {
         setLoading(false);
       }
     }
 
-    const timer = setTimeout(loadFilteredVehicles, 150);
-    return () => clearTimeout(timer);
+    loadFilteredVehicles();
+
+    const unsub = RealtimeService.subscribeToTable('vehicles', () => {
+      loadFilteredVehicles();
+    });
+
+    return () => {
+      unsub();
+    };
   }, [make, model, bodyType, transmission, fuelType, minPrice, maxPrice, sortBy]);
 
   const resetFilters = () => {

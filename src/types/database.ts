@@ -183,6 +183,27 @@ export interface VehicleInquiry {
   created_at: string;
 }
 
+export type InspectionStatus = 'requested' | 'pending' | 'accepted' | 'rejected' | 'scheduled' | 'completed' | 'cancelled';
+
+export interface InspectionRequest {
+  id: string;
+  vehicle_id: string;
+  buyer_id?: string;
+  seller_id?: string;
+  buyer_name: string;
+  buyer_phone: string;
+  buyer_email: string;
+  preferred_date: string;
+  preferred_time: string;
+  location: string;
+  notes?: string;
+  status: InspectionStatus;
+  seller_notes?: string;
+  created_at: string;
+  updated_at?: string;
+  vehicle?: Partial<Vehicle>;
+}
+
 export interface Reservation {
   id: string;
   vehicle_id: string;
