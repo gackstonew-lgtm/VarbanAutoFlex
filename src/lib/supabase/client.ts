@@ -62,35 +62,148 @@ const LOCAL_STORAGE_KEY_NOTIFICATIONS = 'yardly_demo_notifications';
 
 const MOCK_DATASET_VERSION = 'v2026_09_01_canonical_grouped_v15';
 
+let inMemoryVehiclesCache: Vehicle[] | null = null;
+
+function sanitizeVehiclesForStorage(vehicles: Vehicle[]): Vehicle[] {
+  if (!Array.isArray(vehicles)) return [];
+  return vehicles.map(v => ({
+    ...v,
+    images: (v.images || []).map(img => ({
+      ...img,
+      image_url: img.image_url.startsWith('data:') ? '/logo.jpeg' : img.image_url
+    }))
+  }));
+}
+
+// Clean bloated legacy Base64 storage strings on startup to prevent quota errors
+if (typeof window !== 'undefined') {
+  try {
+    const raw = localStorage.getItem(LOCAL_STORAGE_KEY_VEHICLES);
+    if (raw && raw.includes('data:image')) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        inMemoryVehiclesCache = parsed;
+        const cleaned = sanitizeVehiclesForStorage(parsed);
+        localStorage.setItem(LOCAL_STORAGE_KEY_VEHICLES, JSON.stringify(cleaned));
+      }
+    }
+  } catch {
+    try {
+      localStorage.removeItem(LOCAL_STORAGE_KEY_VEHICLES);
+    } catch {
+      // Ignore
+    }
+  }
+}
+
 function getStored<T>(key: string, initial: T): T {
   if (typeof window === 'undefined') return initial;
 
-  // Clear stale cached demo dataset if dataset version has changed
+  if (key === LOCAL_STORAGE_KEY_VEHICLES && inMemoryVehiclesCache && inMemoryVehiclesCache.length > 0) {
+    return inMemoryVehiclesCache as unknown as T;
+  }
+
+  // Clear bloated/corrupted legacy demo dataset if version has changed
   if (key === LOCAL_STORAGE_KEY_VEHICLES) {
     const versionKey = 'yardly_demo_dataset_version';
     const storedVersion = localStorage.getItem(versionKey);
     if (storedVersion !== MOCK_DATASET_VERSION) {
-      localStorage.setItem(versionKey, MOCK_DATASET_VERSION);
-      localStorage.setItem(key, JSON.stringify(initial));
+      try {
+        localStorage.setItem(versionKey, MOCK_DATASET_VERSION);
+        const sanitizedInitial = sanitizeVehiclesForStorage(initial as unknown as Vehicle[]);
+        localStorage.setItem(key, JSON.stringify(sanitizedInitial));
+      } catch {
+        // Ignore storage quota exception
+      }
       return initial;
     }
   }
 
-  const item = localStorage.getItem(key);
-  if (!item) {
-    localStorage.setItem(key, JSON.stringify(initial));
-    return initial;
-  }
   try {
-    return JSON.parse(item);
+    const item = localStorage.getItem(key);
+    if (!item) {
+      const sanitizedInitial = key === LOCAL_STORAGE_KEY_VEHICLES 
+        ? sanitizeVehiclesForStorage(initial as unknown as Vehicle[]) 
+        : initial;
+      localStorage.setItem(key, JSON.stringify(sanitizedInitial));
+      return initial;
+    }
+    const parsed = JSON.parse(item);
+    if (key === LOCAL_STORAGE_KEY_VEHICLES && Array.isArray(parsed)) {
+      inMemoryVehiclesCache = parsed as Vehicle[];
+    }
+    return parsed;
   } catch {
     return initial;
   }
 }
 
 function setStored<T>(key: string, value: T): void {
-  if (typeof window !== 'undefined') {
+  if (typeof window === 'undefined') return;
+
+  if (key === LOCAL_STORAGE_KEY_VEHICLES && Array.isArray(value)) {
+    inMemoryVehiclesCache = value as unknown as Vehicle[];
+    try {
+      const sanitized = sanitizeVehiclesForStorage(value as unknown as Vehicle[]);
+      localStorage.setItem(key, JSON.stringify(sanitized));
+    } catch (err) {
+      console.warn('localStorage setItem quota avoided for vehicles:', err);
+    }
+    return;
+  }
+
+  try {
     localStorage.setItem(key, JSON.stringify(value));
+  } catch (err) {
+    console.warn(`localStorage setItem failed for key ${key}:`, err);
+  }
+}
+
+// Helper to upload Base64 images to Supabase Storage bucket 'vehicles'
+export async function uploadVehicleImageToSupabase(vehicleId: string, imageSource: string): Promise<string> {
+  if (!isSupabaseConfigured || !supabase) {
+    return imageSource;
+  }
+
+  // If already an HTTP/HTTPS URL, return directly
+  if (!imageSource.startsWith('data:')) {
+    return imageSource;
+  }
+
+  try {
+    const [header, base64Data] = imageSource.split(',');
+    const mimeMatch = header.match(/:(.*?);/);
+    const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+    const extension = mime.split('/')[1] || 'jpg';
+    
+    const binary = atob(base64Data);
+    const array = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      array[i] = binary.charCodeAt(i);
+    }
+    const blob = new Blob([array], { type: mime });
+    const fileName = `vehicles/${vehicleId}/${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${extension}`;
+
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('vehicles')
+      .upload(fileName, blob, {
+        contentType: mime,
+        upsert: true
+      });
+
+    if (uploadError) {
+      console.warn('Supabase storage upload notice:', uploadError.message);
+      return imageSource;
+    }
+
+    const { data: publicUrlData } = supabase.storage
+      .from('vehicles')
+      .getPublicUrl(uploadData.path);
+
+    return publicUrlData?.publicUrl || imageSource;
+  } catch (err) {
+    console.warn('Failed to upload image to Supabase Storage, using fallback:', err);
+    return imageSource;
   }
 }
 
@@ -440,27 +553,163 @@ export const VehicleService = {
 
   async addVehicle(vehicle: Omit<Vehicle, 'id' | 'created_at' | 'updated_at'>): Promise<Vehicle> {
     await requireAdminRole();
+    const vehicleId = 'v-' + Date.now();
+
+    // 1. Process and upload any Base64 images to Supabase Storage
+    const uploadedImages = await Promise.all(
+      (vehicle.images || []).map(async (img, idx) => {
+        const publicUrl = await uploadVehicleImageToSupabase(vehicleId, img.image_url);
+        return {
+          ...img,
+          id: img.id || `img-${vehicleId}-${idx}`,
+          vehicle_id: vehicleId,
+          image_url: publicUrl,
+          display_order: idx + 1,
+          is_primary: idx === 0,
+          created_at: img.created_at || new Date().toISOString()
+        };
+      })
+    );
+
     const newVehicle: Vehicle = {
       ...vehicle,
-      id: 'v-' + Date.now(),
+      id: vehicleId,
+      images: uploadedImages,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     };
+
+    // 2. Persist to Supabase PostgreSQL Database if configured
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data: insertedDbVehicle, error: vErr } = await supabase
+          .from('vehicles')
+          .insert([{
+            make: vehicle.make,
+            model: vehicle.model,
+            variant: vehicle.variant || '',
+            year: vehicle.year,
+            price: vehicle.price,
+            currency: vehicle.currency || 'KES',
+            mileage: vehicle.mileage,
+            engine_cc: vehicle.engine_cc,
+            fuel_type: vehicle.fuel_type,
+            transmission: vehicle.transmission,
+            body_type: vehicle.body_type,
+            color: vehicle.color || 'Silver',
+            location: vehicle.location,
+            description: vehicle.description,
+            status: vehicle.status || 'active',
+            verification_status: vehicle.verification_status || 'verified',
+            logbook_verified: vehicle.logbook_verified ?? true,
+            featured: vehicle.featured ?? false,
+            seller_type: vehicle.seller_type || 'dealer',
+            dealer_name: vehicle.dealer_name || 'YARDLY Certified'
+          }])
+          .select()
+          .single();
+
+        if (!vErr && insertedDbVehicle) {
+          const dbVehicleId = insertedDbVehicle.id;
+          newVehicle.id = dbVehicleId;
+
+          if (uploadedImages.length > 0) {
+            await supabase.from('vehicle_images').insert(
+              uploadedImages.map((img, idx) => ({
+                vehicle_id: dbVehicleId,
+                image_url: img.image_url,
+                display_order: idx + 1,
+                is_primary: idx === 0
+              }))
+            );
+          }
+        }
+      } catch (err) {
+        console.warn('Supabase DB insertion notice:', err);
+      }
+    }
+
+    // 3. Update memory state and sanitized storage (safe from quota errors)
     const list = getStored<Vehicle[]>(LOCAL_STORAGE_KEY_VEHICLES, INITIAL_MOCK_VEHICLES);
     list.unshift(newVehicle);
     setStored(LOCAL_STORAGE_KEY_VEHICLES, list);
+
     return newVehicle;
   },
 
   async updateVehicle(id: string, updates: Partial<Vehicle>): Promise<Vehicle | null> {
     await requireAdminRole();
+
+    // 1. Process & upload any new Base64 images to Supabase Storage
+    let updatedImages = updates.images;
+    if (updates.images && updates.images.length > 0) {
+      updatedImages = await Promise.all(
+        updates.images.map(async (img, idx) => {
+          const publicUrl = await uploadVehicleImageToSupabase(id, img.image_url);
+          return {
+            ...img,
+            id: img.id || `img-${id}-${idx}`,
+            vehicle_id: id,
+            image_url: publicUrl,
+            display_order: idx + 1,
+            is_primary: idx === 0
+          };
+        })
+      );
+    }
+
+    const mergedUpdates = {
+      ...updates,
+      ...(updatedImages ? { images: updatedImages } : {}),
+      updated_at: new Date().toISOString()
+    };
+
+    // 2. Persist to Supabase Database if configured
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase
+          .from('vehicles')
+          .update({
+            make: updates.make,
+            model: updates.model,
+            year: updates.year,
+            price: updates.price,
+            mileage: updates.mileage,
+            engine_cc: updates.engine_cc,
+            fuel_type: updates.fuel_type,
+            transmission: updates.transmission,
+            body_type: updates.body_type,
+            location: updates.location,
+            description: updates.description,
+            dealer_name: updates.dealer_name,
+            status: updates.status,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', id);
+
+        if (updatedImages && updatedImages.length > 0) {
+          await supabase.from('vehicle_images').delete().eq('vehicle_id', id);
+          await supabase.from('vehicle_images').insert(
+            updatedImages.map((img, idx) => ({
+              vehicle_id: id,
+              image_url: img.image_url,
+              display_order: idx + 1,
+              is_primary: idx === 0
+            }))
+          );
+        }
+      } catch (err) {
+        console.warn('Supabase DB update notice:', err);
+      }
+    }
+
+    // 3. Update memory state & safe sanitized storage (no quota errors)
     const list = getStored<Vehicle[]>(LOCAL_STORAGE_KEY_VEHICLES, INITIAL_MOCK_VEHICLES);
     const index = list.findIndex(v => v.id === id);
     if (index !== -1) {
       list[index] = {
         ...list[index],
-        ...updates,
-        updated_at: new Date().toISOString()
+        ...mergedUpdates
       };
       setStored(LOCAL_STORAGE_KEY_VEHICLES, list);
       return list[index];
@@ -470,6 +719,15 @@ export const VehicleService = {
 
   async updateStatus(id: string, status: Vehicle['status']): Promise<void> {
     await requireAdminRole();
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase.from('vehicles').update({ status, updated_at: new Date().toISOString() }).eq('id', id);
+      } catch (err) {
+        console.warn('Supabase DB status update notice:', err);
+      }
+    }
+
     const list = getStored<Vehicle[]>(LOCAL_STORAGE_KEY_VEHICLES, INITIAL_MOCK_VEHICLES);
     const item = list.find(v => v.id === id);
     if (item) {
@@ -481,6 +739,16 @@ export const VehicleService = {
 
   async deleteVehicle(id: string): Promise<void> {
     await requireAdminRole();
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase.from('vehicle_images').delete().eq('vehicle_id', id);
+        await supabase.from('vehicles').delete().eq('id', id);
+      } catch (err) {
+        console.warn('Supabase DB delete notice:', err);
+      }
+    }
+
     const list = getStored<Vehicle[]>(LOCAL_STORAGE_KEY_VEHICLES, INITIAL_MOCK_VEHICLES);
     const updated = list.filter(v => v.id !== id);
     setStored(LOCAL_STORAGE_KEY_VEHICLES, updated);
