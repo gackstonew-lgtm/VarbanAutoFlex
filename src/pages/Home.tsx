@@ -37,21 +37,21 @@ export const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7FAFF] flex flex-col font-sans selection:bg-[#1769E0] selection:text-white">
+    <div className="min-h-screen bg-[#F7FAFF] flex flex-col font-sans selection:bg-[#1769E0] selection:text-white pb-[calc(7rem+env(safe-area-inset-bottom,0px))] md:pb-0">
       <Navbar />
 
       {/* Hero Section */}
       <UnitPayHero onSearchClick={scrollToSearch} />
 
       {/* Hero Search Panel Container */}
-      <div ref={searchRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20 w-full mb-16">
+      <div ref={searchRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20 w-full mb-6 sm:mb-16">
         <Reveal direction="up" distance={20}>
           <HeroSearch />
         </Reveal>
       </div>
 
       {/* Featured Vehicles Grid Section */}
-      <section className="py-12 bg-[#F7FAFF]">
+      <section className="pt-4 pb-12 sm:py-12 bg-[#F7FAFF]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           
           <Reveal direction="up">

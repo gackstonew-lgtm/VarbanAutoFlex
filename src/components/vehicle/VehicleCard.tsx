@@ -108,21 +108,21 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle }) => {
 
         {/* Price & Actions Row */}
         <div className="mt-auto pt-2 border-t border-[#D9EAFF] flex items-center justify-between gap-2">
-          <div>
+          <div className="min-w-0 shrink">
             <div className="text-[10px] uppercase font-bold text-[#64748B]">Cash Price</div>
-            <div className="text-lg font-black text-[#0038BC]">
+            <div className="text-base sm:text-lg font-black text-[#0038BC] truncate">
               KES {vehicle.price.toLocaleString()}
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <Link to={`/vehicles/${vehicle.id}`}>
-              <Button size="sm" variant="outline" className="px-3 active:scale-95 transition-transform">
+              <Button size="sm" variant="outline" className="px-2.5 sm:px-3 text-xs active:scale-95 transition-transform">
                 Details
               </Button>
             </Link>
             <Link to={`/vehicles/${vehicle.id}`}>
-              <Button size="sm" variant="primary" className="px-3 active:scale-95 transition-transform">
+              <Button size="sm" variant="primary" className="px-2.5 sm:px-3 text-xs active:scale-95 transition-transform">
                 Reserve
               </Button>
             </Link>

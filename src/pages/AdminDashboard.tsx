@@ -357,7 +357,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow flex flex-col lg:flex-row gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] lg:pb-8 w-full flex-grow flex flex-col lg:flex-row gap-8">
         
         {/* Sidebar Navigation Menu */}
         <aside className="w-full lg:w-64 shrink-0 space-y-2">

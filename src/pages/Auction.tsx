@@ -132,7 +132,7 @@ export const AuctionMarketplace: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] md:pb-8 w-full flex-grow">
         
         {/* Status Filter Tabs */}
         <div className="flex flex-wrap items-center gap-2 border-b border-[#D9EAFF] pb-4 mb-8">

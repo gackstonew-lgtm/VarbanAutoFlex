@@ -68,9 +68,8 @@ export const MobileBottomNav: React.FC = () => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-3 pb-3 pt-1 pointer-events-none">
-      {/* Floating 5-Column Curved Container matching uploaded reference image */}
-      <div className="max-w-md mx-auto bg-white/95 backdrop-blur-lg rounded-3xl shadow-[0_10px_35px_rgba(0,0,0,0.12)] border border-[#E2EEFF] py-2 px-1 grid grid-cols-5 pointer-events-auto items-center">
+    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white/95 backdrop-blur-lg border-t border-[#E2EEFF] shadow-[0_-4px_20px_rgba(0,0,0,0.08)] pb-[env(safe-area-inset-bottom,0px)]">
+      <div className="max-w-md mx-auto py-2 px-1 grid grid-cols-5 items-center">
         
         {items.map((item) => {
           const isActive = location.pathname === item.path;

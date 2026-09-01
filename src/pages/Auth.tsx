@@ -104,7 +104,7 @@ export const Auth: React.FC = () => {
     <div className="min-h-screen bg-[#F7FAFF] flex flex-col">
       <Navbar />
 
-      <div className="max-w-lg mx-auto my-auto px-4 py-12 w-full">
+      <div className="max-w-lg mx-auto my-auto px-4 pt-12 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] md:pb-12 w-full">
         <div className="bg-white rounded-3xl border border-[#D9EAFF] p-6 sm:p-8 shadow-xl space-y-6">
           
           <div className="text-center space-y-3">

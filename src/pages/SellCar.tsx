@@ -136,7 +136,7 @@ export const SellCar: React.FC = () => {
       </div>
 
       {/* Main Form Container */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full flex-grow">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] md:pb-12 w-full flex-grow">
         {submitted ? (
           <div className="bg-white rounded-3xl border border-[#D9EAFF] p-8 sm:p-12 text-center space-y-6 shadow-xl">
             <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
