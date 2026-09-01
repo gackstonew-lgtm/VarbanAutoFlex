@@ -52,7 +52,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     estimated_market_value: 7300000,
     valuation_confidence: 'High',
     valuation_source: 'Kenyan Automotive Market Analysis 2026',
-    images: buildVehicleImages('v1000000-0000-0000-0000-000000000001', 'cluster_land_cruiser_200', '2022 Toyota Land Cruiser Prado TX'),
+    images: buildVehicleImages('v1000000-0000-0000-0000-000000000001', 'cluster_toyota_land_cruiser_prado_150', '2022 Toyota Land Cruiser Prado TX'),
     features: ['7 Leather Seats', 'Multi-Terrain Select', 'Sunroof', 'Reverse Camera', 'Push Start', '4WD High/Low'],
     created_at: '2026-08-15T10:00:00Z',
     updated_at: '2026-08-15T10:00:00Z'
@@ -148,7 +148,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     estimated_market_value: 6850000,
     valuation_confidence: 'High',
     valuation_source: 'Kenyan Luxury Auto Index',
-    images: buildVehicleImages('v1000000-0000-0000-0000-000000000003', 'cluster_mercedes_c_class', '2022 Mercedes-Benz C200 AMG Line'),
+    images: buildVehicleImages('v1000000-0000-0000-0000-000000000003', 'cluster_mercedes_benz_c_class', '2022 Mercedes-Benz C200 AMG Line'),
     features: ['W206 AMG Line', 'Panoramic Sunroof', 'MBUX Portrait Screen', 'Burmester Surround Sound', 'Ambient Lighting'],
     created_at: '2026-08-17T09:30:00Z',
     updated_at: '2026-08-17T09:30:00Z'
@@ -244,7 +244,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     estimated_market_value: 4250000,
     valuation_confidence: 'High',
     valuation_source: 'Kenyan Hatchback Index 2026',
-    images: buildVehicleImages('v1000000-0000-0000-0000-000000000005', 'cluster_vw_golf_mk8', '2022 Volkswagen Golf Mk8 R-Line'),
+    images: buildVehicleImages('v1000000-0000-0000-0000-000000000005', 'cluster_volkswagen_golf', '2022 Volkswagen Golf Mk8 R-Line'),
     features: ['Mk8 Digital Cockpit', 'IQ.LIGHT Matrix', 'Harman Kardon Audio', 'DCC Adaptive Chassis', 'R-Line Sport Seats'],
     created_at: '2026-08-19T08:00:00Z',
     updated_at: '2026-08-19T08:00:00Z'
@@ -292,7 +292,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     estimated_market_value: 7950000,
     valuation_confidence: 'High',
     valuation_source: 'Kenyan Executive Saloon Valuation',
-    images: buildVehicleImages('v1000000-0000-0000-0000-000000000006', 'cluster_mercedes_e_class', '2021 Mercedes-Benz E200 AMG Line'),
+    images: buildVehicleImages('v1000000-0000-0000-0000-000000000006', 'cluster_mercedes_benz_e_class', '2021 Mercedes-Benz E200 AMG Line'),
     features: ['Widescreen Cockpit', 'MBUX AR Navigation', 'Panoramic Glass Roof', '360 Surround View', 'Burmester Audio'],
     created_at: '2026-08-20T12:00:00Z',
     updated_at: '2026-08-20T12:00:00Z'
@@ -388,7 +388,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     estimated_market_value: 4650000,
     valuation_confidence: 'High',
     valuation_source: 'Kenyan Hybrid SUV Valuation Index',
-    images: buildVehicleImages('v1000000-0000-0000-0000-000000000008', 'cluster_rav4_newer', '2020 Toyota RAV4 Hybrid AWD'),
+    images: buildVehicleImages('v1000000-0000-0000-0000-000000000008', 'cluster_toyota_rav4_newer', '2020 Toyota RAV4 Hybrid AWD'),
     features: ['E-Four Hybrid AWD', 'Toyota Safety Sense 2.0', 'Power Tailgate', 'Heated Leather Seats', 'Digital Mirror'],
     created_at: '2026-08-22T16:00:00Z',
     updated_at: '2026-08-22T16:00:00Z'
@@ -436,7 +436,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     estimated_market_value: 18500000,
     valuation_confidence: 'High',
     valuation_source: 'Kenyan Super Luxury Market Guide',
-    images: buildVehicleImages('v1000000-0000-0000-0000-000000000009', 'cluster_s_class', '2022 Mercedes-Benz S-Class S500 W223'),
+    images: buildVehicleImages('v1000000-0000-0000-0000-000000000009', 'cluster_mercedes_benz_s_class', '2022 Mercedes-Benz S-Class S500 W223'),
     features: ['W223 Generation', 'Burmester 4D Audio', 'Rear Axle Steering', '3D Cockpit', 'Soft Close Doors'],
     created_at: '2026-08-23T10:00:00Z',
     updated_at: '2026-08-23T10:00:00Z'
@@ -532,7 +532,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     estimated_market_value: 3850000,
     valuation_confidence: 'High',
     valuation_source: 'Kenyan Commercial & MPV Index',
-    images: buildVehicleImages('v1000000-0000-0000-0000-000000000011', 'cluster_hiace', '2020 Toyota Hiace Super GL'),
+    images: buildVehicleImages('v1000000-0000-0000-0000-000000000011', 'cluster_toyota_hiace', '2020 Toyota Hiace Super GL'),
     features: ['Dark Prime II Spec', 'Dual Power Sliding Doors', 'Push Start', 'Automatic Climate Control', 'Safety Sense'],
     created_at: '2026-08-25T14:00:00Z',
     updated_at: '2026-08-25T14:00:00Z'
@@ -580,7 +580,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     estimated_market_value: 13800000,
     valuation_confidence: 'High',
     valuation_source: 'Kenyan Full-Size 4x4 Market Guide',
-    images: buildVehicleImages('v1000000-0000-0000-0000-000000000012', 'cluster_patrol_y62', '2021 Nissan Patrol Y62 V8'),
+    images: buildVehicleImages('v1000000-0000-0000-0000-000000000012', 'cluster_nissan_patrol_y62', '2021 Nissan Patrol Y62 V8'),
     features: ['HBMC Suspension', '5.6L V8 Engine', 'Bose 13-Speaker Sound', '8 Seats', 'Rear Entertainment'],
     created_at: '2026-08-26T09:00:00Z',
     updated_at: '2026-08-26T09:00:00Z'
@@ -628,7 +628,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     estimated_market_value: 16500000,
     valuation_confidence: 'High',
     valuation_source: 'Kenyan AMG Performance Index',
-    images: buildVehicleImages('v1000000-0000-0000-0000-000000000013', 'cluster_mercedes_gle_coupe', '2022 Mercedes-AMG GLE 53 Coupe'),
+    images: buildVehicleImages('v1000000-0000-0000-0000-000000000013', 'cluster_mercedes_amg_gle_53_coupe', '2022 Mercedes-AMG GLE 53 Coupe'),
     features: ['AMG Performance Exhaust', 'Air Body Control', 'Burmester Audio', '22-inch Forged Wheels', 'Panoramic Roof'],
     created_at: '2026-08-27T10:00:00Z',
     updated_at: '2026-08-27T10:00:00Z'
@@ -676,7 +676,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     estimated_market_value: 1850000,
     valuation_confidence: 'High',
     valuation_source: 'Kenyan Compact Hatchback Index',
-    images: buildVehicleImages('v1000000-0000-0000-0000-000000000014', 'cluster_demio', '2020 Mazda Demio SkyActiv-D'),
+    images: buildVehicleImages('v1000000-0000-0000-0000-000000000014', 'cluster_mazda_demio', '2020 Mazda Demio SkyActiv-D'),
     features: ['SkyActiv-D Turbo Diesel', 'Leather Interior', 'Head-Up Display', 'i-Activesense Safety', 'Alloy Wheels'],
     created_at: '2026-08-28T09:00:00Z',
     updated_at: '2026-08-28T09:00:00Z'

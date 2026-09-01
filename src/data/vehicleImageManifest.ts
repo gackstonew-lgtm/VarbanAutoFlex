@@ -1,9 +1,10 @@
-// AUTOMATICALLY GENERATED VEHICLE IMAGE MANIFEST
-// Canonical source: public/Car Images
-// Total Usable Images: 180
+// AUTOMATICALLY GENERATED CANONICAL VEHICLE IMAGE MANIFEST
+// Source of truth: public/Car Images (Canonical Names)
+// Total Files: 181
 
 export interface VehicleCluster {
   id: string;
+  name: string;
   images: string[];
   primaryImage: string;
   confidence: number;
@@ -12,336 +13,375 @@ export interface VehicleCluster {
 export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
   "cluster_honda_fit": {
     "id": "cluster_honda_fit",
+    "name": "Honda Fit",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.11.jpeg"
+      "/Car Images/Honda_Fit_01.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.11.jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Honda_Fit_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_crv": {
-    "id": "cluster_crv",
+  "cluster_honda_cr_v": {
+    "id": "cluster_honda_cr_v",
+    "name": "Honda CR-V",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.13.jpeg"
+      "/Car Images/Honda_CR-V_01.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.13.jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Honda_CR-V_01.jpeg",
+    "confidence": 0.99
   },
   "cluster_lexus_es": {
     "id": "cluster_lexus_es",
+    "name": "Lexus ES",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.14.jpeg"
+      "/Car Images/Lexus_ES_01.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.14.jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Lexus_ES_01.jpeg",
+    "confidence": 0.99
   },
   "cluster_lexus_rx": {
     "id": "cluster_lexus_rx",
+    "name": "Lexus RX",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.15.jpeg"
+      "/Car Images/Lexus_RX_01.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.15.jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Lexus_RX_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_velar": {
-    "id": "cluster_velar",
+  "cluster_range_rover_velar": {
+    "id": "cluster_range_rover_velar",
+    "name": "Range Rover Velar",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.16.jpeg"
+      "/Car Images/Range_Rover_Velar_01.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.16.jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Range_Rover_Velar_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_vellfire": {
-    "id": "cluster_vellfire",
+  "cluster_toyota_vellfire": {
+    "id": "cluster_toyota_vellfire",
+    "name": "Toyota Vellfire",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.17.jpeg"
+      "/Car Images/Toyota_Vellfire_01.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.17.jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Toyota_Vellfire_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_xc60": {
-    "id": "cluster_xc60",
+  "cluster_volvo_xc60": {
+    "id": "cluster_volvo_xc60",
+    "name": "Volvo XC60",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.18.jpeg"
+      "/Car Images/Volvo_XC60_01.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.18.jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Volvo_XC60_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_polo": {
-    "id": "cluster_polo",
+  "cluster_volkswagen_polo": {
+    "id": "cluster_volkswagen_polo",
+    "name": "Volkswagen Polo",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.19.jpeg"
+      "/Car Images/Volkswagen_Polo_01.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.19.jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Volkswagen_Polo_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_ranger": {
-    "id": "cluster_ranger",
+  "cluster_ford_ranger": {
+    "id": "cluster_ford_ranger",
+    "name": "Ford Ranger",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.20.jpeg"
+      "/Car Images/Ford_Ranger_01.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.20.jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Ford_Ranger_01.jpeg",
+    "confidence": 0.99
   },
   "cluster_audi_a6": {
     "id": "cluster_audi_a6",
+    "name": "Audi A6",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.21.jpeg"
+      "/Car Images/Audi_A6_01.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.21.jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Audi_A6_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_mercedes_c_class": {
-    "id": "cluster_mercedes_c_class",
+  "cluster_mercedes_benz_c_class": {
+    "id": "cluster_mercedes_benz_c_class",
+    "name": "Mercedes-Benz C-Class",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.24 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.24.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.25.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.26 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.26.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.28 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.28 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.28.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.29 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.29.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.30.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.31 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.31.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.32 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.32 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.32.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.33 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.33 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.33.jpeg"
+      "/Car Images/Mercedes-Benz_C-Class_01.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_02.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_03.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_04.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_05.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_06.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_07.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_08.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_09.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_10.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_11.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_12.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_13.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_14.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_15.jpeg",
+      "/Car Images/Mercedes-Benz_C-Class_16.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.24 (1).jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Mercedes-Benz_C-Class_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_land_cruiser_200": {
-    "id": "cluster_land_cruiser_200",
+  "cluster_toyota_land_cruiser_200": {
+    "id": "cluster_toyota_land_cruiser_200",
+    "name": "Toyota Land Cruiser 200",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.34 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.34 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.34.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.35 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.35 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.35.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.36 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.36 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.36.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.37 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.37.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.38 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.38.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.39 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.39 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.39.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.40 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.40.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.41 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.41 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.41 (3).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.41.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.42 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.42.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.43 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.43 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.43.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.44 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.44 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.44.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.45 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.45 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.45.jpeg"
+      "/Car Images/Toyota_Land_Cruiser_200_01.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_02.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_03.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_04.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_05.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_06.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_07.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_08.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_09.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_10.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_11.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_12.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_13.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_14.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_15.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_16.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_17.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_18.jpeg",
+      "/Car Images/Toyota_Land_Cruiser_200_19.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.34 (1).jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Toyota_Land_Cruiser_200_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_mercedes_gle_coupe": {
-    "id": "cluster_mercedes_gle_coupe",
+  "cluster_mercedes_amg_gle_53_coupe": {
+    "id": "cluster_mercedes_amg_gle_53_coupe",
+    "name": "Mercedes-AMG GLE 53 Coupe",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.46 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.46.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.47 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.47 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.47.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.48 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.48 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.48.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.49 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.49.jpeg"
+      "/Car Images/Mercedes-AMG_GLE_53_Coupe_01.jpeg",
+      "/Car Images/Mercedes-AMG_GLE_53_Coupe_02.jpeg",
+      "/Car Images/Mercedes-AMG_GLE_53_Coupe_03.jpeg",
+      "/Car Images/Mercedes-AMG_GLE_53_Coupe_04.jpeg",
+      "/Car Images/Mercedes-AMG_GLE_53_Coupe_05.jpeg",
+      "/Car Images/Mercedes-AMG_GLE_53_Coupe_06.jpeg",
+      "/Car Images/Mercedes-AMG_GLE_53_Coupe_07.jpeg",
+      "/Car Images/Mercedes-AMG_GLE_53_Coupe_08.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.46 (1).jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Mercedes-AMG_GLE_53_Coupe_01.jpeg",
+    "confidence": 0.99
   },
   "cluster_porsche_cayenne": {
     "id": "cluster_porsche_cayenne",
+    "name": "Porsche Cayenne",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.50 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.50.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.53.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.55.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.56.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.57.jpeg"
+      "/Car Images/Porsche_Cayenne_01.jpeg",
+      "/Car Images/Porsche_Cayenne_02.jpeg",
+      "/Car Images/Porsche_Cayenne_03.jpeg",
+      "/Car Images/Porsche_Cayenne_04.jpeg",
+      "/Car Images/Porsche_Cayenne_05.jpeg",
+      "/Car Images/Porsche_Cayenne_06.jpeg",
+      "/Car Images/Porsche_Cayenne_07.jpeg",
+      "/Car Images/Porsche_Cayenne_08.jpeg",
+      "/Car Images/Porsche_Cayenne_09.jpeg",
+      "/Car Images/Porsche_Cayenne_10.jpeg",
+      "/Car Images/Porsche_Cayenne_11.jpeg",
+      "/Car Images/Porsche_Cayenne_12.jpeg",
+      "/Car Images/Porsche_Cayenne_13.jpeg",
+      "/Car Images/Porsche_Cayenne_14.jpeg",
+      "/Car Images/Porsche_Cayenne_15.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.50 (1).jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Porsche_Cayenne_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_vw_golf_mk8": {
-    "id": "cluster_vw_golf_mk8",
+  "cluster_volkswagen_golf": {
+    "id": "cluster_volkswagen_golf",
+    "name": "Volkswagen Golf",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.58 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.58.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.46.59.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.00.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.01.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.02.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.03.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.04.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.05 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.05.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.06 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.06.jpeg"
+      "/Car Images/Volkswagen_Golf_01.jpeg",
+      "/Car Images/Volkswagen_Golf_02.jpeg",
+      "/Car Images/Volkswagen_Golf_03.jpeg",
+      "/Car Images/Volkswagen_Golf_04.jpeg",
+      "/Car Images/Volkswagen_Golf_05.jpeg",
+      "/Car Images/Volkswagen_Golf_06.jpeg",
+      "/Car Images/Volkswagen_Golf_07.jpeg",
+      "/Car Images/Volkswagen_Golf_08.jpeg",
+      "/Car Images/Volkswagen_Golf_09.jpeg",
+      "/Car Images/Volkswagen_Golf_10.jpeg",
+      "/Car Images/Volkswagen_Golf_11.jpeg",
+      "/Car Images/Volkswagen_Golf_12.jpeg",
+      "/Car Images/Volkswagen_Golf_13.jpeg",
+      "/Car Images/Volkswagen_Golf_14.jpeg",
+      "/Car Images/Volkswagen_Golf_15.jpeg",
+      "/Car Images/Volkswagen_Golf_16.jpeg",
+      "/Car Images/Volkswagen_Golf_17.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.46.58 (1).jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Volkswagen_Golf_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_mercedes_e_class": {
-    "id": "cluster_mercedes_e_class",
+  "cluster_mercedes_benz_e_class": {
+    "id": "cluster_mercedes_benz_e_class",
+    "name": "Mercedes-Benz E-Class",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.07 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.07.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.08 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.08.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.09 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.09.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.10 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.10.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.11 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.11.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.12 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.12.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.13.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.14.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.15 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.15.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.16 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.16.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.17 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.17 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.17.jpeg"
+      "/Car Images/Mercedes-Benz_E-Class_01.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_02.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_03.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_04.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_05.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_06.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_07.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_08.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_09.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_10.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_11.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_12.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_13.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_14.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_15.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_16.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_17.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_18.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_19.jpeg",
+      "/Car Images/Mercedes-Benz_E-Class_20.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.47.07 (1).jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Mercedes-Benz_E-Class_01.jpeg",
+    "confidence": 0.99
   },
   "cluster_bmw_x6": {
     "id": "cluster_bmw_x6",
+    "name": "BMW X6",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.18.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.19 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.19 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.19.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.20 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.20.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.21 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.21 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.21.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.22 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.22 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.22.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.23 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.23.jpeg"
+      "/Car Images/BMW_X6_01.jpeg",
+      "/Car Images/BMW_X6_02.jpeg",
+      "/Car Images/BMW_X6_03.jpeg",
+      "/Car Images/BMW_X6_04.jpeg",
+      "/Car Images/BMW_X6_05.jpeg",
+      "/Car Images/BMW_X6_06.jpeg",
+      "/Car Images/BMW_X6_07.jpeg",
+      "/Car Images/BMW_X6_08.jpeg",
+      "/Car Images/BMW_X6_09.jpeg",
+      "/Car Images/BMW_X6_10.jpeg",
+      "/Car Images/BMW_X6_11.jpeg",
+      "/Car Images/BMW_X6_12.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.47.18.jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/BMW_X6_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_rav4_older": {
-    "id": "cluster_rav4_older",
+  "cluster_toyota_rav4_older": {
+    "id": "cluster_toyota_rav4_older",
+    "name": "Toyota RAV4 Older",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.24 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.24 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.24.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.25 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.25.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.26.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.27 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.27.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.28 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.28 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.28.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.29 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.29 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.29.jpeg"
+      "/Car Images/Toyota_RAV4_Older_01.jpeg",
+      "/Car Images/Toyota_RAV4_Older_02.jpeg",
+      "/Car Images/Toyota_RAV4_Older_03.jpeg",
+      "/Car Images/Toyota_RAV4_Older_04.jpeg",
+      "/Car Images/Toyota_RAV4_Older_05.jpeg",
+      "/Car Images/Toyota_RAV4_Older_06.jpeg",
+      "/Car Images/Toyota_RAV4_Older_07.jpeg",
+      "/Car Images/Toyota_RAV4_Older_08.jpeg",
+      "/Car Images/Toyota_RAV4_Older_09.jpeg",
+      "/Car Images/Toyota_RAV4_Older_10.jpeg",
+      "/Car Images/Toyota_RAV4_Older_11.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.47.24 (1).jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Toyota_RAV4_Older_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_rav4_newer": {
-    "id": "cluster_rav4_newer",
+  "cluster_toyota_rav4_newer": {
+    "id": "cluster_toyota_rav4_newer",
+    "name": "Toyota RAV4 Newer",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.30 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.30.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.31 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.31.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.32 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.32 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.32.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.33.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.34 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.34.jpeg"
+      "/Car Images/Toyota_RAV4_Newer_01.jpeg",
+      "/Car Images/Toyota_RAV4_Newer_02.jpeg",
+      "/Car Images/Toyota_RAV4_Newer_03.jpeg",
+      "/Car Images/Toyota_RAV4_Newer_04.jpeg",
+      "/Car Images/Toyota_RAV4_Newer_05.jpeg",
+      "/Car Images/Toyota_RAV4_Newer_06.jpeg",
+      "/Car Images/Toyota_RAV4_Newer_07.jpeg",
+      "/Car Images/Toyota_RAV4_Newer_08.jpeg",
+      "/Car Images/Toyota_RAV4_Newer_09.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.47.30 (1).jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Toyota_RAV4_Newer_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_hiace": {
-    "id": "cluster_hiace",
+  "cluster_toyota_hiace": {
+    "id": "cluster_toyota_hiace",
+    "name": "Toyota Hiace",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.36 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.36 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.36 (3).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.37.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.38 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.38 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.38.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.39 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.39 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.39.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.40 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.40.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.41 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.41 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.41.jpeg"
+      "/Car Images/Toyota_Hiace_01.jpeg",
+      "/Car Images/Toyota_Hiace_02.jpeg",
+      "/Car Images/Toyota_Hiace_03.jpeg",
+      "/Car Images/Toyota_Hiace_04.jpeg",
+      "/Car Images/Toyota_Hiace_05.jpeg",
+      "/Car Images/Toyota_Hiace_06.jpeg",
+      "/Car Images/Toyota_Hiace_07.jpeg",
+      "/Car Images/Toyota_Hiace_08.jpeg",
+      "/Car Images/Toyota_Hiace_09.jpeg",
+      "/Car Images/Toyota_Hiace_10.jpeg",
+      "/Car Images/Toyota_Hiace_11.jpeg",
+      "/Car Images/Toyota_Hiace_12.jpeg",
+      "/Car Images/Toyota_Hiace_13.jpeg",
+      "/Car Images/Toyota_Hiace_14.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.47.36 (1).jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Toyota_Hiace_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_demio": {
-    "id": "cluster_demio",
+  "cluster_mazda_demio": {
+    "id": "cluster_mazda_demio",
+    "name": "Mazda Demio",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.42 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.42 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.42.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.43.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.44.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.45 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.45.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.46 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.46.jpeg"
+      "/Car Images/Mazda_Demio_01.jpeg",
+      "/Car Images/Mazda_Demio_02.jpeg",
+      "/Car Images/Mazda_Demio_03.jpeg",
+      "/Car Images/Mazda_Demio_04.jpeg",
+      "/Car Images/Mazda_Demio_05.jpeg",
+      "/Car Images/Mazda_Demio_06.jpeg",
+      "/Car Images/Mazda_Demio_07.jpeg",
+      "/Car Images/Mazda_Demio_08.jpeg",
+      "/Car Images/Mazda_Demio_09.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.47.42 (1).jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Mazda_Demio_01.jpeg",
+    "confidence": 0.99
   },
-  "cluster_patrol_y62": {
-    "id": "cluster_patrol_y62",
+  "cluster_nissan_patrol_y62": {
+    "id": "cluster_nissan_patrol_y62",
+    "name": "Nissan Patrol Y62",
     "images": [
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.47.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.48 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.48 (2).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.48.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.49.jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.50 (1).jpeg",
-      "/Car Images/WhatsApp Image 2026-09-01 at 09.47.50.jpeg"
+      "/Car Images/Nissan_Patrol_Y62_01.jpeg",
+      "/Car Images/Nissan_Patrol_Y62_02.jpeg",
+      "/Car Images/Nissan_Patrol_Y62_03.jpeg",
+      "/Car Images/Nissan_Patrol_Y62_04.jpeg",
+      "/Car Images/Nissan_Patrol_Y62_05.jpeg",
+      "/Car Images/Nissan_Patrol_Y62_06.jpeg",
+      "/Car Images/Nissan_Patrol_Y62_07.jpeg",
+      "/Car Images/Nissan_Patrol_Y62_08.jpeg",
+      "/Car Images/Nissan_Patrol_Y62_09.jpeg"
     ],
-    "primaryImage": "/Car Images/WhatsApp Image 2026-09-01 at 09.47.47.jpeg",
-    "confidence": 0.98
+    "primaryImage": "/Car Images/Nissan_Patrol_Y62_01.jpeg",
+    "confidence": 0.99
+  },
+  "cluster_mercedes_benz_s_class": {
+    "id": "cluster_mercedes_benz_s_class",
+    "name": "Mercedes-Benz S-Class",
+    "images": [
+      "/Car Images/Mercedes-Benz_S-Class_01.jpeg",
+      "/Car Images/Mercedes-Benz_S-Class_02.jpeg",
+      "/Car Images/Mercedes-Benz_S-Class_03.jpeg",
+      "/Car Images/Mercedes-Benz_S-Class_04.jpeg",
+      "/Car Images/Mercedes-Benz_S-Class_05.jpeg",
+      "/Car Images/Mercedes-Benz_S-Class_06.jpeg"
+    ],
+    "primaryImage": "/Car Images/Mercedes-Benz_S-Class_01.jpeg",
+    "confidence": 0.99
+  },
+  "cluster_audi_q8": {
+    "id": "cluster_audi_q8",
+    "name": "Audi Q8",
+    "images": [
+      "/Car Images/Audi_Q8_01.jpeg",
+      "/Car Images/Audi_Q8_02.jpeg",
+      "/Car Images/Audi_Q8_03.jpeg",
+      "/Car Images/Audi_Q8_04.jpeg",
+      "/Car Images/Audi_Q8_05.jpeg",
+      "/Car Images/Audi_Q8_06.jpeg"
+    ],
+    "primaryImage": "/Car Images/Audi_Q8_01.jpeg",
+    "confidence": 0.99
   }
 };

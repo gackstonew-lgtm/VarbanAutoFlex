@@ -4,28 +4,28 @@ import { generateModelSpecificGenericImage } from './genericImageGenerator';
 
 // Keyword matching dictionary mapping vehicle makes, models, and variants to discovered clusters
 const MODEL_TO_CLUSTER: Array<{ patterns: string[]; clusterId: string }> = [
-  { patterns: ['demio', 'mazda2'], clusterId: 'cluster_demio' },
-  { patterns: ['gle 53', 'gle'], clusterId: 'cluster_mercedes_gle_coupe' },
-  { patterns: ['patrol', 'y62'], clusterId: 'cluster_patrol_y62' },
-  { patterns: ['prado', 'land cruiser 300', 'land cruiser 200', 'land cruiser'], clusterId: 'cluster_land_cruiser_200' },
-  { patterns: ['c-class', 'c200', 'c300', 'c63'], clusterId: 'cluster_mercedes_c_class' },
+  { patterns: ['demio', 'mazda2'], clusterId: 'cluster_mazda_demio' },
+  { patterns: ['gle 53', 'gle'], clusterId: 'cluster_mercedes_amg_gle_53_coupe' },
+  { patterns: ['patrol', 'y62'], clusterId: 'cluster_nissan_patrol_y62' },
+  { patterns: ['prado', 'land cruiser 300', 'land cruiser 200', 'land cruiser'], clusterId: 'cluster_toyota_land_cruiser_200' },
+  { patterns: ['c-class', 'c200', 'c300', 'c63'], clusterId: 'cluster_mercedes_benz_c_class' },
   { patterns: ['cayenne'], clusterId: 'cluster_porsche_cayenne' },
-  { patterns: ['golf', 'gti'], clusterId: 'cluster_vw_golf_mk8' },
-  { patterns: ['e-class', 'e200', 'e300', 'e350'], clusterId: 'cluster_mercedes_e_class' },
+  { patterns: ['golf', 'gti'], clusterId: 'cluster_volkswagen_golf' },
+  { patterns: ['e-class', 'e200', 'e300', 'e350'], clusterId: 'cluster_mercedes_benz_e_class' },
   { patterns: ['x6'], clusterId: 'cluster_bmw_x6' },
-  { patterns: ['rav4', 'rav 4'], clusterId: 'cluster_rav4_newer' },
-  { patterns: ['s-class', 's500', 's350', 'w223'], clusterId: 'cluster_s_class' },
+  { patterns: ['rav4', 'rav 4'], clusterId: 'cluster_toyota_rav4_newer' },
+  { patterns: ['s-class', 's500', 's350', 'w223'], clusterId: 'cluster_mercedes_benz_s_class' },
   { patterns: ['q8'], clusterId: 'cluster_audi_q8' },
-  { patterns: ['hiace', 'super gl'], clusterId: 'cluster_hiace' },
+  { patterns: ['hiace', 'super gl'], clusterId: 'cluster_toyota_hiace' },
   { patterns: ['fit', 'vitz'], clusterId: 'cluster_honda_fit' },
-  { patterns: ['crv', 'cr-v'], clusterId: 'cluster_crv' },
+  { patterns: ['crv', 'cr-v'], clusterId: 'cluster_honda_cr_v' },
   { patterns: ['es 300h', 'lexus sedan'], clusterId: 'cluster_lexus_es' },
   { patterns: ['rx', 'rx450h'], clusterId: 'cluster_lexus_rx' },
-  { patterns: ['velar'], clusterId: 'cluster_velar' },
-  { patterns: ['vellfire', 'alphard'], clusterId: 'cluster_vellfire' },
-  { patterns: ['xc60'], clusterId: 'cluster_xc60' },
-  { patterns: ['polo'], clusterId: 'cluster_polo' },
-  { patterns: ['ranger'], clusterId: 'cluster_ranger' },
+  { patterns: ['velar'], clusterId: 'cluster_range_rover_velar' },
+  { patterns: ['vellfire', 'alphard'], clusterId: 'cluster_toyota_vellfire' },
+  { patterns: ['xc60'], clusterId: 'cluster_volvo_xc60' },
+  { patterns: ['polo'], clusterId: 'cluster_volkswagen_polo' },
+  { patterns: ['ranger'], clusterId: 'cluster_ford_ranger' },
   { patterns: ['a6', 'a4'], clusterId: 'cluster_audi_a6' }
 ];
 
@@ -145,4 +145,3 @@ export function getVehiclePrimaryImage(vehicle: Vehicle): VehicleImage | null {
   if (!images || images.length === 0) return null;
   return images.find(img => img.is_primary) || images[0] || null;
 }
-

@@ -60,7 +60,7 @@ const LOCAL_STORAGE_KEY_IMPORTS = 'yardly_demo_imports';
 const LOCAL_STORAGE_KEY_FAVORITES = 'yardly_demo_favorites';
 const LOCAL_STORAGE_KEY_NOTIFICATIONS = 'yardly_demo_notifications';
 
-const MOCK_DATASET_VERSION = 'v2026_09_01_generic_fallback_engine_v12';
+const MOCK_DATASET_VERSION = 'v2026_09_01_canonical_grouped_v15';
 
 function getStored<T>(key: string, initial: T): T {
   if (typeof window === 'undefined') return initial;

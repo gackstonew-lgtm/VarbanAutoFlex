@@ -12,6 +12,7 @@ import { ImportServicePage } from './pages/ImportService';
 import { AccountDashboard } from './pages/Account';
 
 import { MobileBottomNav } from './components/navigation/MobileBottomNav';
+import { PWAInstallPrompt } from './components/ui/PWAInstallPrompt';
 
 export const App: React.FC = () => {
   return (
@@ -31,6 +32,7 @@ export const App: React.FC = () => {
         <Route path="*" element={<Home />} />
       </Routes>
       <MobileBottomNav />
+      <PWAInstallPrompt />
     </BrowserRouter>
   );
 };
