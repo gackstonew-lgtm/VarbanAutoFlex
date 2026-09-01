@@ -661,6 +661,7 @@ export const VehicleService = {
     list.unshift(newVehicle);
     setStored(LOCAL_STORAGE_KEY_VEHICLES, list);
 
+    RealtimeService.broadcastLocalEvent('vehicles', newVehicle);
     return newVehicle;
   },
 
@@ -739,6 +740,7 @@ export const VehicleService = {
         ...mergedUpdates
       };
       setStored(LOCAL_STORAGE_KEY_VEHICLES, list);
+      RealtimeService.broadcastLocalEvent('vehicles', list[index]);
       return list[index];
     }
     return null;
@@ -761,6 +763,7 @@ export const VehicleService = {
       item.status = status;
       item.updated_at = new Date().toISOString();
       setStored(LOCAL_STORAGE_KEY_VEHICLES, list);
+      RealtimeService.broadcastLocalEvent('vehicles', item);
     }
   },
 
@@ -779,6 +782,7 @@ export const VehicleService = {
     const list = getStored<Vehicle[]>(LOCAL_STORAGE_KEY_VEHICLES, INITIAL_MOCK_VEHICLES);
     const updated = list.filter(v => v.id !== id);
     setStored(LOCAL_STORAGE_KEY_VEHICLES, updated);
+    RealtimeService.broadcastLocalEvent('vehicles', { id, deleted: true });
   }
 };
 
@@ -1398,22 +1402,78 @@ export const InspectionService = {
   }
 };
 
+// Native BroadcastChannel for zero-latency local multi-window / multi-tab sync
+const broadcastChannel = typeof window !== 'undefined' && 'BroadcastChannel' in window
+  ? new BroadcastChannel('yardly_realtime_sync_channel')
+  : null;
+
 export const RealtimeService = {
+  broadcastLocalEvent(table: string, payload?: any): void {
+    if (broadcastChannel) {
+      try {
+        broadcastChannel.postMessage({ table, payload, timestamp: Date.now() });
+      } catch (err) {
+        console.warn('BroadcastChannel notice:', err);
+      }
+    }
+  },
+
   subscribeToTable(table: string, onPayload: (payload: any) => void): () => void {
-    if (!isSupabaseConfigured || !supabase) {
-      return () => {};
+    const unsubscribers: Array<() => void> = [];
+
+    // 1. Supabase Realtime WebSocket Subscription (Cloud Cross-Device Sync)
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const canonicalChannelName = `yardly_realtime_${table}`;
+        const channel = supabase
+          .channel(canonicalChannelName)
+          .on('postgres_changes', { event: '*', schema: 'public', table }, (payload) => {
+            console.log(`[Supabase Realtime] ${table} event received:`, payload);
+            if (table === 'vehicles') inMemoryVehiclesCache = null;
+            onPayload(payload);
+          })
+          .subscribe((status) => {
+            console.log(`[Supabase Realtime] ${table} channel status:`, status);
+          });
+
+        unsubscribers.push(() => {
+          supabase.removeChannel(channel);
+        });
+      } catch (err) {
+        console.warn(`[Supabase Realtime] ${table} subscription error:`, err);
+      }
     }
 
-    const channelName = `realtime_${table}_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
-    const channel = supabase
-      .channel(channelName)
-      .on('postgres_changes', { event: '*', schema: 'public', table }, (payload) => {
-        onPayload(payload);
-      })
-      .subscribe();
+    // 2. BroadcastChannel Subscription (Instant Cross-Tab / Cross-Window Sync)
+    if (broadcastChannel) {
+      const handleBroadcast = (event: MessageEvent) => {
+        if (event.data && (event.data.table === table || event.data.table === '*')) {
+          if (table === 'vehicles') inMemoryVehiclesCache = null;
+          onPayload(event.data.payload || event.data);
+        }
+      };
+      broadcastChannel.addEventListener('message', handleBroadcast);
+      unsubscribers.push(() => {
+        broadcastChannel.removeEventListener('message', handleBroadcast);
+      });
+    }
+
+    // 3. Storage Event Listener (Fallback Cross-Window Sync)
+    if (typeof window !== 'undefined') {
+      const handleStorage = (e: StorageEvent) => {
+        if (e.key && e.key.includes(table)) {
+          if (table === 'vehicles') inMemoryVehiclesCache = null;
+          onPayload({ event: 'storage_update', key: e.key });
+        }
+      };
+      window.addEventListener('storage', handleStorage);
+      unsubscribers.push(() => {
+        window.removeEventListener('storage', handleStorage);
+      });
+    }
 
     return () => {
-      supabase.removeChannel(channel);
+      unsubscribers.forEach(unsub => unsub());
     };
   }
 };

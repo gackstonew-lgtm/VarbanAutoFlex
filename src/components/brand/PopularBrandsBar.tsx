@@ -141,6 +141,57 @@ export const POPULAR_BRANDS: BrandItem[] = [
         <path d="M32 60 L50 82 L68 60" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     )
+  },
+  {
+    name: 'Porsche',
+    count: '4+ Vehicles',
+    svgLogo: (
+      <svg viewBox="0 0 100 90" className="w-7 h-6 sm:w-8 sm:h-7 shrink-0" fill="none">
+        <polygon points="50,8 90,30 80,82 20,82 10,30" stroke="currentColor" strokeWidth="4.5" fill="none" />
+        <path d="M30 35 H70 M50 35 V82" stroke="currentColor" strokeWidth="4" />
+        <text x="50" y="24" textAnchor="middle" fill="currentColor" fontSize="10" fontWeight="900">PORSCHE</text>
+      </svg>
+    )
+  },
+  {
+    name: 'Hyundai',
+    count: '6+ Vehicles',
+    svgLogo: (
+      <svg viewBox="0 0 100 60" className="w-8 h-5 sm:w-10 sm:h-6 shrink-0" fill="none">
+        <ellipse cx="50" cy="30" rx="44" ry="24" stroke="currentColor" strokeWidth="4" />
+        <path d="M32 45 L42 15 M68 45 L58 15 M36 30 H64" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" />
+      </svg>
+    )
+  },
+  {
+    name: 'Kia',
+    count: '5+ Vehicles',
+    svgLogo: (
+      <svg viewBox="0 0 100 50" className="w-9 h-5 sm:w-11 sm:h-6 shrink-0" fill="none">
+        <ellipse cx="50" cy="25" rx="46" ry="20" stroke="#BB162B" strokeWidth="4" fill="none" />
+        <text x="50" y="32" textAnchor="middle" fill="#BB162B" fontSize="20" fontWeight="900" letterSpacing="1">KIA</text>
+      </svg>
+    )
+  },
+  {
+    name: 'Jeep',
+    count: '4+ Vehicles',
+    svgLogo: (
+      <svg viewBox="0 0 100 45" className="w-9 h-4 sm:w-11 sm:h-5 shrink-0" fill="none">
+        <text x="50" y="32" textAnchor="middle" fill="currentColor" fontSize="24" fontWeight="900" letterSpacing="2">Jeep</text>
+      </svg>
+    )
+  },
+  {
+    name: 'Mitsubishi',
+    count: '4+ Vehicles',
+    svgLogo: (
+      <svg viewBox="0 0 100 90" className="w-7 h-6 sm:w-8 sm:h-7 shrink-0" fill="none">
+        <polygon points="50,10 65,35 35,35" fill="#E60012" />
+        <polygon points="65,35 95,80 65,80" fill="#E60012" />
+        <polygon points="35,35 5,80 35,80" fill="#E60012" />
+      </svg>
+    )
   }
 ];
 
