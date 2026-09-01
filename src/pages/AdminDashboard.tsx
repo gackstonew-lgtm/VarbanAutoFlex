@@ -257,6 +257,7 @@ export const AdminDashboard: React.FC = () => {
             id: `img-${Date.now()}-${idx}`,
             vehicle_id: editingVehicleId || '',
             image_url: url,
+            alt_text: `${vYear} ${vMake} ${vModel} - ${idx === 0 ? 'Front Exterior Hero' : 'Vehicle View'}`,
             display_order: idx + 1,
             is_primary: idx === 0,
             created_at: new Date().toISOString()
