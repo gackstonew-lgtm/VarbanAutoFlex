@@ -92,5 +92,38 @@ body.menu-open {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .animate-brand-ticker {
+    animation: none !important;
+  }
+}
+
+/* Popular Brands Infinite Ticker Animation */
+@keyframes brandTicker {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-brand-ticker {
+  display: flex;
+  width: max-content;
+  animation: brandTicker 32s linear infinite;
+}
+
+.animate-brand-ticker:hover,
+.animate-brand-ticker:focus-within,
+.animate-brand-ticker.is-paused {
+  animation-play-state: paused;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 

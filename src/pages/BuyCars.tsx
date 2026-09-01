@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Filter, SlidersHorizontal, ArrowUpDown, RefreshCw, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from '../components/navigation/Navbar';
+import { PopularBrandsBar } from '../components/brand/PopularBrandsBar';
 import { VehicleCard } from '../components/vehicle/VehicleCard';
 import { VehicleService } from '../lib/supabase/client';
 import { Vehicle, FuelType, TransmissionType, BodyType } from '../types/database';
@@ -81,6 +82,9 @@ export const BuyCars: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F7FAFF] flex flex-col font-sans">
       <Navbar />
+
+      {/* Popular Brands Logo Bar */}
+      <PopularBrandsBar />
 
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-[#0038BC] via-[#0751C9] to-[#1769E0] text-white py-10 px-4 sm:px-6 lg:px-8">

@@ -24,7 +24,8 @@ import {
   Building,
   Image as ImageIcon,
   ArrowUp,
-  ArrowDown
+  ArrowDown,
+  Upload
 } from 'lucide-react';
 import { Navbar } from '../components/navigation/Navbar';
 import { 
@@ -106,7 +107,28 @@ export const AdminDashboard: React.FC = () => {
   const [vLocation, setVLocation] = useState('Nairobi');
   const [vDescription, setVDescription] = useState('');
   const [vImageUrl, setVImageUrl] = useState('');
+  const [vImages, setVImages] = useState<string[]>([]);
   const [vDealerName, setVDealerName] = useState('YARDLY Certified');
+
+  // Photo File Upload Handlers for Admin
+  const handleAdminPhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          if (reader.result) {
+            setVImages(prev => [...prev, reader.result as string]);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
+  const handleRemoveAdminImage = (index: number) => {
+    setVImages(prev => prev.filter((_, i) => i !== index));
+  };
 
   // Auction Modal State
   const [showAuctionModal, setShowAuctionModal] = useState(false);
@@ -179,6 +201,8 @@ export const AdminDashboard: React.FC = () => {
     setVLocation('Nairobi');
     setVDescription('');
     setVImageUrl('');
+    setVImages([]);
+    setVDealerName('YARDLY Certified');
     setShowVehicleModal(true);
   };
 
@@ -196,12 +220,33 @@ export const AdminDashboard: React.FC = () => {
     setVLocation(v.location);
     setVDescription(v.description);
     setVImageUrl(v.images?.[0]?.image_url || '');
+    setVImages(v.images?.map(img => img.image_url) || []);
     setVDealerName(v.dealer_name || 'YARDLY Certified');
     setShowVehicleModal(true);
   };
 
   const handleSaveVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
+    const finalImages = vImages.length > 0
+      ? vImages.map((url, idx) => ({
+          id: `img-${Date.now()}-${idx}`,
+          vehicle_id: editingVehicleId || '',
+          image_url: url,
+          display_order: idx + 1,
+          is_primary: idx === 0,
+          created_at: new Date().toISOString()
+        }))
+      : [
+          {
+            id: 'img-' + Date.now(),
+            vehicle_id: '',
+            image_url: vImageUrl || '/logo.jpeg',
+            display_order: 1,
+            is_primary: true,
+            created_at: new Date().toISOString()
+          }
+        ];
+
     if (editingVehicleId) {
       await VehicleService.updateVehicle(editingVehicleId, {
         make: vMake,
@@ -215,7 +260,8 @@ export const AdminDashboard: React.FC = () => {
         body_type: vBodyType,
         location: vLocation,
         description: vDescription,
-        dealer_name: vDealerName
+        dealer_name: vDealerName,
+        images: finalImages
       });
     } else {
       await VehicleService.addVehicle({
@@ -238,16 +284,7 @@ export const AdminDashboard: React.FC = () => {
         featured: false,
         seller_type: 'dealer',
         dealer_name: vDealerName,
-        images: [
-          {
-            id: 'img-' + Date.now(),
-            vehicle_id: '',
-            image_url: vImageUrl || '/logo.jpeg',
-            display_order: 1,
-            is_primary: true,
-            created_at: new Date().toISOString()
-          }
-        ]
+        images: finalImages
       });
     }
     setShowVehicleModal(false);
@@ -908,8 +945,55 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              <Input label="Image URL" value={vImageUrl} onChange={(e) => setVImageUrl(e.target.value)} placeholder="https://..." />
-              <Input label="Dealer / Car Yard Name" value={vDealerName} onChange={(e) => setVDealerName(e.target.value)} />
+              {/* Photo Upload (.jpg) */}
+              <div className="space-y-2 border-t border-b border-[#D9EAFF] py-3">
+                <label className="block text-xs font-bold text-[#10233F] uppercase tracking-wider">
+                  Vehicle Photographs (Import JPG / PNG files from device) *
+                </label>
+                <div className="flex items-center gap-3">
+                  <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1769E0] text-white text-xs font-extrabold shadow hover:bg-[#0038BC] transition-all">
+                    <Upload className="w-4 h-4" />
+                    <span>Select JPG / PNG Files</span>
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/jpg,image/webp"
+                      multiple
+                      onChange={handleAdminPhotoUpload}
+                      className="hidden"
+                    />
+                  </label>
+                  <span className="text-xs text-[#64748B] font-medium">
+                    {vImages.length} photo(s) selected
+                  </span>
+                </div>
+
+                {/* Photo Previews */}
+                {vImages.length > 0 && (
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 pt-2 max-h-44 overflow-y-auto p-2 bg-[#F7FAFF] rounded-xl border border-[#D9EAFF]">
+                    {vImages.map((url, idx) => (
+                      <div key={idx} className="relative aspect-video rounded-lg overflow-hidden bg-slate-100 group border border-[#D9EAFF] shadow-xs">
+                        <img src={url} alt={`Preview ${idx + 1}`} className="w-full h-full object-cover" />
+                        {idx === 0 && (
+                          <span className="absolute bottom-1 left-1 text-[8px] font-black uppercase bg-[#1769E0] text-white px-1.5 py-0.5 rounded">Primary</span>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveAdminImage(idx)}
+                          className="absolute top-1 right-1 p-1 rounded-full bg-red-600 text-white hover:bg-red-700 shadow transition-all"
+                          aria-label="Remove image"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <Input label="Dealer / Car Yard Name" value={vDealerName} onChange={(e) => setVDealerName(e.target.value)} />
+                <Input label="Optional Image URL Fallback" value={vImageUrl} onChange={(e) => setVImageUrl(e.target.value)} placeholder="https://..." />
+              </div>
               
               <div>
                 <label className="block text-xs font-bold text-[#10233F] mb-1">Description</label>

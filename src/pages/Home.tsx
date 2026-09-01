@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Search, Award, ArrowRight, CheckCircle2, PhoneCall, ChevronRight, Zap, RefreshCw } from 'lucide-react';
 import { Navbar } from '../components/navigation/Navbar';
+import { PopularBrandsBar } from '../components/brand/PopularBrandsBar';
 import { UnitPayHero } from '../components/hero/UnitPayHero';
 import { HeroSearch } from '../components/search/HeroSearch';
 import { VehicleCard } from '../components/vehicle/VehicleCard';
@@ -39,6 +40,9 @@ export const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F7FAFF] flex flex-col font-sans selection:bg-[#1769E0] selection:text-white pb-[calc(7rem+env(safe-area-inset-bottom,0px))] md:pb-0">
       <Navbar />
+
+      {/* Popular Brands Logo Bar */}
+      <PopularBrandsBar />
 
       {/* Hero Section */}
       <UnitPayHero onSearchClick={scrollToSearch} />
