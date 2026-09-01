@@ -93,6 +93,7 @@ export const AdminDashboard: React.FC = () => {
   // Vehicle Modal State
   const [showVehicleModal, setShowVehicleModal] = useState(false);
   const [editingVehicleId, setEditingVehicleId] = useState<string | null>(null);
+  const [savingVehicle, setSavingVehicle] = useState(false);
   
   // Form State for Vehicle Add/Edit
   const [vMake, setVMake] = useState('');
@@ -227,68 +228,82 @@ export const AdminDashboard: React.FC = () => {
 
   const handleSaveVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
-    const finalImages = vImages.length > 0
-      ? vImages.map((url, idx) => ({
-          id: `img-${Date.now()}-${idx}`,
-          vehicle_id: editingVehicleId || '',
-          image_url: url,
-          display_order: idx + 1,
-          is_primary: idx === 0,
-          created_at: new Date().toISOString()
-        }))
-      : [
-          {
-            id: 'img-' + Date.now(),
-            vehicle_id: '',
-            image_url: vImageUrl || '/logo.jpeg',
-            display_order: 1,
-            is_primary: true,
-            created_at: new Date().toISOString()
-          }
-        ];
+    setSavingVehicle(true);
 
-    if (editingVehicleId) {
-      await VehicleService.updateVehicle(editingVehicleId, {
-        make: vMake,
-        model: vModel,
-        year: vYear,
-        price: vPrice,
-        mileage: vMileage,
-        engine_cc: vEngineCc,
-        fuel_type: vFuelType,
-        transmission: vTransmission,
-        body_type: vBodyType,
-        location: vLocation,
-        description: vDescription,
-        dealer_name: vDealerName,
-        images: finalImages
-      });
-    } else {
-      await VehicleService.addVehicle({
-        make: vMake,
-        model: vModel,
-        year: vYear,
-        price: vPrice,
-        currency: 'KES',
-        mileage: vMileage,
-        engine_cc: vEngineCc,
-        fuel_type: vFuelType,
-        transmission: vTransmission,
-        body_type: vBodyType,
-        color: 'Silver',
-        location: vLocation,
-        description: vDescription,
-        status: 'active',
-        verification_status: 'verified',
-        logbook_verified: true,
-        featured: false,
-        seller_type: 'dealer',
-        dealer_name: vDealerName,
-        images: finalImages
-      });
+    try {
+      let imageList = [...vImages];
+      if (vImageUrl && vImageUrl.trim() && !imageList.includes(vImageUrl.trim())) {
+        imageList.push(vImageUrl.trim());
+      }
+
+      const finalImages = imageList.length > 0
+        ? imageList.map((url, idx) => ({
+            id: `img-${Date.now()}-${idx}`,
+            vehicle_id: editingVehicleId || '',
+            image_url: url,
+            display_order: idx + 1,
+            is_primary: idx === 0,
+            created_at: new Date().toISOString()
+          }))
+        : [
+            {
+              id: 'img-' + Date.now(),
+              vehicle_id: '',
+              image_url: '/logo.jpeg',
+              display_order: 1,
+              is_primary: true,
+              created_at: new Date().toISOString()
+            }
+          ];
+
+      if (editingVehicleId) {
+        await VehicleService.updateVehicle(editingVehicleId, {
+          make: vMake,
+          model: vModel,
+          year: vYear,
+          price: vPrice,
+          mileage: vMileage,
+          engine_cc: vEngineCc,
+          fuel_type: vFuelType,
+          transmission: vTransmission,
+          body_type: vBodyType,
+          location: vLocation,
+          description: vDescription,
+          dealer_name: vDealerName,
+          images: finalImages
+        });
+      } else {
+        await VehicleService.addVehicle({
+          make: vMake,
+          model: vModel,
+          year: vYear,
+          price: vPrice,
+          currency: 'KES',
+          mileage: vMileage,
+          engine_cc: vEngineCc,
+          fuel_type: vFuelType,
+          transmission: vTransmission,
+          body_type: vBodyType,
+          color: 'Silver',
+          location: vLocation,
+          description: vDescription,
+          status: 'active',
+          verification_status: 'verified',
+          logbook_verified: true,
+          featured: false,
+          seller_type: 'dealer',
+          dealer_name: vDealerName,
+          images: finalImages
+        });
+      }
+      setShowVehicleModal(false);
+      await loadData();
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Failed to save vehicle.';
+      alert(msg);
+    } finally {
+      setSavingVehicle(false);
     }
-    setShowVehicleModal(false);
-    await loadData();
   };
 
   const handleDeleteVehicle = async (id: string) => {
@@ -1000,8 +1015,8 @@ export const AdminDashboard: React.FC = () => {
                 <textarea rows={2} value={vDescription} onChange={(e) => setVDescription(e.target.value)} className="w-full p-3 rounded-xl border border-[#D9EAFF] text-xs" />
               </div>
 
-              <Button type="submit" fullWidth className="font-extrabold">
-                {editingVehicleId ? 'Update Vehicle' : 'Publish Vehicle'}
+              <Button type="submit" disabled={savingVehicle} fullWidth className="font-extrabold">
+                {savingVehicle ? 'Saving Vehicle to Inventory...' : editingVehicleId ? 'Update Vehicle' : 'Publish Vehicle'}
               </Button>
             </form>
           </div>

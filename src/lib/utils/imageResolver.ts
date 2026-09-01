@@ -34,8 +34,8 @@ export function validateVehicleImageMatch(vehicle: Vehicle, image: VehicleImage)
     return { valid: false, reason: 'Missing image URL' };
   }
 
-  // If generic model-specific image, check that it matches make and model title
-  if (image.image_type === 'generic') {
+  // Generic images, Base64 Data URLs, or Blob URLs are always valid user and admin uploaded assets
+  if (image.image_type === 'generic' || image.image_url.startsWith('data:') || image.image_url.startsWith('blob:')) {
     return { valid: true };
   }
 
