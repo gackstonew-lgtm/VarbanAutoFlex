@@ -6,13 +6,15 @@ import { Vehicle } from '../../types/database';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { VehicleImageWithFallback } from '../ui/VehicleImageWithFallback';
+import { getVehiclePrimaryImage, resolveVehicleImages } from '../../lib/utils/imageResolver';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
 }
 
 export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle }) => {
-  const primaryImage = vehicle.images?.find(img => img.is_primary) || vehicle.images?.[0] || null;
+  const images = resolveVehicleImages(vehicle);
+  const primaryImage = getVehiclePrimaryImage(vehicle);
 
   return (
     <motion.div
@@ -36,7 +38,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle }) => {
           {vehicle.verification_status === 'verified' && (
             <Badge variant="verified" size="sm">
               <ShieldCheck className="w-3.5 h-3.5 mr-1" />
-              Verified Demo Listing
+              Verified Listing
             </Badge>
           )}
           {vehicle.featured && (
@@ -46,10 +48,18 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle }) => {
           )}
         </div>
 
-        {/* Location Tag */}
-        <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 z-10">
-          <MapPin className="w-3 h-3 text-[#2D8CFF]" />
-          <span>{vehicle.location}</span>
+        {/* Location Tag & Photo Count Badge */}
+        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none z-10">
+          <div className="bg-black/60 backdrop-blur-md text-white text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">
+            <MapPin className="w-3 h-3 text-[#2D8CFF]" />
+            <span>{vehicle.location}</span>
+          </div>
+
+          {images && images.length > 1 && (
+            <div className="bg-[#10233F]/80 backdrop-blur-md text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-white/20">
+              {images.length} Photos
+            </div>
+          )}
         </div>
 
         {/* Favorite Icon */}

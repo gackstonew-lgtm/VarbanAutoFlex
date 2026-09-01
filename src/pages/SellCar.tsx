@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Upload, Trash2, CheckCircle2, Car, AlertCircle, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Upload, Trash2, CheckCircle2, Car, AlertCircle, ArrowRight, FileText } from 'lucide-react';
 import { Navbar } from '../components/navigation/Navbar';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -15,7 +15,7 @@ export const SellCar: React.FC = () => {
   // Form State
   const [sellerType, setSellerType] = useState<'private' | 'dealer'>('private');
   const [sellerName, setSellerName] = useState('');
-  const [sellerPhone, setSellerPhone] = useState('');
+  const [sellerPhone, setSellerPhone] = useState('0712052104');
   const [sellerEmail, setSellerEmail] = useState('');
   const [make, setMake] = useState('Toyota');
   const [model, setModel] = useState('');
@@ -30,17 +30,34 @@ export const SellCar: React.FC = () => {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [condition, setCondition] = useState<'Brand New' | 'Foreign Used' | 'Locally Used'>('Foreign Used');
-  const [images, setImages] = useState<string[]>([
-    'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80'
-  ]);
-  const [imageUrlInput, setImageUrlInput] = useState('');
+  const [images, setImages] = useState<string[]>([]);
   const [logbookUrl, setLogbookUrl] = useState('');
+  const [logbookFileName, setLogbookFileName] = useState('');
 
-  const handleAddImageUrl = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (imageUrlInput.trim()) {
-      setImages([...images, imageUrlInput.trim()]);
-      setImageUrlInput('');
+  const handlePhotoFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          if (reader.result) {
+            setImages(prev => [...prev, reader.result as string]);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
+  const handleLogbookFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setLogbookFileName(file.name);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogbookUrl(reader.result as string || file.name);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -400,32 +417,42 @@ export const SellCar: React.FC = () => {
             <div className="space-y-4">
               <div className="border-b border-[#D9EAFF] pb-3">
                 <h3 className="text-lg font-extrabold text-[#10233F]">3. Photos & Logbook Verification</h3>
-                <p className="text-xs text-[#64748B]">Add vehicle image URLs or upload document links.</p>
+                <p className="text-xs text-[#64748B]">Upload vehicle photographs (.jpg, .png) and logbook documents (.pdf, .doc).</p>
               </div>
 
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  placeholder="Enter Image URL (e.g. https://...)"
-                  value={imageUrlInput}
-                  onChange={(e) => setImageUrlInput(e.target.value)}
-                  className="flex-grow rounded-xl border border-[#D0E6FD] px-4 py-2.5 text-xs text-[#10233F]"
-                />
-                <Button type="button" onClick={handleAddImageUrl} variant="secondary" size="sm">
-                  Add Photo URL
-                </Button>
+              {/* Photo Upload (.jpg) */}
+              <div className="space-y-2">
+                <label className="block text-xs font-bold text-[#10233F] uppercase tracking-wider">
+                  Upload Vehicle Photographs (JPG / PNG / WebP) *
+                </label>
+                <div className="flex items-center gap-3">
+                  <label className="cursor-pointer inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#1769E0] text-white text-xs font-extrabold shadow hover:bg-[#0038BC] transition-all">
+                    <Upload className="w-4 h-4" />
+                    <span>Select Photo Files (.jpg)</span>
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/jpg,image/webp"
+                      multiple
+                      onChange={handlePhotoFileUpload}
+                      className="hidden"
+                    />
+                  </label>
+                  <span className="text-xs text-[#64748B] font-medium">
+                    {images.length} photo(s) attached
+                  </span>
+                </div>
               </div>
 
               {/* Photo Previews */}
               {images.length > 0 && (
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
                   {images.map((url, idx) => (
-                    <div key={idx} className="relative aspect-video rounded-xl overflow-hidden bg-slate-100 group border border-[#D9EAFF]">
+                    <div key={idx} className="relative aspect-video rounded-xl overflow-hidden bg-slate-100 group border border-[#D9EAFF] shadow-sm">
                       <img src={url} alt={`Preview ${idx + 1}`} className="w-full h-full object-cover" />
                       <button
                         type="button"
                         onClick={() => handleRemoveImage(idx)}
-                        className="absolute top-2 right-2 p-1.5 rounded-full bg-red-600 text-white hover:bg-red-700 shadow-md"
+                        className="absolute top-2 right-2 p-1.5 rounded-full bg-red-600 text-white hover:bg-red-700 shadow-md transition-all"
                         aria-label="Remove image"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -435,13 +462,31 @@ export const SellCar: React.FC = () => {
                 </div>
               )}
 
-              <Input
-                label="Logbook Document URL (Optional & Sensitive)"
-                placeholder="https://..."
-                value={logbookUrl}
-                onChange={(e) => setLogbookUrl(e.target.value)}
-                helperText="Restricted under Supabase RLS. Never publicly accessible."
-              />
+              {/* Logbook Upload (.pdf/.doc) */}
+              <div className="space-y-2 pt-2">
+                <label className="block text-xs font-bold text-[#10233F] uppercase tracking-wider">
+                  Upload Logbook / Registration Document (.pdf / .doc) *
+                </label>
+                <div className="flex items-center gap-3">
+                  <label className="cursor-pointer inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#10233F] text-white text-xs font-extrabold shadow hover:bg-[#0038BC] transition-all">
+                    <FileText className="w-4 h-4 text-[#2D8CFF]" />
+                    <span>Select Document (.pdf / .doc)</span>
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      onChange={handleLogbookFileUpload}
+                      className="hidden"
+                    />
+                  </label>
+                  {logbookFileName && (
+                    <div className="flex items-center gap-2 bg-[#D9EAFF] text-[#0038BC] px-3 py-1.5 rounded-lg text-xs font-bold">
+                      <FileText className="w-4 h-4" />
+                      <span className="truncate max-w-[200px]">{logbookFileName}</span>
+                    </div>
+                  )}
+                </div>
+                <p className="text-[11px] text-[#64748B]">Restricted logbook audit document. Encrypted for verified admin inspection only.</p>
+              </div>
             </div>
 
             {/* Submit Button */}

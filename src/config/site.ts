@@ -9,8 +9,8 @@ export const siteConfig = {
   url: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173',
   ogImage: '/og-image.jpg',
   contact: {
-    phone: "+254 700 123 456",
-    whatsapp: "+254700123456",
+    phone: "0712052104",
+    whatsapp: "0712052104",
     email: "support@yardly.co.ke",
     address: "YARDLY Hub, Ngong Road / Karen Junction, Nairobi, Kenya",
     hours: "Mon - Sat: 8:00 AM - 6:00 PM"

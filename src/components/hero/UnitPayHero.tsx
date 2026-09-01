@@ -175,7 +175,7 @@ export const UnitPayHero: React.FC<UnitPayHeroProps> = ({ onSearchClick }) => {
                     image={{
                       id: 'hero-img',
                       vehicle_id: 'v2',
-                      image_url: '/Car Images/WhatsApp Image 2026-08-31 at 23.30.29 (2)_Yardy_Imports.jpg',
+                      image_url: '/Car Images/WhatsApp Image 2026-09-01 at 09.46.34 (1).jpeg',
                       display_order: 1,
                       is_primary: true,
                       license_status: 'authorized',

@@ -6,10 +6,16 @@ import { SellCar } from './pages/SellCar';
 import { VehicleDetails } from './pages/VehicleDetails';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { Auth } from './pages/Auth';
+import { TradeIn } from './pages/TradeIn';
+import { AuctionMarketplace } from './pages/Auction';
+import { ImportServicePage } from './pages/ImportService';
+import { AccountDashboard } from './pages/Account';
+
+import { MobileBottomNav } from './components/navigation/MobileBottomNav';
 
 export const App: React.FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/buy" element={<BuyCars />} />
@@ -18,8 +24,13 @@ export const App: React.FC = () => {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/register" element={<Auth />} />
+        <Route path="/trade-in" element={<TradeIn />} />
+        <Route path="/auction" element={<AuctionMarketplace />} />
+        <Route path="/import" element={<ImportServicePage />} />
+        <Route path="/account" element={<AccountDashboard />} />
         <Route path="*" element={<Home />} />
       </Routes>
+      <MobileBottomNav />
     </BrowserRouter>
   );
 };

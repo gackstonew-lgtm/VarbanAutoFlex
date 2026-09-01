@@ -1,6 +1,6 @@
 export type UserRole = 'buyer' | 'seller' | 'dealer' | 'admin';
 
-export type VehicleStatus = 'pending_review' | 'active' | 'reserved' | 'sold' | 'rejected';
+export type VehicleStatus = 'pending_review' | 'active' | 'reserved' | 'sold' | 'rejected' | 'draft' | 'archived';
 
 export type VerificationStatus = 'pending' | 'verified' | 'rejected';
 
@@ -10,7 +10,15 @@ export type TransmissionType = 'Automatic' | 'Manual' | 'CVT';
 
 export type BodyType = 'SUV' | 'Sedan' | 'Hatchback' | 'Station Wagon' | 'Pickup / Truck' | 'Van / Minibus' | 'Coupe / Convertible';
 
-export type SellerType = 'private' | 'dealer';
+export type SellerType = 'private' | 'dealer' | 'importer' | 'business';
+
+export type AccountStatus = 'active' | 'suspended' | 'pending';
+
+export type AuctionStatus = 'upcoming' | 'live' | 'ending_soon' | 'ended' | 'cancelled';
+
+export type TradeInStatus = 'new' | 'under_review' | 'valuation' | 'offer_sent' | 'accepted' | 'rejected' | 'completed';
+
+export type ImportStatus = 'new' | 'reviewing' | 'sourcing' | 'quotation' | 'shipping' | 'customs' | 'delivered' | 'completed' | 'cancelled';
 
 export type ImageSourceType = 'authorized_external' | 'supabase_storage' | 'admin_uploaded' | 'demo' | 'local_image_library';
 
@@ -36,6 +44,8 @@ export type RegistrationStatusType = 'import' | 'locally_used' | 'new' | 'specia
 
 export type VehicleCategory = 'mainstream' | 'premium' | 'sports' | 'supercars';
 
+export type ValuationConfidence = 'High' | 'Medium' | 'Low';
+
 export type { PaymentRecord } from './payment';
 
 export interface Profile {
@@ -44,9 +54,40 @@ export interface Profile {
   full_name: string;
   phone?: string;
   role: UserRole;
+  seller_type?: SellerType;
+  business_name?: string;
   avatar_url?: string;
+  status?: AccountStatus;
   created_at: string;
-  updated_at: string;
+  updated_at?: string;
+}
+
+export interface BuyerProfile {
+  id: string;
+  user_id: string;
+  email: string;
+  full_name: string;
+  phone?: string;
+  preferred_location?: string;
+  budget_max?: number;
+  status: AccountStatus;
+  created_at: string;
+}
+
+export interface SellerProfile {
+  id: string;
+  user_id: string;
+  email: string;
+  full_name: string;
+  phone?: string;
+  business_name?: string;
+  seller_type: SellerType;
+  verification_status: VerificationStatus;
+  status: AccountStatus;
+  location?: string;
+  logbook_verified: boolean;
+  total_listings: number;
+  created_at: string;
 }
 
 export interface VehicleImage {
@@ -60,6 +101,7 @@ export interface VehicleImage {
   is_primary: boolean;
   source_type?: ImageSourceType;
   license_status?: ImageLicenseStatus;
+  image_type?: 'actual' | 'generic';
   created_at: string;
 }
 
@@ -77,6 +119,8 @@ export interface Vehicle {
   make: string;
   model: string;
   variant?: string;
+  generation?: string;
+  trim?: string;
   year: number;
   price: number; // KES
   currency: string; // KES
@@ -85,8 +129,12 @@ export interface Vehicle {
   fuel_type: FuelType;
   transmission: TransmissionType;
   body_type: BodyType;
-  drive_type?: '2WD' | '4WD' | 'AWD' | 'RWD';
+  drive_type?: '2WD' | '4WD' | 'AWD' | 'RWD' | 'FWD';
   color: string;
+  exterior_color?: string;
+  interior_color?: string;
+  seats?: number;
+  doors?: number;
   location: string; // e.g. Nairobi, Mombasa, Nakuru
   description: string;
   registration_number?: string; // Hidden from public, visible to admin
@@ -100,6 +148,13 @@ export interface Vehicle {
   source_reference?: string;
   demo_source_id?: string;
   
+  // Market Valuation Metrics
+  market_value_low?: number;
+  market_value_high?: number;
+  estimated_market_value?: number;
+  valuation_confidence?: ValuationConfidence;
+  valuation_source?: string;
+
   // Kenyan Import & Market Metadata
   category?: VehicleCategory;
   market_status?: MarketStatus;
@@ -118,12 +173,13 @@ export interface VehicleInquiry {
   id: string;
   vehicle_id: string;
   buyer_id?: string;
+  seller_id?: string;
   name: string;
   phone: string;
   email: string;
   message: string;
   source: 'web' | 'whatsapp' | 'call' | 'inspection_request';
-  status: 'new' | 'contacted' | 'inspection_scheduled' | 'negotiating' | 'won' | 'lost';
+  status: 'new' | 'contacted' | 'in_progress' | 'closed';
   created_at: string;
 }
 
@@ -166,5 +222,100 @@ export interface SellerListingSubmission {
   logbook_document_url?: string;
   status: 'pending_review' | 'approved' | 'rejected';
   rejection_reason?: string;
+  created_at: string;
+}
+
+export interface AuctionBid {
+  id: string;
+  auction_id: string;
+  buyer_id: string;
+  buyer_name: string;
+  buyer_email: string;
+  amount: number;
+  created_at: string;
+}
+
+export interface Auction {
+  id: string;
+  vehicle_id: string;
+  seller_id?: string;
+  starting_bid: number;
+  current_bid: number;
+  minimum_increment: number;
+  bid_count: number;
+  start_time: string;
+  end_time: string;
+  status: AuctionStatus;
+  created_at: string;
+  updated_at?: string;
+  vehicle?: Vehicle;
+  bids?: AuctionBid[];
+}
+
+export interface TradeInRequest {
+  id: string;
+  reference_id: string;
+  user_id?: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  make: string;
+  model: string;
+  year: number;
+  mileage: number;
+  registration_status: string;
+  transmission: TransmissionType;
+  fuel_type: FuelType;
+  condition: string;
+  location: string;
+  expected_value: number;
+  description: string;
+  images: string[];
+  status: TradeInStatus;
+  admin_valuation?: number;
+  admin_notes?: string;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface ImportRequest {
+  id: string;
+  reference_number: string;
+  user_id?: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  country: string;
+  preferred_source_country: string;
+  make: string;
+  model: string;
+  year_min: number;
+  budget: number;
+  preferred_specs?: string;
+  shipping_preference: string;
+  additional_requirements?: string;
+  status: ImportStatus;
+  assigned_to?: string;
+  admin_notes?: string;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface Favorite {
+  id: string;
+  user_id: string;
+  vehicle_id: string;
+  created_at: string;
+  vehicle?: Vehicle;
+}
+
+export interface NotificationItem {
+  id: string;
+  user_id: string;
+  type: 'inquiry' | 'auction_bid' | 'outbid' | 'auction_ending' | 'trade_in_status' | 'import_status' | 'listing_approval' | 'system';
+  title: string;
+  message: string;
+  read: boolean;
+  link?: string;
   created_at: string;
 }

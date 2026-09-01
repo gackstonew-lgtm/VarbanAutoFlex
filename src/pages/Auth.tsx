@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, Mail, User, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Lock, Mail, User, Phone, Building, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Navbar } from '../components/navigation/Navbar';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { AuthService } from '../lib/supabase/client';
+import { SellerType, UserRole } from '../types/database';
 
 export const Auth: React.FC = () => {
   const navigate = useNavigate();
   const [isRegister, setIsRegister] = useState(false);
+  const [registerRole, setRegisterRole] = useState<'buyer' | 'seller'>('buyer');
+
+  // Form Fields
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [sellerType, setSellerType] = useState<SellerType>('dealer');
+  const [businessName, setBusinessName] = useState('');
+
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -24,17 +33,40 @@ export const Auth: React.FC = () => {
 
     try {
       if (isRegister) {
-        const res = await AuthService.signUp(email, password, fullName);
+        if (password !== confirmPassword) {
+          setErrorMsg('Passwords do not match. Please re-enter your password.');
+          setLoading(false);
+          return;
+        }
+
+        if (password.length < 6) {
+          setErrorMsg('Password must be at least 6 characters long.');
+          setLoading(false);
+          return;
+        }
+
+        const roleToAssign: UserRole = registerRole === 'seller' ? 'seller' : 'buyer';
+        const res = await AuthService.signUp(
+          email, 
+          password, 
+          fullName, 
+          roleToAssign, 
+          phone, 
+          registerRole === 'seller' ? sellerType : undefined, 
+          registerRole === 'seller' ? businessName : undefined
+        );
+
         if (!res.success) {
           setErrorMsg(res.error || 'Failed to register account.');
           setLoading(false);
           return;
         }
-        setSuccessMsg('Account registered successfully! Redirecting to Admin Dashboard...');
+
+        setSuccessMsg(`Account created successfully as ${registerRole.toUpperCase()}! Redirecting...`);
       } else {
         const res = await AuthService.signIn(email, password);
         if (!res.success) {
-          setErrorMsg(res.error || 'Invalid credentials.');
+          setErrorMsg(res.error || 'Invalid email or password.');
           setLoading(false);
           return;
         }
@@ -43,8 +75,13 @@ export const Auth: React.FC = () => {
 
       setTimeout(() => {
         setLoading(false);
-        navigate('/admin');
-      }, 600);
+        const currentUser = getStoredUserRole();
+        if (currentUser === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/account');
+        }
+      }, 700);
     } catch (err) {
       console.error(err);
       setErrorMsg('An unexpected authentication error occurred.');
@@ -52,12 +89,24 @@ export const Auth: React.FC = () => {
     }
   };
 
+  const getStoredUserRole = (): string => {
+    try {
+      const stored = localStorage.getItem('yardly_current_user');
+      if (stored) {
+        const u = JSON.parse(stored);
+        return u.role || 'buyer';
+      }
+    } catch {}
+    return 'buyer';
+  };
+
   return (
     <div className="min-h-screen bg-[#F7FAFF] flex flex-col">
       <Navbar />
 
-      <div className="max-w-md mx-auto my-auto px-4 py-12 w-full">
-        <div className="bg-white rounded-3xl border border-[#D9EAFF] p-8 shadow-xl space-y-6">
+      <div className="max-w-lg mx-auto my-auto px-4 py-12 w-full">
+        <div className="bg-white rounded-3xl border border-[#D9EAFF] p-6 sm:p-8 shadow-xl space-y-6">
+          
           <div className="text-center space-y-3">
             <div className="w-16 h-16 rounded-2xl bg-white border border-[#D9EAFF] p-1 shadow-md mx-auto flex items-center justify-center">
               <img
@@ -67,12 +116,42 @@ export const Auth: React.FC = () => {
               />
             </div>
             <h2 className="text-2xl font-extrabold text-[#10233F]">
-              {isRegister ? 'Register Car-Yard Admin' : 'Car-Yard Partner Login'}
+              {isRegister ? `Register as a ${registerRole === 'seller' ? 'Seller / Dealer' : 'Buyer'}` : 'YARDLY Partner & Buyer Sign In'}
             </h2>
             <p className="text-xs text-[#64748B]">
-              {isRegister ? 'Register as a car-yard administrator or dealer' : 'Access your listings, leads & deposit reports'}
+              {isRegister 
+                ? 'Create your YARDLY account to buy, bid, list cars or request imports' 
+                : 'Access your vehicle inventory, saved cars, trade-ins & bidding portal'}
             </p>
           </div>
+
+          {/* Registration Mode Selector */}
+          {isRegister && (
+            <div className="grid grid-cols-2 gap-2 bg-[#F7FAFF] p-1.5 rounded-2xl border border-[#D9EAFF]">
+              <button
+                type="button"
+                onClick={() => setRegisterRole('buyer')}
+                className={`py-2.5 rounded-xl text-xs font-extrabold transition-all ${
+                  registerRole === 'buyer'
+                    ? 'bg-[#1769E0] text-white shadow-sm'
+                    : 'text-[#64748B] hover:text-[#10233F]'
+                }`}
+              >
+                Register as Buyer
+              </button>
+              <button
+                type="button"
+                onClick={() => setRegisterRole('seller')}
+                className={`py-2.5 rounded-xl text-xs font-extrabold transition-all ${
+                  registerRole === 'seller'
+                    ? 'bg-[#1769E0] text-white shadow-sm'
+                    : 'text-[#64748B] hover:text-[#10233F]'
+                }`}
+              >
+                Register as Seller
+              </button>
+            </div>
+          )}
 
           {errorMsg && (
             <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs font-semibold text-red-700 flex items-center gap-2">
@@ -89,21 +168,59 @@ export const Auth: React.FC = () => {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            
             {isRegister && (
-              <Input
-                label="Full Name / Dealership Name *"
-                placeholder="e.g. Mwangi Car Yard"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                icon={<User className="w-4 h-4 text-[#64748B]" />}
-                required
-              />
+              <>
+                <Input
+                  label={registerRole === 'seller' ? 'Full Name / Representative Name *' : 'Full Name *'}
+                  placeholder="e.g. Maina Kamau"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  icon={<User className="w-4 h-4 text-[#64748B]" />}
+                  required
+                />
+
+                <Input
+                  label="Phone Number *"
+                  placeholder="+254 712 345 678"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  icon={<Phone className="w-4 h-4 text-[#64748B]" />}
+                  required
+                />
+
+                {registerRole === 'seller' && (
+                  <>
+                    <Input
+                      label="Business / Dealership Name"
+                      placeholder="e.g. Mwangi Car Yard Ltd"
+                      value={businessName}
+                      onChange={(e) => setBusinessName(e.target.value)}
+                      icon={<Building className="w-4 h-4 text-[#64748B]" />}
+                    />
+
+                    <div>
+                      <label className="block text-xs font-bold text-[#10233F] mb-1.5">Seller Type *</label>
+                      <select
+                        value={sellerType}
+                        onChange={(e) => setSellerType(e.target.value as SellerType)}
+                        className="w-full px-4 py-2.5 rounded-xl border border-[#D9EAFF] text-xs font-bold text-[#10233F] bg-white focus:outline-none focus:ring-2 focus:ring-[#1769E0]"
+                      >
+                        <option value="private">Individual Private Seller</option>
+                        <option value="dealer">Car Yard / Commercial Dealer</option>
+                        <option value="importer">Direct Importer</option>
+                        <option value="business">Corporate / Business Fleet</option>
+                      </select>
+                    </div>
+                  </>
+                )}
+              </>
             )}
 
             <Input
               label="Email Address *"
               type="email"
-              placeholder="admin@yardly.co.ke"
+              placeholder="user@yardly.co.ke"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               icon={<Mail className="w-4 h-4 text-[#64748B]" />}
@@ -120,14 +237,27 @@ export const Auth: React.FC = () => {
               required
             />
 
-            <Button type="submit" fullWidth loading={loading} className="font-bold">
-              {isRegister ? 'Register Account' : 'Sign In'}
+            {isRegister && (
+              <Input
+                label="Confirm Password *"
+                type="password"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                icon={<Lock className="w-4 h-4 text-[#64748B]" />}
+                required
+              />
+            )}
+
+            <Button type="submit" fullWidth loading={loading} className="font-extrabold py-3">
+              {isRegister ? `Create ${registerRole === 'seller' ? 'Seller' : 'Buyer'} Account` : 'Sign In'}
             </Button>
           </form>
 
-          <div className="text-center text-xs text-[#64748B] pt-2 border-t border-[#D9EAFF]">
-            {isRegister ? 'Already have an admin account?' : "Don't have an admin account?"}{' '}
+          <div className="text-center text-xs text-[#64748B] pt-3 border-t border-[#D9EAFF]">
+            {isRegister ? 'Already registered?' : "Don't have an account yet?"}{' '}
             <button
+              type="button"
               onClick={() => {
                 setIsRegister(!isRegister);
                 setErrorMsg('');
@@ -135,9 +265,10 @@ export const Auth: React.FC = () => {
               }}
               className="font-bold text-[#1769E0] hover:underline"
             >
-              {isRegister ? 'Sign In' : 'Register Here'}
+              {isRegister ? 'Sign In Here' : 'Create Account Now'}
             </button>
           </div>
+
         </div>
       </div>
     </div>
