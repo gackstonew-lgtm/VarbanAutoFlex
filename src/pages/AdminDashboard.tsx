@@ -245,16 +245,7 @@ export const AdminDashboard: React.FC = () => {
             is_primary: idx === 0,
             created_at: new Date().toISOString()
           }))
-        : [
-            {
-              id: 'img-' + Date.now(),
-              vehicle_id: '',
-              image_url: '/logo.jpeg',
-              display_order: 1,
-              is_primary: true,
-              created_at: new Date().toISOString()
-            }
-          ];
+        : [];
 
       if (editingVehicleId) {
         await VehicleService.updateVehicle(editingVehicleId, {

@@ -34,9 +34,18 @@ export function validateVehicleImageMatch(vehicle: Vehicle, image: VehicleImage)
     return { valid: false, reason: 'Missing image URL' };
   }
 
-  // Generic images, Base64 Data URLs, or Blob URLs are always valid user and admin uploaded assets
-  if (image.image_type === 'generic' || image.image_url.startsWith('data:') || image.image_url.startsWith('blob:')) {
-    return { valid: true };
+  // Any user/admin uploaded image, Supabase Storage URL, or non-demo image is always valid
+  if (
+    image.image_type === 'generic' || 
+    image.image_url.startsWith('data:') || 
+    image.image_url.startsWith('blob:') ||
+    image.image_url.startsWith('http://') ||
+    image.image_url.startsWith('https://') ||
+    (image.image_url.startsWith('/') && !image.image_url.includes('cluster_'))
+  ) {
+    if (!image.image_url.includes('cluster_')) {
+      return { valid: true };
+    }
   }
 
   const url = image.image_url.toLowerCase();

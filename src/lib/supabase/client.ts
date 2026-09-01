@@ -30,6 +30,7 @@ import {
   INITIAL_MOCK_NOTIFICATIONS
 } from './mockData';
 import { resolveVehicleImages } from '../utils/imageResolver';
+import { saveVehicleImageToIndexedDB, getAllVehicleImagesFromIndexedDB } from '../utils/imageStore';
 
 const env = (import.meta as any).env || {};
 const supabaseUrl = env.VITE_SUPABASE_URL || '';
@@ -68,23 +69,33 @@ function sanitizeVehiclesForStorage(vehicles: Vehicle[]): Vehicle[] {
   if (!Array.isArray(vehicles)) return [];
   return vehicles.map(v => ({
     ...v,
-    images: (v.images || []).map(img => ({
-      ...img,
-      image_url: img.image_url.startsWith('data:') ? '/logo.jpeg' : img.image_url
-    }))
+    images: (v.images || []).map(img => {
+      if (img.image_url && img.image_url.startsWith('data:')) {
+        saveVehicleImageToIndexedDB(img.id, img.image_url);
+        return {
+          ...img,
+          image_url: `idb://${img.id}`
+        };
+      }
+      return img;
+    })
   }));
 }
 
-// Clean bloated legacy Base64 storage strings on startup to prevent quota errors
+// Clean bloated legacy Base64 storage strings & /logo.jpeg fallbacks on startup
 if (typeof window !== 'undefined') {
   try {
     const raw = localStorage.getItem(LOCAL_STORAGE_KEY_VEHICLES);
-    if (raw && raw.includes('data:image')) {
+    if (raw && (raw.includes('data:image') || raw.includes('/logo.jpeg'))) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed)) {
-        inMemoryVehiclesCache = parsed;
-        const cleaned = sanitizeVehiclesForStorage(parsed);
-        localStorage.setItem(LOCAL_STORAGE_KEY_VEHICLES, JSON.stringify(cleaned));
+        const cleaned = parsed.map((v: any) => ({
+          ...v,
+          images: (v.images || []).filter((img: any) => img.image_url !== '/logo.jpeg')
+        }));
+        inMemoryVehiclesCache = cleaned;
+        const sanitized = sanitizeVehiclesForStorage(cleaned);
+        localStorage.setItem(LOCAL_STORAGE_KEY_VEHICLES, JSON.stringify(sanitized));
       }
     }
   } catch {
@@ -463,9 +474,25 @@ export const VehicleService = {
       list = getStored<Vehicle[]>(LOCAL_STORAGE_KEY_VEHICLES, INITIAL_MOCK_VEHICLES);
     }
 
-    // Ensure every single vehicle has a valid photography gallery resolved
+    const idbMap = await getAllVehicleImagesFromIndexedDB();
+
     return list.map(v => {
-      if (!v.images || v.images.length === 0 || !v.images[0]?.image_url) {
+      if (v.images && v.images.length > 0) {
+        v.images = v.images
+          .filter(img => img.image_url !== '/logo.jpeg')
+          .map(img => {
+            if (img.image_url && img.image_url.startsWith('idb://')) {
+              const idbKey = img.image_url.replace('idb://', '');
+              const storedBlob = idbMap[idbKey];
+              if (storedBlob) {
+                return { ...img, image_url: storedBlob };
+              }
+            }
+            return img;
+          });
+      }
+
+      if (!v.images || v.images.length === 0 || !v.images[0]?.image_url || v.images[0].image_url === '/logo.jpeg') {
         v.images = resolveVehicleImages(v);
       }
       return v;
