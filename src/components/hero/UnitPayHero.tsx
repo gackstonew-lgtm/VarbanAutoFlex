@@ -166,16 +166,16 @@ export const UnitPayHero: React.FC<UnitPayHeroProps> = ({ onSearchClick }) => {
               {/* Primary Main Glass Card */}
               <div className="relative rounded-3xl bg-white/90 backdrop-blur-xl border border-white p-4 sm:p-6 shadow-2xl shadow-[#0751C9]/15 hover:shadow-[#0751C9]/25 transition-shadow duration-500">
                 
-                {/* Featured Vehicle Showcase Image */}
+                {/* Featured Vehicle Showcase Image - Toyota Supra Carbon Gear Shift */}
                 <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100 border border-[#D9EAFF]">
                   <VehicleImageWithFallback
                     make="Toyota"
-                    model="Land Cruiser 300"
-                    year={2024}
+                    model="Supra"
+                    year={2020}
                     image={{
-                      id: 'hero-img',
-                      vehicle_id: 'v2',
-                      image_url: '/Car Images/WhatsApp Image 2026-09-01 at 09.46.34 (1).jpeg',
+                      id: 'hero-supra-gear-img',
+                      vehicle_id: 'v1000000-0000-0000-0000-000000000015',
+                      image_url: '/Car Images/Toyota Supra (5).jpeg',
                       display_order: 1,
                       is_primary: true,
                       license_status: 'authorized',
@@ -184,28 +184,6 @@ export const UnitPayHero: React.FC<UnitPayHeroProps> = ({ onSearchClick }) => {
                     }}
                     className="w-full h-full object-cover"
                   />
-
-                  {/* Overlaid Live Price Badge */}
-                  <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-[#D9EAFF] shadow-lg">
-                    <div className="text-[10px] font-bold text-[#64748B] uppercase">Featured Verified Listing</div>
-                    <div className="text-sm font-black text-[#0038BC]">KES 15,050,000</div>
-                  </div>
-                </div>
-
-                {/* Vehicle Spec Badges Row */}
-                <div className="mt-4 grid grid-cols-3 gap-2">
-                  <div className="bg-[#F7FAFF] p-2.5 rounded-xl border border-[#D9EAFF] text-center">
-                    <div className="text-[9px] font-bold text-[#64748B] uppercase">Engine</div>
-                    <div className="text-xs font-black text-[#10233F]">3.3L Twin Turbo</div>
-                  </div>
-                  <div className="bg-[#F7FAFF] p-2.5 rounded-xl border border-[#D9EAFF] text-center">
-                    <div className="text-[9px] font-bold text-[#64748B] uppercase">Mileage</div>
-                    <div className="text-xs font-black text-[#10233F]">8,000 KM</div>
-                  </div>
-                  <div className="bg-[#F7FAFF] p-2.5 rounded-xl border border-[#D9EAFF] text-center">
-                    <div className="text-[9px] font-bold text-[#64748B] uppercase">Import Status</div>
-                    <div className="text-xs font-black text-emerald-600">Container Ready</div>
-                  </div>
                 </div>
 
               </div>

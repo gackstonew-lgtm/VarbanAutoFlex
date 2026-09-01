@@ -61,7 +61,7 @@ const LOCAL_STORAGE_KEY_IMPORTS = 'yardly_demo_imports';
 const LOCAL_STORAGE_KEY_FAVORITES = 'yardly_demo_favorites';
 const LOCAL_STORAGE_KEY_NOTIFICATIONS = 'yardly_demo_notifications';
 
-const MOCK_DATASET_VERSION = 'v2026_09_01_canonical_grouped_v15';
+const MOCK_DATASET_VERSION = 'v2026_09_02_canonical_grouped_v20_s400_update';
 
 let inMemoryVehiclesCache: Vehicle[] | null = null;
 
@@ -565,12 +565,15 @@ export const VehicleService = {
       list = list.filter(v => v.featured);
     }
 
-    if (params.sortBy === 'price_low') {
+    const s = String(params.sortBy || '').toLowerCase();
+    if (s === 'price_low' || s === 'price-asc') {
       list.sort((a, b) => a.price - b.price);
-    } else if (params.sortBy === 'price_high') {
+    } else if (s === 'price_high' || s === 'price-desc') {
       list.sort((a, b) => b.price - a.price);
-    } else if (params.sortBy === 'mileage_low') {
+    } else if (s === 'mileage_low' || s === 'mileage-asc') {
       list.sort((a, b) => a.mileage - b.mileage);
+    } else if (s === 'year-desc' || s === 'year_high') {
+      list.sort((a, b) => b.year - a.year);
     } else {
       list.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     }
