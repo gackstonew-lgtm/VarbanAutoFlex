@@ -104,6 +104,74 @@ export interface AuthUser {
   business_name?: string;
 }
 
+// Secure Password Hashing Helper
+async function hashPassword(password: string): Promise<string> {
+  const salted = 'yardly_auth_salt_2026:' + password;
+  if (typeof crypto !== 'undefined' && crypto.subtle) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(salted);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+  let hash = 0;
+  for (let i = 0; i < salted.length; i++) {
+    const char = salted.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash |= 0;
+  }
+  return 'sha256_mock_' + Math.abs(hash).toString(16);
+}
+
+// Server / API Level Admin Authorization Guard
+export async function requireAdminRole(): Promise<AuthUser> {
+  const user = await AuthService.getCurrentUser();
+  if (!user || user.role !== 'admin') {
+    throw new Error('Access denied: Administrator privileges required.');
+  }
+  return user;
+}
+
+interface StoredUserAccount extends AuthUser {
+  passwordHash?: string;
+  password?: string;
+}
+
+async function getStoredUsers(): Promise<StoredUserAccount[]> {
+  const users = getStored<StoredUserAccount[]>(LOCAL_STORAGE_KEY_USERS, []);
+
+  // Ensure dedicated primary admin account exists with hashed credentials
+  let adminAcc = users.find(u => u.email.toLowerCase() === 'admin@yardlyautomotivehub.com');
+  const adminHash = await hashPassword('Admin123');
+
+  if (!adminAcc) {
+    adminAcc = {
+      id: 'admin-primary-001',
+      email: 'admin@yardlyautomotivehub.com',
+      passwordHash: adminHash,
+      full_name: 'Yardly System Administrator',
+      role: 'admin'
+    };
+    users.unshift(adminAcc);
+    setStored(LOCAL_STORAGE_KEY_USERS, users);
+  } else if (!adminAcc.passwordHash || adminAcc.passwordHash !== adminHash) {
+    adminAcc.passwordHash = adminHash;
+    adminAcc.role = 'admin';
+    delete adminAcc.password;
+    setStored(LOCAL_STORAGE_KEY_USERS, users);
+  }
+
+  // Ensure demo accounts have hashes
+  for (const u of users) {
+    if (!u.passwordHash && u.password) {
+      u.passwordHash = await hashPassword(u.password);
+      delete u.password;
+    }
+  }
+
+  return users;
+}
+
 // Authentication Service
 export const AuthService = {
   async getCurrentUser(): Promise<AuthUser | null> {
@@ -115,22 +183,21 @@ export const AuthService = {
           email: user.email || '',
           full_name: user.user_metadata?.full_name || 'Yardly User',
           phone: user.user_metadata?.phone,
-          role: (user.user_metadata?.role as UserRole) || 'admin',
+          role: (user.user_metadata?.role as UserRole) || 'buyer',
           seller_type: user.user_metadata?.seller_type,
           business_name: user.user_metadata?.business_name
         };
       }
     }
     const currentUser = getStored<AuthUser | null>(LOCAL_STORAGE_KEY_CURRENT_USER, null);
-    if (currentUser) return currentUser;
+    if (currentUser) {
+      const { ...safeUser } = currentUser as any;
+      delete safeUser.password;
+      delete safeUser.passwordHash;
+      return safeUser;
+    }
 
-    // Default admin profile for seamless demo access if no user logged in
-    return {
-      id: 'admin-default-id',
-      email: 'admin@yardly.co.ke',
-      full_name: 'YARDLY Car-Yard Admin',
-      role: 'admin'
-    };
+    return null;
   },
 
   async signIn(email: string, password: string): Promise<{ success: boolean; user?: AuthUser; error?: string }> {
@@ -152,69 +219,46 @@ export const AuthService = {
       }
     }
 
-    const users = getStored<Array<AuthUser & { password?: string }>>(LOCAL_STORAGE_KEY_USERS, [
-      {
-        id: 'admin-default-id',
-        email: 'admin@yardly.co.ke',
-        password: 'Admin@123',
-        full_name: 'YARDLY Car-Yard Admin',
-        role: 'admin'
-      },
-      {
-        id: 'buyer-001',
-        email: 'buyer@yardly.co.ke',
-        password: 'Buyer@123',
-        full_name: 'Maina Kamau',
-        phone: '0712052104',
-        role: 'buyer'
-      },
-      {
-        id: 'seller-001',
-        email: 'seller@yardly.co.ke',
-        password: 'Seller@123',
-        full_name: 'Nairobi Motors Hub',
-        phone: '0712052104',
-        role: 'seller',
-        seller_type: 'dealer',
-        business_name: 'Nairobi Motors Hub Ltd'
-      }
-    ]);
-
+    const users = await getStoredUsers();
     const found = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-    if (found && found.password && found.password !== password) {
-      return { success: false, error: 'Invalid password. Please check your credentials.' };
+
+    if (!found) {
+      return { success: false, error: 'Invalid email or password. Please check your credentials.' };
     }
 
-    const user: AuthUser = found
-      ? { 
-          id: found.id, 
-          email: found.email, 
-          full_name: found.full_name, 
-          phone: found.phone, 
-          role: found.role, 
-          seller_type: found.seller_type, 
-          business_name: found.business_name 
-        }
-      : { 
-          id: 'u-' + Date.now(), 
-          email, 
-          full_name: email.split('@')[0] || 'Yardly User', 
-          role: email.includes('admin') ? 'admin' : email.includes('seller') ? 'seller' : 'buyer' 
-        };
+    const inputHash = await hashPassword(password);
+    const isValid = found.passwordHash === inputHash;
 
-    setStored(LOCAL_STORAGE_KEY_CURRENT_USER, user);
-    return { success: true, user };
+    if (!isValid) {
+      return { success: false, error: 'Invalid email or password. Please check your credentials.' };
+    }
+
+    const sessionUser: AuthUser = {
+      id: found.id,
+      email: found.email,
+      full_name: found.full_name,
+      phone: found.phone,
+      role: found.role,
+      seller_type: found.seller_type,
+      business_name: found.business_name
+    };
+
+    setStored(LOCAL_STORAGE_KEY_CURRENT_USER, sessionUser);
+    return { success: true, user: sessionUser };
   },
 
   async signUp(
     email: string, 
     password: string, 
     fullName: string, 
-    role: UserRole = 'buyer', 
+    requestedRole: UserRole = 'buyer', 
     phone?: string, 
     sellerType?: SellerType, 
     businessName?: string
   ): Promise<{ success: boolean; user?: AuthUser; error?: string }> {
+    // CRITICAL SECURITY ENFORCEMENT: Public registration can NEVER assign admin role!
+    const sanitizedRole: UserRole = requestedRole === 'seller' ? 'seller' : 'buyer';
+
     if (isSupabaseConfigured && supabase) {
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -223,7 +267,7 @@ export const AuthService = {
           data: { 
             full_name: fullName, 
             phone, 
-            role, 
+            role: sanitizedRole, 
             seller_type: sellerType, 
             business_name: businessName 
           }
@@ -236,7 +280,7 @@ export const AuthService = {
           email: data.user.email || email,
           full_name: fullName,
           phone,
-          role,
+          role: sanitizedRole,
           seller_type: sellerType,
           business_name: businessName
         };
@@ -245,19 +289,20 @@ export const AuthService = {
       }
     }
 
-    const users = getStored<Array<AuthUser & { password?: string }>>(LOCAL_STORAGE_KEY_USERS, []);
+    const users = await getStoredUsers();
     const existing = users.find(u => u.email.toLowerCase() === email.toLowerCase());
     if (existing) {
       return { success: false, error: 'An account with this email address already exists.' };
     }
 
-    const newUser = {
+    const passwordHash = await hashPassword(password);
+    const newUser: StoredUserAccount = {
       id: 'u-' + Date.now(),
       email,
-      password,
+      passwordHash,
       full_name: fullName,
       phone,
-      role,
+      role: sanitizedRole,
       seller_type: sellerType,
       business_name: businessName
     };
@@ -394,6 +439,7 @@ export const VehicleService = {
   },
 
   async addVehicle(vehicle: Omit<Vehicle, 'id' | 'created_at' | 'updated_at'>): Promise<Vehicle> {
+    await requireAdminRole();
     const newVehicle: Vehicle = {
       ...vehicle,
       id: 'v-' + Date.now(),
@@ -407,6 +453,7 @@ export const VehicleService = {
   },
 
   async updateVehicle(id: string, updates: Partial<Vehicle>): Promise<Vehicle | null> {
+    await requireAdminRole();
     const list = getStored<Vehicle[]>(LOCAL_STORAGE_KEY_VEHICLES, INITIAL_MOCK_VEHICLES);
     const index = list.findIndex(v => v.id === id);
     if (index !== -1) {
@@ -422,6 +469,7 @@ export const VehicleService = {
   },
 
   async updateStatus(id: string, status: Vehicle['status']): Promise<void> {
+    await requireAdminRole();
     const list = getStored<Vehicle[]>(LOCAL_STORAGE_KEY_VEHICLES, INITIAL_MOCK_VEHICLES);
     const item = list.find(v => v.id === id);
     if (item) {
@@ -432,6 +480,7 @@ export const VehicleService = {
   },
 
   async deleteVehicle(id: string): Promise<void> {
+    await requireAdminRole();
     const list = getStored<Vehicle[]>(LOCAL_STORAGE_KEY_VEHICLES, INITIAL_MOCK_VEHICLES);
     const updated = list.filter(v => v.id !== id);
     setStored(LOCAL_STORAGE_KEY_VEHICLES, updated);
@@ -458,6 +507,7 @@ export const SellerSubmissionService = {
   },
 
   async updateStatus(id: string, status: SellerListingSubmission['status'], rejection_reason?: string): Promise<void> {
+    await requireAdminRole();
     const list = getStored<SellerListingSubmission[]>(LOCAL_STORAGE_KEY_SUBMISSIONS, INITIAL_MOCK_SUBMISSIONS);
     const item = list.find(s => s.id === id);
     if (item) {
@@ -508,6 +558,7 @@ export const BuyerService = {
   },
 
   async updateStatus(id: string, status: 'active' | 'suspended'): Promise<void> {
+    await requireAdminRole();
     const users = getStored<Profile[]>(LOCAL_STORAGE_KEY_USERS, INITIAL_MOCK_BUYERS);
     const found = users.find(u => u.id === id);
     if (found) {
@@ -524,6 +575,7 @@ export const SellerService = {
   },
 
   async updateVerification(id: string, status: 'verified' | 'rejected'): Promise<void> {
+    await requireAdminRole();
     const users = getStored<Profile[]>(LOCAL_STORAGE_KEY_USERS, INITIAL_MOCK_SELLERS);
     const found = users.find(u => u.id === id);
     if (found) {
@@ -571,6 +623,7 @@ export const AuctionService = {
   },
 
   async createAuction(data: Omit<Auction, 'id' | 'bid_count' | 'created_at' | 'current_bid'>): Promise<Auction> {
+    await requireAdminRole();
     const newAuc: Auction = {
       ...data,
       id: 'auc-' + Date.now(),
@@ -631,6 +684,7 @@ export const AuctionService = {
   },
 
   async updateStatus(id: string, status: Auction['status']): Promise<void> {
+    await requireAdminRole();
     const list = getStored<Auction[]>(LOCAL_STORAGE_KEY_AUCTIONS, INITIAL_MOCK_AUCTIONS);
     const auc = list.find(a => a.id === id);
     if (auc) {
@@ -662,6 +716,7 @@ export const TradeInService = {
   },
 
   async updateStatus(id: string, status: TradeInRequest['status'], adminValuation?: number, adminNotes?: string): Promise<void> {
+    await requireAdminRole();
     const list = getStored<TradeInRequest[]>(LOCAL_STORAGE_KEY_TRADE_INS, INITIAL_MOCK_TRADE_INS);
     const item = list.find(t => t.id === id);
     if (item) {
@@ -696,6 +751,7 @@ export const ImportService = {
   },
 
   async updateStatus(id: string, status: ImportRequest['status'], notes?: string, assignedTo?: string): Promise<void> {
+    await requireAdminRole();
     const list = getStored<ImportRequest[]>(LOCAL_STORAGE_KEY_IMPORTS, INITIAL_MOCK_IMPORTS);
     const item = list.find(i => i.id === id);
     if (item) {

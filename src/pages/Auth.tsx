@@ -32,6 +32,7 @@ export const Auth: React.FC = () => {
     setLoading(true);
 
     try {
+      let loggedInRole: string = 'buyer';
       if (isRegister) {
         if (password !== confirmPassword) {
           setErrorMsg('Passwords do not match. Please re-enter your password.');
@@ -45,12 +46,11 @@ export const Auth: React.FC = () => {
           return;
         }
 
-        const roleToAssign: UserRole = registerRole === 'seller' ? 'seller' : 'buyer';
         const res = await AuthService.signUp(
           email, 
           password, 
           fullName, 
-          roleToAssign, 
+          registerRole === 'seller' ? 'seller' : 'buyer', 
           phone, 
           registerRole === 'seller' ? sellerType : undefined, 
           registerRole === 'seller' ? businessName : undefined
@@ -61,22 +61,22 @@ export const Auth: React.FC = () => {
           setLoading(false);
           return;
         }
-
+        loggedInRole = res.user?.role || 'buyer';
         setSuccessMsg(`Account created successfully as ${registerRole.toUpperCase()}! Redirecting...`);
       } else {
         const res = await AuthService.signIn(email, password);
-        if (!res.success) {
+        if (!res.success || !res.user) {
           setErrorMsg(res.error || 'Invalid email or password.');
           setLoading(false);
           return;
         }
+        loggedInRole = res.user.role;
         setSuccessMsg('Signed in successfully! Redirecting...');
       }
 
       setTimeout(() => {
         setLoading(false);
-        const currentUser = getStoredUserRole();
-        if (currentUser === 'admin') {
+        if (loggedInRole === 'admin') {
           navigate('/admin');
         } else {
           navigate('/account');
@@ -87,17 +87,6 @@ export const Auth: React.FC = () => {
       setErrorMsg('An unexpected authentication error occurred.');
       setLoading(false);
     }
-  };
-
-  const getStoredUserRole = (): string => {
-    try {
-      const stored = localStorage.getItem('yardly_current_user');
-      if (stored) {
-        const u = JSON.parse(stored);
-        return u.role || 'buyer';
-      }
-    } catch {}
-    return 'buyer';
   };
 
   return (

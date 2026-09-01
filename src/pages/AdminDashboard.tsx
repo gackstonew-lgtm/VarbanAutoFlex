@@ -119,7 +119,8 @@ export const AdminDashboard: React.FC = () => {
     try {
       const user = await AuthService.getCurrentUser();
       if (!user || user.role !== 'admin') {
-        // Enforce Server / Auth Route Protection for Admin
+        navigate('/login', { replace: true });
+        return;
       }
       setCurrentUser(user);
 
@@ -148,6 +149,7 @@ export const AdminDashboard: React.FC = () => {
       setSellers(selList);
     } catch (err) {
       console.error('Failed to load admin dataset', err);
+      navigate('/login', { replace: true });
     } finally {
       setLoading(false);
     }
