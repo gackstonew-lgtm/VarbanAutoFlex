@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, PlusCircle, ShieldCheck, Menu, X, PhoneCall, User, RefreshCw, Gavel, Globe } from 'lucide-react';
+import { Search, PlusCircle, ShieldCheck, Menu, X, PhoneCall, User, RefreshCw, Gavel, Globe, Wrench, Navigation, Key, Building, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '../../config/site';
 import { AuthService, AuthUser } from '../../lib/supabase/client';
@@ -71,6 +71,44 @@ export const Navbar: React.FC = () => {
     { name: 'Car Yard Admin', path: '/admin', icon: ShieldCheck },
   ];
 
+  const mobileMenuItems = [
+    {
+      name: 'Sign in / Register Account',
+      path: user ? (user.role === 'admin' ? '/admin' : '/account') : '/login',
+      icon: User
+    },
+    {
+      name: 'Admin Portal',
+      path: '/admin',
+      icon: ShieldCheck
+    },
+    {
+      name: 'Car Accessories & Spares',
+      path: '/accessories',
+      icon: Wrench
+    },
+    {
+      name: 'Tracker Installations',
+      path: '/trackers',
+      icon: Navigation
+    },
+    {
+      name: 'Car Hire Services',
+      path: '/car-hire',
+      icon: Key
+    },
+    {
+      name: 'Dealerships',
+      path: '/dealerships',
+      icon: Building
+    },
+    {
+      name: 'About Us',
+      path: '/about',
+      icon: Info
+    }
+  ];
+
   return (
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
@@ -90,18 +128,23 @@ export const Navbar: React.FC = () => {
               className="h-full w-full object-contain rounded-lg"
             />
           </div>
-          <div>
-            <div className="text-xl font-black tracking-tight text-[#10233F] group-hover:text-[#1769E0] transition-colors leading-none">
-              {siteConfig.name}
+          <div className="flex flex-col justify-center text-left min-w-0">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span className="text-base sm:text-lg font-black tracking-tight text-[#10233F] leading-none group-hover:text-[#1769E0] transition-colors font-sans truncate">
+                {siteConfig.name}
+              </span>
+              <span className="bg-[#1769E0] text-white text-[9px] font-black uppercase px-1.5 py-0.5 rounded tracking-widest font-sans shrink-0">
+                HUB
+              </span>
             </div>
-            <div className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest mt-0.5">
-              Automotive Hub
-            </div>
+            <span className="text-[10px] sm:text-[11px] font-bold text-[#1769E0] tracking-wide mt-0.5 font-sans truncate">
+              {siteConfig.tagline}
+            </span>
           </div>
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1 bg-[#F7FAFF] p-1.5 rounded-2xl border border-[#D9EAFF]">
+        <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-1 xl:gap-2">
           {navLinks.map((link) => {
             const Icon = link.icon;
             const isActive = location.pathname === link.path;
@@ -109,10 +152,10 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`relative px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#1769E0] ${
+                className={`px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#1769E0] ${
                   isActive
-                    ? 'text-white bg-gradient-to-r from-[#1769E0] to-[#0751C9] shadow-sm'
-                    : 'text-[#10233F] hover:text-[#1769E0] hover:bg-white'
+                    ? 'bg-[#1769E0] text-white shadow-sm'
+                    : 'text-[#10233F] hover:bg-[#F7FAFF] hover:text-[#1769E0]'
                 }`}
               >
                 <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-[#1769E0]'}`} />
@@ -122,57 +165,34 @@ export const Navbar: React.FC = () => {
           })}
         </nav>
 
-        {/* Medium Screen Navigation Subset */}
-        <nav className="hidden md:flex lg:hidden items-center gap-1 bg-[#F7FAFF] p-1.5 rounded-2xl border border-[#D9EAFF]">
-          {navLinks.slice(0, 4).map((link) => {
-            const Icon = link.icon;
-            const isActive = location.pathname === link.path;
-            return (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`px-2.5 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1 transition-all ${
-                  isActive
-                    ? 'text-white bg-[#1769E0]'
-                    : 'text-[#10233F] hover:text-[#1769E0]'
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{link.name}</span>
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Desktop Action Button & Contact */}
-        <div className="hidden md:flex items-center gap-3 shrink-0">
+        {/* Right Header Actions */}
+        <div className="flex items-center gap-2 sm:gap-3">
           <a
             href={`tel:${siteConfig.contact.phone}`}
-            className="flex items-center gap-2 text-xs font-bold text-[#10233F] hover:text-[#1769E0] transition-colors focus:outline-none focus:ring-2 focus:ring-[#1769E0] rounded-lg p-1"
+            className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl bg-[#F7FAFF] border border-[#D9EAFF] text-[#10233F] text-xs font-bold hover:border-[#1769E0] hover:text-[#1769E0] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#1769E0]"
           >
-            <div className="w-8 h-8 rounded-full bg-[#D9EAFF] flex items-center justify-center text-[#1769E0]">
-              <PhoneCall className="w-4 h-4" />
+            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <div className="flex flex-col text-left">
+              <span className="text-[9px] text-[#64748B] uppercase tracking-wider font-extrabold">Hotline</span>
             </div>
             <span className="hidden xl:inline">{siteConfig.contact.phone}</span>
           </a>
 
-          <Link to={user ? (user.role === 'admin' ? '/admin' : '/account') : '/login'}>
+          <Link to={user ? (user.role === 'admin' ? '/admin' : '/account') : '/login'} className="hidden md:block">
             <button className="px-4 py-2 rounded-xl bg-white border border-[#D9EAFF] text-[#10233F] text-xs font-extrabold flex items-center gap-1.5 hover:border-[#1769E0] hover:bg-[#F7FAFF] transition-all duration-200 shadow-sm active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#1769E0]">
               <User className="w-3.5 h-3.5 text-[#1769E0]" />
               <span>{user ? (user.role === 'admin' ? 'Admin Hub' : 'My Account') : 'Sign In'}</span>
             </button>
           </Link>
-        </div>
 
-        {/* Mobile Menu Toggle Button */}
-        <div className="flex md:hidden items-center gap-2">
+          {/* Mobile Menu Button */}
           <button
             ref={menuButtonRef}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-navigation"
             aria-label={mobileMenuOpen ? 'Close navigation' : 'Open navigation'}
-            className="min-w-[48px] min-h-[48px] p-2.5 rounded-xl bg-[#F7FAFF] border border-[#D9EAFF] text-[#10233F] hover:text-[#1769E0] hover:bg-[#D9EAFF]/30 active:scale-95 transition-all duration-200 flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#1769E0]"
+            className="min-w-[48px] min-h-[48px] p-2.5 rounded-xl bg-[#F7FAFF] border border-[#D9EAFF] text-[#10233F] hover:text-[#1769E0] hover:bg-[#D9EAFF]/30 active:scale-95 transition-all duration-200 flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#1769E0] md:hidden"
           >
             {mobileMenuOpen ? (
               <>
@@ -215,7 +235,7 @@ export const Navbar: React.FC = () => {
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               className="absolute top-full left-0 right-0 z-50 bg-white border-b border-[#D9EAFF] px-4 py-5 shadow-2xl overflow-y-auto max-h-[calc(100vh-70px)] md:hidden pb-safe"
             >
-              <div className="max-w-md mx-auto space-y-6">
+              <div className="max-w-md mx-auto space-y-5">
 
                 {/* Quick Action Grid */}
                 <div className="bg-[#F7FAFF] p-3 rounded-2xl border border-[#D9EAFF] shadow-sm">
@@ -250,18 +270,18 @@ export const Navbar: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Main Navigation */}
+                {/* Main 7 Mobile Navigation Items */}
                 <div className="space-y-1.5">
                   <div className="text-[10px] font-extrabold uppercase tracking-widest text-[#64748B] px-2 mb-1">
-                    Marketplace Portal Pages
+                    Mobile Menu & Services
                   </div>
-                  {navLinks.map((link) => {
-                    const Icon = link.icon;
-                    const isActive = location.pathname === link.path;
+                  {mobileMenuItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = location.pathname === item.path;
                     return (
                       <Link
-                        key={link.path}
-                        to={link.path}
+                        key={item.name}
+                        to={item.path}
                         onClick={() => setMobileMenuOpen(false)}
                         className={`px-4 py-3 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-between transition-all ${
                           isActive
@@ -271,7 +291,7 @@ export const Navbar: React.FC = () => {
                       >
                         <div className="flex items-center gap-3">
                           <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-[#1769E0]'}`} />
-                          <span>{link.name}</span>
+                          <span>{item.name}</span>
                         </div>
                         {isActive && (
                           <span className="text-[10px] font-extrabold uppercase bg-white/20 px-2 py-0.5 rounded-full">Active</span>
@@ -279,18 +299,6 @@ export const Navbar: React.FC = () => {
                       </Link>
                     );
                   })}
-                </div>
-
-                {/* Portal Sign In / Account Link */}
-                <div className="pt-2 border-t border-[#D9EAFF]">
-                  <Link
-                    to={user ? (user.role === 'admin' ? '/admin' : '/account') : '/login'}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="px-4 py-3 rounded-xl bg-[#0038BC] hover:bg-[#0751C9] text-white text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 shadow-sm transition-all"
-                  >
-                    <User className="w-4 h-4 text-white" />
-                    <span>{user ? `Logged in as ${user.full_name}` : 'Sign In / Register Account'}</span>
-                  </Link>
                 </div>
 
               </div>

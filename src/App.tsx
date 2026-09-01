@@ -10,6 +10,11 @@ import { TradeIn } from './pages/TradeIn';
 import { AuctionMarketplace } from './pages/Auction';
 import { ImportServicePage } from './pages/ImportService';
 import { AccountDashboard } from './pages/Account';
+import { AccessoriesPage } from './pages/Accessories';
+import { TrackersPage } from './pages/Trackers';
+import { CarHirePage } from './pages/CarHire';
+import { DealershipsPage } from './pages/Dealerships';
+import { AboutPage } from './pages/About';
 
 import { MobileBottomNav } from './components/navigation/MobileBottomNav';
 import { PWAInstallPrompt } from './components/ui/PWAInstallPrompt';
@@ -29,6 +34,11 @@ export const App: React.FC = () => {
         <Route path="/auction" element={<AuctionMarketplace />} />
         <Route path="/import" element={<ImportServicePage />} />
         <Route path="/account" element={<AccountDashboard />} />
+        <Route path="/accessories" element={<AccessoriesPage />} />
+        <Route path="/trackers" element={<TrackersPage />} />
+        <Route path="/car-hire" element={<CarHirePage />} />
+        <Route path="/dealerships" element={<DealershipsPage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<Home />} />
       </Routes>
       <MobileBottomNav />
