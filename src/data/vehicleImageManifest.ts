@@ -1,6 +1,6 @@
 // AUTOMATICALLY GENERATED CANONICAL VEHICLE IMAGE MANIFEST
 // Source of truth: public/Car Images
-// Total Files: 435
+// Total Files: 550
 
 export interface VehicleCluster {
   id: string;
@@ -25,6 +25,20 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
       "/Car Images/2014 Honda Accord EX-L.jpeg"
     ],
     "primaryImage": "/Car Images/2014 Honda Accord EX-L (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_2014_mercedes_benz_s400h_lwb": {
+    "id": "cluster_2014_mercedes_benz_s400h_lwb",
+    "name": "2014 Mercedes-Benz S400h LWB",
+    "images": [
+      "/Car Images/2014 Mercedes-Benz S400h LWB (2).jpeg",
+      "/Car Images/2014 Mercedes-Benz S400h LWB (3).jpeg",
+      "/Car Images/2014 Mercedes-Benz S400h LWB (4).jpeg",
+      "/Car Images/2014 Mercedes-Benz S400h LWB (5).jpeg",
+      "/Car Images/2014 Mercedes-Benz S400h LWB (6).jpeg",
+      "/Car Images/2014 Mercedes-Benz S400h LWB.jpeg"
+    ],
+    "primaryImage": "/Car Images/2014 Mercedes-Benz S400h LWB (2).jpeg",
     "confidence": 0.99
   },
   "cluster_2015_mitsubishi_fuso_canter": {
@@ -101,6 +115,20 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
       "/Car Images/𝟐𝟎𝟏𝟕 𝐕𝐎𝐋𝐕𝐎 𝐗𝐂𝟔𝟎 𝐓𝟓 𝐈𝐍𝐒𝐂𝐑𝐈𝐏𝐓𝐈𝐎𝐍.jpeg"
     ],
     "primaryImage": "/Car Images/𝟐𝟎𝟏𝟕 𝐕𝐎𝐋𝐕𝐎 𝐗𝐂𝟔𝟎 𝐓𝟓 𝐈𝐍𝐒𝐂𝐑𝐈𝐏𝐓𝐈𝐎𝐍 (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_2018_audi_sq5_3_0t_v6": {
+    "id": "cluster_2018_audi_sq5_3_0t_v6",
+    "name": "2018 AUDI SQ5 3.0T V6",
+    "images": [
+      "/Car Images/2018 AUDI SQ5 3.0T V6 (2).jpeg",
+      "/Car Images/2018 AUDI SQ5 3.0T V6 (3).jpeg",
+      "/Car Images/2018 AUDI SQ5 3.0T V6 (4).jpeg",
+      "/Car Images/2018 AUDI SQ5 3.0T V6 (5).jpeg",
+      "/Car Images/2018 AUDI SQ5 3.0T V6 (6).jpeg",
+      "/Car Images/2018 AUDI SQ5 3.0T V6.jpeg"
+    ],
+    "primaryImage": "/Car Images/2018 AUDI SQ5 3.0T V6 (2).jpeg",
     "confidence": 0.99
   },
   "cluster_2018_mazda_atenza_2_2d": {
@@ -203,6 +231,40 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
     "primaryImage": "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (2).jpeg",
     "confidence": 0.99
   },
+  "cluster_2023_ford_ranger_raptor_3_0_double_cab_petrol": {
+    "id": "cluster_2023_ford_ranger_raptor_3_0_double_cab_petrol",
+    "name": "2023 Ford Ranger Raptor 3.0 Double Cab Petrol",
+    "images": [
+      "/Car Images/2023 Ford Ranger Raptor 3.0 Double Cab Petrol (2).jpeg",
+      "/Car Images/2023 Ford Ranger Raptor 3.0 Double Cab Petrol (3).jpeg",
+      "/Car Images/2023 Ford Ranger Raptor 3.0 Double Cab Petrol (4).jpeg",
+      "/Car Images/2023 Ford Ranger Raptor 3.0 Double Cab Petrol (5).jpeg",
+      "/Car Images/2023 Ford Ranger Raptor 3.0 Double Cab Petrol (6).jpeg",
+      "/Car Images/2023 Ford Ranger Raptor 3.0 Double Cab Petrol (7).jpeg",
+      "/Car Images/2023 Ford Ranger Raptor 3.0 Double Cab Petrol (8).jpeg",
+      "/Car Images/2023 Ford Ranger Raptor 3.0 Double Cab Petrol.jpeg"
+    ],
+    "primaryImage": "/Car Images/2023 Ford Ranger Raptor 3.0 Double Cab Petrol (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_2023_land_rover_defender_110_d350": {
+    "id": "cluster_2023_land_rover_defender_110_d350",
+    "name": "2023 LAND ROVER DEFENDER 110 D350",
+    "images": [
+      "/Car Images/2023 LAND ROVER DEFENDER 110 D350 (2).jpeg",
+      "/Car Images/2023 LAND ROVER DEFENDER 110 D350 (3).jpeg",
+      "/Car Images/2023 LAND ROVER DEFENDER 110 D350 (4).jpeg",
+      "/Car Images/2023 LAND ROVER DEFENDER 110 D350 (5).jpeg",
+      "/Car Images/2023 LAND ROVER DEFENDER 110 D350 (6).jpeg",
+      "/Car Images/2023 LAND ROVER DEFENDER 110 D350 (7).jpeg",
+      "/Car Images/2023 LAND ROVER DEFENDER 110 D350 (8).jpeg",
+      "/Car Images/2023 LAND ROVER DEFENDER 110 D350 (9).jpeg",
+      "/Car Images/2023 LAND ROVER DEFENDER 110 D350 (10).jpeg",
+      "/Car Images/2023 LAND ROVER DEFENDER 110 D350.jpeg"
+    ],
+    "primaryImage": "/Car Images/2023 LAND ROVER DEFENDER 110 D350 (2).jpeg",
+    "confidence": 0.99
+  },
   "cluster_2024_toyota_hilux_gr_sport": {
     "id": "cluster_2024_toyota_hilux_gr_sport",
     "name": "2024 Toyota Hilux GR Sport",
@@ -263,6 +325,23 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
       "/Car Images/audi Q8 2021.jpeg"
     ],
     "primaryImage": "/Car Images/audi Q8 2021 (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_audi_s5": {
+    "id": "cluster_audi_s5",
+    "name": "Audi S5",
+    "images": [
+      "/Car Images/Audi S5 (2).jpeg",
+      "/Car Images/Audi S5 (3).jpeg",
+      "/Car Images/Audi S5 (4).jpeg",
+      "/Car Images/Audi S5 (5).jpeg",
+      "/Car Images/Audi S5 (6).jpeg",
+      "/Car Images/Audi S5 (7).jpeg",
+      "/Car Images/Audi S5 (8).jpeg",
+      "/Car Images/Audi S5 (9).jpeg",
+      "/Car Images/Audi S5.jpeg"
+    ],
+    "primaryImage": "/Car Images/Audi S5 (2).jpeg",
     "confidence": 0.99
   },
   "cluster_bmw_320d_m_sport_2013": {
@@ -352,6 +431,21 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
     "primaryImage": "/Car Images/BMW Z4  CONVERTIBLE (SDRIVE 20i) (2).jpeg",
     "confidence": 0.99
   },
+  "cluster_ford_mustang_2020": {
+    "id": "cluster_ford_mustang_2020",
+    "name": "FORD MUSTANG 2020",
+    "images": [
+      "/Car Images/FORD MUSTANG 2020 (2).jpeg",
+      "/Car Images/FORD MUSTANG 2020 (3).jpeg",
+      "/Car Images/FORD MUSTANG 2020 (4).jpeg",
+      "/Car Images/FORD MUSTANG 2020 (5).jpeg",
+      "/Car Images/FORD MUSTANG 2020 (6).jpeg",
+      "/Car Images/FORD MUSTANG 2020 (7).jpeg",
+      "/Car Images/FORD MUSTANG 2020.jpeg"
+    ],
+    "primaryImage": "/Car Images/FORD MUSTANG 2020 (2).jpeg",
+    "confidence": 0.99
+  },
   "cluster_ford_ranger": {
     "id": "cluster_ford_ranger",
     "name": "Ford Ranger",
@@ -438,13 +532,91 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
     "primaryImage": "/Car Images/Landrover Defender (2).jpeg",
     "confidence": 0.99
   },
-  "cluster_lexus_rx": {
-    "id": "cluster_lexus_rx",
-    "name": "Lexus RX",
+  "cluster_lexus_is300_2016": {
+    "id": "cluster_lexus_is300_2016",
+    "name": "LEXUS IS300 2016",
     "images": [
-      "/Car Images/Lexus_RX_01.jpeg"
+      "/Car Images/LEXUS IS300 2016 (2).jpeg",
+      "/Car Images/LEXUS IS300 2016 (3).jpeg",
+      "/Car Images/LEXUS IS300 2016 (4).jpeg",
+      "/Car Images/LEXUS IS300 2016 (5).jpeg",
+      "/Car Images/LEXUS IS300 2016 (6).jpeg",
+      "/Car Images/LEXUS IS300 2016 (7).jpeg",
+      "/Car Images/LEXUS IS300 2016 (8).jpeg",
+      "/Car Images/LEXUS IS300 2016 (9).jpeg",
+      "/Car Images/LEXUS IS300 2016 (10).jpeg",
+      "/Car Images/LEXUS IS300 2016 (11).jpeg",
+      "/Car Images/LEXUS IS300 2016.jpeg"
     ],
-    "primaryImage": "/Car Images/Lexus_RX_01.jpeg",
+    "primaryImage": "/Car Images/LEXUS IS300 2016 (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_lexus_rx_300": {
+    "id": "cluster_lexus_rx_300",
+    "name": "Lexus RX 300",
+    "images": [
+      "/Car Images/Lexus RX 300 (2).jpeg",
+      "/Car Images/Lexus RX 300 (3).jpeg",
+      "/Car Images/Lexus RX 300 (4).jpeg",
+      "/Car Images/Lexus RX 300 (5).jpeg",
+      "/Car Images/Lexus RX 300 (6).jpeg",
+      "/Car Images/Lexus RX 300 (7).jpeg",
+      "/Car Images/Lexus RX 300 (8).jpeg",
+      "/Car Images/Lexus RX 300 (9).jpeg",
+      "/Car Images/Lexus RX 300 (10).jpeg",
+      "/Car Images/Lexus RX 300 (11).jpeg",
+      "/Car Images/Lexus RX 300 (12).jpeg",
+      "/Car Images/Lexus RX 300 (13).jpeg",
+      "/Car Images/Lexus RX 300.jpeg"
+    ],
+    "primaryImage": "/Car Images/Lexus RX 300 (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_mazda_3_premium_grade": {
+    "id": "cluster_mazda_3_premium_grade",
+    "name": "MAZDA 3 PREMIUM  GRADE",
+    "images": [
+      "/Car Images/MAZDA 3 PREMIUM  GRADE (2).jpeg",
+      "/Car Images/MAZDA 3 PREMIUM  GRADE (3).jpeg",
+      "/Car Images/MAZDA 3 PREMIUM  GRADE (4).jpeg",
+      "/Car Images/MAZDA 3 PREMIUM  GRADE (5).jpeg",
+      "/Car Images/MAZDA 3 PREMIUM  GRADE (6).jpeg",
+      "/Car Images/MAZDA 3 PREMIUM  GRADE (7).jpeg",
+      "/Car Images/MAZDA 3 PREMIUM  GRADE (8).jpeg",
+      "/Car Images/MAZDA 3 PREMIUM  GRADE (9).jpeg",
+      "/Car Images/MAZDA 3 PREMIUM  GRADE.jpeg"
+    ],
+    "primaryImage": "/Car Images/MAZDA 3 PREMIUM  GRADE (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_mazda_6": {
+    "id": "cluster_mazda_6",
+    "name": "MAZDA 6",
+    "images": [
+      "/Car Images/MAZDA 6 (2).jpeg",
+      "/Car Images/MAZDA 6 (3).jpeg",
+      "/Car Images/MAZDA 6 (4).jpeg",
+      "/Car Images/MAZDA 6 (5).jpeg",
+      "/Car Images/MAZDA 6 (6).jpeg",
+      "/Car Images/MAZDA 6 (7).jpeg",
+      "/Car Images/MAZDA 6.jpeg"
+    ],
+    "primaryImage": "/Car Images/MAZDA 6 (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_mazda_cx5_xdl_2020": {
+    "id": "cluster_mazda_cx5_xdl_2020",
+    "name": "Mazda CX5 XDL 2020",
+    "images": [
+      "/Car Images/Mazda CX5 XDL 2020 (2).jpeg",
+      "/Car Images/Mazda CX5 XDL 2020 (3).jpeg",
+      "/Car Images/Mazda CX5 XDL 2020 (4).jpeg",
+      "/Car Images/Mazda CX5 XDL 2020 (5).jpeg",
+      "/Car Images/Mazda CX5 XDL 2020 (6).jpeg",
+      "/Car Images/Mazda CX5 XDL 2020 (7).jpeg",
+      "/Car Images/Mazda CX5 XDL 2020.jpeg"
+    ],
+    "primaryImage": "/Car Images/Mazda CX5 XDL 2020 (2).jpeg",
     "confidence": 0.99
   },
   "cluster_mazda_demio": {
@@ -546,6 +718,22 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
       "/Car Images/Mercedes-Benz_E-Class_20.jpeg"
     ],
     "primaryImage": "/Car Images/Mercedes-Benz_E-Class_02.jpeg",
+    "confidence": 0.99
+  },
+  "cluster_mercedes_benz_glc250_4matic": {
+    "id": "cluster_mercedes_benz_glc250_4matic",
+    "name": "Mercedes Benz GLC250 4Matic",
+    "images": [
+      "/Car Images/Mercedes Benz GLC250 4Matic (2).jpeg",
+      "/Car Images/Mercedes Benz GLC250 4Matic (3).jpeg",
+      "/Car Images/Mercedes Benz GLC250 4Matic (4).jpeg",
+      "/Car Images/Mercedes Benz GLC250 4Matic (5).jpeg",
+      "/Car Images/Mercedes Benz GLC250 4Matic (6).jpeg",
+      "/Car Images/Mercedes Benz GLC250 4Matic (7).jpeg",
+      "/Car Images/Mercedes Benz GLC250 4Matic (8).jpeg",
+      "/Car Images/Mercedes Benz GLC250 4Matic.jpeg"
+    ],
+    "primaryImage": "/Car Images/Mercedes Benz GLC250 4Matic (2).jpeg",
     "confidence": 0.99
   },
   "cluster_mercedes_benz_s_class": {
@@ -734,6 +922,23 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
     "primaryImage": "/Car Images/Toyota Landcruiser (2).jpeg",
     "confidence": 0.99
   },
+  "cluster_toyota_mark_x_premium": {
+    "id": "cluster_toyota_mark_x_premium",
+    "name": "Toyota Mark X Premium",
+    "images": [
+      "/Car Images/Toyota Mark X Premium (2).jpeg",
+      "/Car Images/Toyota Mark X Premium (3).jpeg",
+      "/Car Images/Toyota Mark X Premium (4).jpeg",
+      "/Car Images/Toyota Mark X Premium (5).jpeg",
+      "/Car Images/Toyota Mark X Premium (6).jpeg",
+      "/Car Images/Toyota Mark X Premium (7).jpeg",
+      "/Car Images/Toyota Mark X Premium (8).jpeg",
+      "/Car Images/Toyota Mark X Premium (9).jpeg",
+      "/Car Images/Toyota Mark X Premium.jpeg"
+    ],
+    "primaryImage": "/Car Images/Toyota Mark X Premium (2).jpeg",
+    "confidence": 0.99
+  },
   "cluster_toyota_noah": {
     "id": "cluster_toyota_noah",
     "name": "Toyota Noah",
@@ -749,6 +954,20 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
       "/Car Images/Toyota Noah.jpeg"
     ],
     "primaryImage": "/Car Images/Toyota Noah (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_toyota_probox_silver": {
+    "id": "cluster_toyota_probox_silver",
+    "name": "Toyota Probox (Silver)",
+    "images": [
+      "/Car Images/Toyota Probox (Silver) (2).jpeg",
+      "/Car Images/Toyota Probox (Silver) (3).jpeg",
+      "/Car Images/Toyota Probox (Silver) (4).jpeg",
+      "/Car Images/Toyota Probox (Silver) (5).jpeg",
+      "/Car Images/Toyota Probox (Silver) (6).jpeg",
+      "/Car Images/Toyota Probox (Silver).jpeg"
+    ],
+    "primaryImage": "/Car Images/Toyota Probox (Silver) (2).jpeg",
     "confidence": 0.99
   },
   "cluster_toyota_rav4_newer": {

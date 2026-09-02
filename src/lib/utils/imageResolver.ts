@@ -4,6 +4,20 @@ import { generateModelSpecificGenericImage } from './genericImageGenerator';
 
 // Keyword matching dictionary mapping vehicle makes, models, and variants to discovered clusters
 const MODEL_TO_CLUSTER: Array<{ patterns: string[]; clusterId: string }> = [
+  { patterns: ['glc250', 'glc 250'], clusterId: 'cluster_mercedes_benz_glc250_4matic' },
+  { patterns: ['is300 2016', 'is300'], clusterId: 'cluster_lexus_is300_2016' },
+  { patterns: ['rx 300', 'rx300'], clusterId: 'cluster_lexus_rx_300' },
+  { patterns: ['sq5 3.0t', 'sq5'], clusterId: 'cluster_2018_audi_sq5_3_0t_v6' },
+  { patterns: ['mark x premium', 'mark x'], clusterId: 'cluster_toyota_mark_x_premium' },
+  { patterns: ['s400h lwb', 's400h', 's400'], clusterId: 'cluster_2014_mercedes_benz_s400h_lwb' },
+  { patterns: ['defender 110 d350', 'd350', '75th limited edition'], clusterId: 'cluster_2023_land_rover_defender_110_d350' },
+  { patterns: ['cx5 xdl', 'cx5 2020'], clusterId: 'cluster_mazda_cx5_xdl_2020' },
+  { patterns: ['audi s5', 's5 2015'], clusterId: 'cluster_audi_s5' },
+  { patterns: ['mazda 3 premium', 'mazda 3 2019'], clusterId: 'cluster_mazda_3_premium_grade' },
+  { patterns: ['probox silver', 'probox 2017'], clusterId: 'cluster_toyota_probox_silver' },
+  { patterns: ['mazda 6 2020', 'mazda 6'], clusterId: 'cluster_mazda_6' },
+  { patterns: ['ranger raptor 3.0', 'ranger raptor'], clusterId: 'cluster_2023_ford_ranger_raptor_3_0_double_cab_petrol' },
+  { patterns: ['mustang 2020', 'mustang'], clusterId: 'cluster_ford_mustang_2020' },
   { patterns: ['gle 400d coupe', 'gle 400d'], clusterId: 'cluster_2020_mercedes_benz_gle_400d_coupe' },
   { patterns: ['atenza 2.2d', 'atenza'], clusterId: 'cluster_2018_mazda_atenza_2_2d' },
   { patterns: ['320d m sport', '320d'], clusterId: 'cluster_bmw_320d_m_sport_2013' },
