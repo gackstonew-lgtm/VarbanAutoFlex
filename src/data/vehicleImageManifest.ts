@@ -1,6 +1,6 @@
 // AUTOMATICALLY GENERATED CANONICAL VEHICLE IMAGE MANIFEST
 // Source of truth: public/Car Images
-// Total Files: 354
+// Total Files: 435
 
 export interface VehicleCluster {
   id: string;
@@ -39,6 +39,25 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
       "/Car Images/2015 Mitsubishi Fuso Canter.jpeg"
     ],
     "primaryImage": "/Car Images/2015 Mitsubishi Fuso Canter (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_2015_rolls_royce_ghost_series_i": {
+    "id": "cluster_2015_rolls_royce_ghost_series_i",
+    "name": "2015 Rolls Royce Ghost Series I",
+    "images": [
+      "/Car Images/2015 Rolls Royce Ghost Series I (2).jpeg",
+      "/Car Images/2015 Rolls Royce Ghost Series I (3).jpeg",
+      "/Car Images/2015 Rolls Royce Ghost Series I (4).jpeg",
+      "/Car Images/2015 Rolls Royce Ghost Series I (5).jpeg",
+      "/Car Images/2015 Rolls Royce Ghost Series I (6).jpeg",
+      "/Car Images/2015 Rolls Royce Ghost Series I (7).jpeg",
+      "/Car Images/2015 Rolls Royce Ghost Series I (8).jpeg",
+      "/Car Images/2015 Rolls Royce Ghost Series I (9).jpeg",
+      "/Car Images/2015 Rolls Royce Ghost Series I (10).jpeg",
+      "/Car Images/2015 Rolls Royce Ghost Series I (11).jpeg",
+      "/Car Images/2015 Rolls Royce Ghost Series I.jpeg"
+    ],
+    "primaryImage": "/Car Images/2015 Rolls Royce Ghost Series I (2).jpeg",
     "confidence": 0.99
   },
   "cluster_2016_vw_golf_r_mk7_5": {
@@ -84,6 +103,22 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
     "primaryImage": "/Car Images/𝟐𝟎𝟏𝟕 𝐕𝐎𝐋𝐕𝐎 𝐗𝐂𝟔𝟎 𝐓𝟓 𝐈𝐍𝐒𝐂𝐑𝐈𝐏𝐓𝐈𝐎𝐍 (2).jpeg",
     "confidence": 0.99
   },
+  "cluster_2018_mazda_atenza_2_2d": {
+    "id": "cluster_2018_mazda_atenza_2_2d",
+    "name": "2018 Mazda Atenza 2.2D",
+    "images": [
+      "/Car Images/2018 Mazda Atenza 2.2D (2).jpeg",
+      "/Car Images/2018 Mazda Atenza 2.2D (3).jpeg",
+      "/Car Images/2018 Mazda Atenza 2.2D (4).jpeg",
+      "/Car Images/2018 Mazda Atenza 2.2D (5).jpeg",
+      "/Car Images/2018 Mazda Atenza 2.2D (6).jpeg",
+      "/Car Images/2018 Mazda Atenza 2.2D (7).jpeg",
+      "/Car Images/2018 Mazda Atenza 2.2D (8).jpeg",
+      "/Car Images/2018 Mazda Atenza 2.2D.jpeg"
+    ],
+    "primaryImage": "/Car Images/2018 Mazda Atenza 2.2D (2).jpeg",
+    "confidence": 0.99
+  },
   "cluster_2018_mercedes_e200": {
     "id": "cluster_2018_mercedes_e200",
     "name": "2018 Mercedes E200",
@@ -112,6 +147,25 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
     "primaryImage": "/Car Images/2018 TOYOTA CROWN RS S220 15TH GEN (2).jpeg",
     "confidence": 0.99
   },
+  "cluster_2019_lexus_lx570": {
+    "id": "cluster_2019_lexus_lx570",
+    "name": "2019 LEXUS LX570",
+    "images": [
+      "/Car Images/2019 𝐋𝐄𝐗𝐔𝐒 𝐋𝐗570 (2).jpeg",
+      "/Car Images/2019 𝐋𝐄𝐗𝐔𝐒 𝐋𝐗570 (3).jpeg",
+      "/Car Images/2019 𝐋𝐄𝐗𝐔𝐒 𝐋𝐗570 (4).jpeg",
+      "/Car Images/2019 𝐋𝐄𝐗𝐔𝐒 𝐋𝐗570 (5).jpeg",
+      "/Car Images/2019 𝐋𝐄𝐗𝐔𝐒 𝐋𝐗570 (6).jpeg",
+      "/Car Images/2019 𝐋𝐄𝐗𝐔𝐒 𝐋𝐗570 (7).jpeg",
+      "/Car Images/2019 𝐋𝐄𝐗𝐔𝐒 𝐋𝐗570 (8).jpeg",
+      "/Car Images/2019 𝐋𝐄𝐗𝐔𝐒 𝐋𝐗570 (9).jpeg",
+      "/Car Images/2019 𝐋𝐄𝐗𝐔𝐒 𝐋𝐗570 (10).jpeg",
+      "/Car Images/2019 𝐋𝐄𝐗𝐔𝐒 𝐋𝐗570 (11).jpeg",
+      "/Car Images/2019 𝐋𝐄𝐗𝐔𝐒 𝐋𝐗570.jpeg"
+    ],
+    "primaryImage": "/Car Images/2019 𝐋𝐄𝐗𝐔𝐒 𝐋𝐗570 (2).jpeg",
+    "confidence": 0.99
+  },
   "cluster_2020_bmw_x6_35d": {
     "id": "cluster_2020_bmw_x6_35d",
     "name": "2020 BMW X6 35D",
@@ -127,6 +181,26 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
       "/Car Images/2020 BMW X6 35D.jpeg"
     ],
     "primaryImage": "/Car Images/2020 BMW X6 35D (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_2020_mercedes_benz_gle_400d_coupe": {
+    "id": "cluster_2020_mercedes_benz_gle_400d_coupe",
+    "name": "2020 MERCEDES BENZ GLE 400D COUPE",
+    "images": [
+      "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (2).jpeg",
+      "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (3).jpeg",
+      "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (4).jpeg",
+      "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (5).jpeg",
+      "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (6).jpeg",
+      "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (7).jpeg",
+      "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (8).jpeg",
+      "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (9).jpeg",
+      "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (10).jpeg",
+      "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (11).jpeg",
+      "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (12).jpeg",
+      "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE.jpeg"
+    ],
+    "primaryImage": "/Car Images/2020 MERCEDES BENZ GLE 400D COUPE (2).jpeg",
     "confidence": 0.99
   },
   "cluster_2024_toyota_hilux_gr_sport": {
@@ -191,6 +265,27 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
     "primaryImage": "/Car Images/audi Q8 2021 (2).jpeg",
     "confidence": 0.99
   },
+  "cluster_bmw_320d_m_sport_2013": {
+    "id": "cluster_bmw_320d_m_sport_2013",
+    "name": "BMW 320D M SPORT – 2013",
+    "images": [
+      "/Car Images/BMW 320D M SPORT – 2013 (2).jpeg",
+      "/Car Images/BMW 320D M SPORT – 2013 (3).jpeg",
+      "/Car Images/BMW 320D M SPORT – 2013 (4).jpeg",
+      "/Car Images/BMW 320D M SPORT – 2013 (5).jpeg",
+      "/Car Images/BMW 320D M SPORT – 2013 (6).jpeg",
+      "/Car Images/BMW 320D M SPORT – 2013 (7).jpeg",
+      "/Car Images/BMW 320D M SPORT – 2013 (8).jpeg",
+      "/Car Images/BMW 320D M SPORT – 2013 (9).jpeg",
+      "/Car Images/BMW 320D M SPORT – 2013 (10).jpeg",
+      "/Car Images/BMW 320D M SPORT – 2013 (11).jpeg",
+      "/Car Images/BMW 320D M SPORT – 2013 (12).jpeg",
+      "/Car Images/BMW 320D M SPORT – 2013 (13).jpeg",
+      "/Car Images/BMW 320D M SPORT – 2013.jpeg"
+    ],
+    "primaryImage": "/Car Images/BMW 320D M SPORT – 2013 (2).jpeg",
+    "confidence": 0.99
+  },
   "cluster_bmw_e46_318i": {
     "id": "cluster_bmw_e46_318i",
     "name": "Bmw E46 318i",
@@ -242,6 +337,19 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
       "/Car Images/BMW_X6_12.jpeg"
     ],
     "primaryImage": "/Car Images/BMW_X6_01.jpeg",
+    "confidence": 0.99
+  },
+  "cluster_bmw_z4_convertible_sdrive_20i": {
+    "id": "cluster_bmw_z4_convertible_sdrive_20i",
+    "name": "BMW Z4  CONVERTIBLE (SDRIVE 20i)",
+    "images": [
+      "/Car Images/BMW Z4  CONVERTIBLE (SDRIVE 20i) (2).jpeg",
+      "/Car Images/BMW Z4  CONVERTIBLE (SDRIVE 20i) (3).jpeg",
+      "/Car Images/BMW Z4  CONVERTIBLE (SDRIVE 20i) (4).jpeg",
+      "/Car Images/BMW Z4  CONVERTIBLE (SDRIVE 20i) (5).jpeg",
+      "/Car Images/BMW Z4  CONVERTIBLE (SDRIVE 20i).jpeg"
+    ],
+    "primaryImage": "/Car Images/BMW Z4  CONVERTIBLE (SDRIVE 20i) (2).jpeg",
     "confidence": 0.99
   },
   "cluster_ford_ranger": {
@@ -299,6 +407,35 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
       "/Car Images/Jincheng 150.jpeg"
     ],
     "primaryImage": "/Car Images/Jincheng 150 (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_lamborghini_urus_2020": {
+    "id": "cluster_lamborghini_urus_2020",
+    "name": "Lamborghini Urus 2020",
+    "images": [
+      "/Car Images/𝙇𝙖𝙢𝙗𝙤𝙧𝙜𝙝𝙞𝙣𝙞 𝙐𝙧𝙪𝙨 2020 (2).jpeg",
+      "/Car Images/𝙇𝙖𝙢𝙗𝙤𝙧𝙜𝙝𝙞𝙣𝙞 𝙐𝙧𝙪𝙨 2020 (3).jpeg",
+      "/Car Images/𝙇𝙖𝙢𝙗𝙤𝙧𝙜𝙝𝙞𝙣𝙞 𝙐𝙧𝙪𝙨 2020 (4).jpeg",
+      "/Car Images/𝙇𝙖𝙢𝙗𝙤𝙧𝙜𝙝𝙞𝙣𝙞 𝙐𝙧𝙪𝙨 2020 (5).jpeg",
+      "/Car Images/𝙇𝙖𝙢𝙗𝙤𝙧𝙜𝙝𝙞𝙣𝙞 𝙐𝙧𝙪𝙨 2020 (6).jpeg",
+      "/Car Images/𝙇𝙖𝙢𝙗𝙤𝙧𝙜𝙝𝙞𝙣𝙞 𝙐𝙧𝙪𝙨 2020 (7).jpeg",
+      "/Car Images/𝙇𝙖𝙢𝙗𝙤𝙧𝙜𝙝𝙞𝙣𝙞 𝙐𝙧𝙪𝙨 2020 (8).jpeg",
+      "/Car Images/𝙇𝙖𝙢𝙗𝙤𝙧𝙜𝙝𝙞𝙣𝙞 𝙐𝙧𝙪𝙨 2020.jpeg"
+    ],
+    "primaryImage": "/Car Images/𝙇𝙖𝙢𝙗𝙤𝙧𝙜𝙝𝙞𝙣𝙞 𝙐𝙧𝙪𝙨 2020 (2).jpeg",
+    "confidence": 0.99
+  },
+  "cluster_landrover_defender": {
+    "id": "cluster_landrover_defender",
+    "name": "Landrover Defender",
+    "images": [
+      "/Car Images/Landrover Defender (2).jpeg",
+      "/Car Images/Landrover Defender (3).jpeg",
+      "/Car Images/Landrover Defender (4).jpeg",
+      "/Car Images/Landrover Defender (5).jpeg",
+      "/Car Images/Landrover Defender.jpeg"
+    ],
+    "primaryImage": "/Car Images/Landrover Defender (2).jpeg",
     "confidence": 0.99
   },
   "cluster_lexus_rx": {
@@ -460,6 +597,22 @@ export const AUTOMATIC_VEHICLE_CLUSTERS: Record<string, VehicleCluster> = {
       "/Car Images/Porsche_Cayenne_15.jpeg"
     ],
     "primaryImage": "/Car Images/Porsche_Cayenne_01.jpeg",
+    "confidence": 0.99
+  },
+  "cluster_range_rover_evoque": {
+    "id": "cluster_range_rover_evoque",
+    "name": "RANGE ROVER EVOQUE",
+    "images": [
+      "/Car Images/RANGE ROVER EVOQUE (2).jpeg",
+      "/Car Images/RANGE ROVER EVOQUE (3).jpeg",
+      "/Car Images/RANGE ROVER EVOQUE (4).jpeg",
+      "/Car Images/RANGE ROVER EVOQUE (5).jpeg",
+      "/Car Images/RANGE ROVER EVOQUE (6).jpeg",
+      "/Car Images/RANGE ROVER EVOQUE (7).jpeg",
+      "/Car Images/RANGE ROVER EVOQUE (8).jpeg",
+      "/Car Images/RANGE ROVER EVOQUE.jpeg"
+    ],
+    "primaryImage": "/Car Images/RANGE ROVER EVOQUE (2).jpeg",
     "confidence": 0.99
   },
   "cluster_range_rover_velar": {

@@ -4,6 +4,15 @@ import { generateModelSpecificGenericImage } from './genericImageGenerator';
 
 // Keyword matching dictionary mapping vehicle makes, models, and variants to discovered clusters
 const MODEL_TO_CLUSTER: Array<{ patterns: string[]; clusterId: string }> = [
+  { patterns: ['gle 400d coupe', 'gle 400d'], clusterId: 'cluster_2020_mercedes_benz_gle_400d_coupe' },
+  { patterns: ['atenza 2.2d', 'atenza'], clusterId: 'cluster_2018_mazda_atenza_2_2d' },
+  { patterns: ['320d m sport', '320d'], clusterId: 'cluster_bmw_320d_m_sport_2013' },
+  { patterns: ['landrover defender', 'defender 2009'], clusterId: 'cluster_landrover_defender' },
+  { patterns: ['evoque r-dynamic', 'evoque r dynamic'], clusterId: 'cluster_range_rover_evoque' },
+  { patterns: ['lamborghini urus', 'urus'], clusterId: 'cluster_lamborghini_urus_2020' },
+  { patterns: ['lx570', 'lx 570'], clusterId: 'cluster_2019_lexus_lx570' },
+  { patterns: ['bmw z4 convertible', 'sdrive 20i', 'z4 2020'], clusterId: 'cluster_bmw_z4_convertible_sdrive_20i' },
+  { patterns: ['rolls royce ghost', 'ghost series i'], clusterId: 'cluster_2015_rolls_royce_ghost_series_i' },
   { patterns: ['f10 520i', '520i m sport', 'f10'], clusterId: 'cluster_bmw_f10_520i_m_sport' },
   { patterns: ['cbr 650r', 'cbr650r', 'cbr'], clusterId: 'cluster_honda_cbr_650r' },
   { patterns: ['hilux gr sport', 'hilux gr', 'hilux'], clusterId: 'cluster_2024_toyota_hilux_gr_sport' },

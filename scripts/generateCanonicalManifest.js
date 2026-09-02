@@ -7,16 +7,14 @@ const carImagesDir = path.resolve('public/Car Images');
 const files = fs.readdirSync(carImagesDir).filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f));
 
 function toAscii(str) {
-  let res = '';
-  for (const ch of str) {
+  let res = str.normalize('NFKD');
+  let clean = '';
+  for (const ch of res) {
     const cp = ch.codePointAt(0);
-    if (cp >= 0x1D400 && cp <= 0x1D419) res += String.fromCharCode(65 + cp - 0x1D400);
-    else if (cp >= 0x1D41A && cp <= 0x1D433) res += String.fromCharCode(97 + cp - 0x1D41A);
-    else if (cp >= 0x1D7CE && cp <= 0x1D7D7) res += String.fromCharCode(48 + cp - 0x1D7CE);
-    else if (cp >= 0x1F1E6 && cp <= 0x1F1FF) res += String.fromCharCode(65 + cp - 0x1F1E6);
-    else res += ch;
+    if (cp >= 0x1F1E6 && cp <= 0x1F1FF) clean += String.fromCharCode(65 + cp - 0x1F1E6);
+    else clean += ch;
   }
-  return res;
+  return clean;
 }
 
 // Group files by prefix
