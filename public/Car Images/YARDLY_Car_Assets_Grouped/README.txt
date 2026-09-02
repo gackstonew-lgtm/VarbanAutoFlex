@@ -1,1 +1,0 @@
-181 uploaded JPEGs grouped into 24 provisional vehicle/listing groups based on visual continuity and image sequence. Model names are provisional and must be confirmed from image evidence/VIN/listing data before publication. Current values must be rechecked against live Kenyan market listings before being stored as asking/market values.

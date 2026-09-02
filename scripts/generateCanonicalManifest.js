@@ -6,18 +6,32 @@ console.log('Generating canonical vehicle image manifest with natural numeric so
 const carImagesDir = path.resolve('public/Car Images');
 const files = fs.readdirSync(carImagesDir).filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f));
 
-// Group files by prefix (up to the trailing number _01.jpeg)
+function toAscii(str) {
+  let res = '';
+  for (const ch of str) {
+    const cp = ch.codePointAt(0);
+    if (cp >= 0x1D400 && cp <= 0x1D419) res += String.fromCharCode(65 + cp - 0x1D400);
+    else if (cp >= 0x1D41A && cp <= 0x1D433) res += String.fromCharCode(97 + cp - 0x1D41A);
+    else if (cp >= 0x1D7CE && cp <= 0x1D7D7) res += String.fromCharCode(48 + cp - 0x1D7CE);
+    else if (cp >= 0x1F1E6 && cp <= 0x1F1FF) res += String.fromCharCode(65 + cp - 0x1F1E6);
+    else res += ch;
+  }
+  return res;
+}
+
+// Group files by prefix
 const clusters = {};
 
 files.forEach(filename => {
-  const match = filename.match(/^(.*?)_\d+\.(jpg|jpeg|png|webp)$/i);
-  const prefix = match ? match[1] : filename.replace(/\.(jpg|jpeg|png|webp)$/i, '');
-  const clusterId = `cluster_${prefix.toLowerCase().replace(/[^a-z0-9]+/g, '_')}`;
+  const asciiFilename = toAscii(filename);
+  const match = asciiFilename.match(/^([\s\S]+?)(?:\s*\(\d+\)|_\d+)?\.(jpg|jpeg|png|webp)$/i);
+  const rawPrefix = match ? match[1].trim() : asciiFilename.replace(/\.(jpg|jpeg|png|webp)$/i, '').trim();
+  const clusterId = 'cluster_' + rawPrefix.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
 
   if (!clusters[clusterId]) {
     clusters[clusterId] = {
       id: clusterId,
-      name: prefix.replace(/_/g, ' '),
+      name: rawPrefix.replace(/_/g, ' '),
       images: [],
       primaryImage: '',
       confidence: 0.99

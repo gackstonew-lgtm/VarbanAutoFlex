@@ -8,7 +8,7 @@ export type FuelType = 'Petrol' | 'Diesel' | 'Hybrid' | 'Electric';
 
 export type TransmissionType = 'Automatic' | 'Manual' | 'CVT';
 
-export type BodyType = 'SUV' | 'Sedan' | 'Hatchback' | 'Station Wagon' | 'Pickup / Truck' | 'Van / Minibus' | 'Coupe / Convertible';
+export type BodyType = 'SUV' | 'Sedan' | 'Hatchback' | 'Station Wagon' | 'Pickup / Truck' | 'Van / Minibus' | 'Coupe / Convertible' | 'Motorcycle';
 
 export type SellerType = 'private' | 'dealer' | 'importer' | 'business';
 
