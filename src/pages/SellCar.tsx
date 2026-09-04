@@ -15,7 +15,7 @@ export const SellCar: React.FC = () => {
   // Form State
   const [sellerType, setSellerType] = useState<'private' | 'dealer'>('private');
   const [sellerName, setSellerName] = useState('');
-  const [sellerPhone, setSellerPhone] = useState('0712052104');
+  const [sellerPhone, setSellerPhone] = useState('+254 780618608');
   const [sellerEmail, setSellerEmail] = useState('');
   const [make, setMake] = useState('Toyota');
   const [model, setModel] = useState('');

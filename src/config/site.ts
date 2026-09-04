@@ -1,18 +1,18 @@
 import { ImportEligibility, MarketStatus } from '../types/database';
 
 export const siteConfig = {
-  name: "Verban Auto",
-  legalName: "Verban Auto Technologies Ltd",
+  name: "Verban Auto Flex",
+  legalName: "Verban Auto Flex Technologies Ltd",
   tagline: "Find it. Buy it. Drive it.",
   secondaryTagline: "Kenya's smarter way to buy and sell quality vehicles.",
   description: "Browse verified vehicles, inspect with confidence, and reserve instantly from trusted car yards and private sellers across Kenya.",
   url: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173',
   ogImage: '/og-image.jpg',
   contact: {
-    phone: "0712052104",
-    whatsapp: "0712052104",
+    phone: "+254 780618608",
+    whatsapp: "+254 780618608",
     email: "support@verban.co.ke",
-    address: "Verban Auto Hub, Ngong Road / Karen Junction, Nairobi, Kenya",
+    address: "Kenyatta Avenue, Nakuru, Kenya",
     hours: "Mon - Sat: 8:00 AM - 6:00 PM"
   },
   socials: {

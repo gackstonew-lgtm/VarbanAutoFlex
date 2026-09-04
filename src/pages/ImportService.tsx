@@ -9,7 +9,7 @@ export const ImportServicePage: React.FC = () => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('0712052104');
+  const [phone, setPhone] = useState('+254 780618608');
   const [country, setCountry] = useState('Kenya');
   const [make, setMake] = useState('');
   const [model, setModel] = useState('');
@@ -32,7 +32,7 @@ export const ImportServicePage: React.FC = () => {
         setUser(u);
         setFullName(u.full_name || '');
         setEmail(u.email || '');
-        setPhone(u.phone || '0712052104');
+        setPhone(u.phone || '+254 780618608');
       }
     });
   }, []);

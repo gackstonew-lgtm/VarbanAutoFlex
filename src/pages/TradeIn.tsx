@@ -10,7 +10,7 @@ export const TradeIn: React.FC = () => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('0712052104');
+  const [phone, setPhone] = useState('+254 780618608');
   const [make, setMake] = useState('');
   const [model, setModel] = useState('');
   const [year, setYear] = useState<number>(2019);
@@ -36,7 +36,7 @@ export const TradeIn: React.FC = () => {
         setUser(u);
         setFullName(u.full_name || '');
         setEmail(u.email || '');
-        setPhone(u.phone || '0712052104');
+        setPhone(u.phone || '+254 780618608');
       }
     });
   }, []);
