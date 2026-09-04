@@ -116,7 +116,7 @@ export const AuctionMarketplace: React.FC = () => {
               <span>LIVE AUTOMOTIVE AUCTIONS</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-black tracking-tight">
-              Verban Verified Vehicle Auctions
+              Varban Verified Vehicle Auctions
             </h1>
             <p className="text-sm text-[#D9EAFF] mt-1 max-w-xl">
               Bid with confidence on inspected vehicles from certified Kenyan car yards and direct importers with transparent reserve prices.

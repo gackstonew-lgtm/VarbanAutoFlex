@@ -56,7 +56,7 @@ export const DealershipsPage: React.FC = () => {
             Partner Dealerships & Car Yards
           </h1>
           <p className="text-sm sm:text-base text-[#D9EAFF] max-w-2xl mx-auto">
-            Explore verified car yards and licensed auto dealers across Nairobi, Mombasa, and Nakuru. Every listed dealer is logbook-audited and background-verified by Verban Auto.
+            Explore verified car yards and licensed auto dealers across Nairobi, Mombasa, and Nakuru. Every listed dealer is logbook-audited and background-verified by Varban Auto Flex.
           </p>
         </div>
       </div>

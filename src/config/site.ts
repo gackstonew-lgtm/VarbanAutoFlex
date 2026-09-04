@@ -1,8 +1,8 @@
 import { ImportEligibility, MarketStatus } from '../types/database';
 
 export const siteConfig = {
-  name: "Verban Auto Flex",
-  legalName: "Verban Auto Flex Technologies Ltd",
+  name: "Varban Auto Flex",
+  legalName: "Varban Auto Flex Technologies Ltd",
   tagline: "Find it. Buy it. Drive it.",
   secondaryTagline: "Kenya's smarter way to buy and sell quality vehicles.",
   description: "Browse verified vehicles, inspect with confidence, and reserve instantly from trusted car yards and private sellers across Kenya.",
@@ -11,15 +11,15 @@ export const siteConfig = {
   contact: {
     phone: "+254 780618608",
     whatsapp: "+254 780618608",
-    email: "support@verban.co.ke",
+    email: "support@varban.co.ke",
     address: "Kenyatta Avenue, Nakuru, Kenya",
     hours: "Mon - Sat: 8:00 AM - 6:00 PM"
   },
   socials: {
-    facebook: "https://facebook.com/verbanauto",
-    twitter: "https://x.com/verbanauto",
-    instagram: "https://instagram.com/verbanauto",
-    linkedin: "https://linkedin.com/company/verbanauto"
+    facebook: "https://facebook.com/varbanauto",
+    twitter: "https://x.com/varbanauto",
+    instagram: "https://instagram.com/varbanauto",
+    linkedin: "https://linkedin.com/company/varbanauto"
   },
   reservation: {
     defaultDepositKES: 50000,

@@ -12,8 +12,8 @@ if (!fs.existsSync(iconsDir)) {
 
 // 1. Generate Web App Manifest (public/manifest.json)
 const manifest = {
-  name: "Verban Auto — Find it. Buy it. Drive it.",
-  short_name: "Verban Auto",
+  name: "Varban Auto Flex — Find it. Buy it. Drive it.",
+  short_name: "Varban Auto Flex",
   description: "Kenya's Premier Automotive Marketplace for Car Sales, Trade-Ins, and Duty-Paid Imports.",
   start_url: "/",
   scope: "/",
@@ -48,7 +48,7 @@ fs.writeFileSync(path.join(publicDir, 'manifest.json'), JSON.stringify(manifest,
 console.log('Created public/manifest.json');
 
 // 2. Generate Service Worker (public/sw.js)
-const swCode = `// Verban Auto Service Worker v1.0.0
+const swCode = `// Varban Auto Flex Service Worker v1.0.0
 const CACHE_NAME = 'yardly-pwa-v1.0.0';
 const STATIC_ASSETS = [
   '/',
@@ -63,7 +63,7 @@ const STATIC_ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Verban Auto SW] Pre-caching core app shell');
+      console.log('[Varban Auto Flex SW] Pre-caching core app shell');
       return cache.addAll(STATIC_ASSETS);
     }).then(() => self.skipWaiting())
   );
@@ -75,7 +75,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
-            console.log('[Verban Auto SW] Removing obsolete cache:', cacheName);
+            console.log('[Varban Auto Flex SW] Removing obsolete cache:', cacheName);
             return caches.delete(cacheName);
           }
         })

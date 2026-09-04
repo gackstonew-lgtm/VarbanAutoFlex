@@ -1,9 +1,9 @@
-# Verban Auto — Digital Automotive Marketplace & Car Yard Platform (Kenya)
+# Varban Auto Flex — Digital Automotive Marketplace & Car Yard Platform (Kenya)
 
 > **Tagline:** "Find it. Buy it. Drive it."  
 > **Supporting message:** "Kenya's smarter way to buy and sell quality vehicles."
 
-Verban Auto is a production-ready, fintech-grade Kenyan automotive marketplace and digital car-yard platform inspired by UnitPay visual design principles. It features real-time search & filter query synchronization, instant vehicle submission with logbook protection under Supabase RLS, configurable Safaricom Daraja M-Pesa / PayHero payment provider architecture, Resend transactional emails, and Vercel serverless deployment.
+Varban Auto Flex is a production-ready, fintech-grade Kenyan automotive marketplace and digital car-yard platform inspired by UnitPay visual design principles. It features real-time search & filter query synchronization, instant vehicle submission with logbook protection under Supabase RLS, configurable Safaricom Daraja M-Pesa / PayHero payment provider architecture, Resend transactional emails, and Vercel serverless deployment.
 
 ---
 
@@ -132,4 +132,4 @@ npm run preview
 
 ## License
 
-Copyright &copy; 2026 Verban Auto Technologies Ltd. All rights reserved.
+Copyright &copy; 2026 Varban Auto Flex Technologies Ltd. All rights reserved.

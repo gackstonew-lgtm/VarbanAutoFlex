@@ -78,13 +78,13 @@ export const PWAInstallPrompt: React.FC = () => {
         
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h4 className="font-bold text-sm text-white">Install Verban Auto App</h4>
+            <h4 className="font-bold text-sm text-white">Install Varban Auto Flex App</h4>
             <span className="bg-emerald-500/20 text-emerald-400 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-emerald-500/30">PWA Ready</span>
           </div>
           <p className="text-xs text-slate-300 mt-1 leading-relaxed">
             {isIOS 
-              ? 'Install Verban Auto on your iPhone: tap Share in Safari, then select "Add to Home Screen".'
-              : 'Add Verban Auto to your home screen for fast offline browsing and direct access.'}
+              ? 'Install Varban Auto Flex on your iPhone: tap Share in Safari, then select "Add to Home Screen".'
+              : 'Add Varban Auto Flex to your home screen for fast offline browsing and direct access.'}
           </p>
         </div>
 

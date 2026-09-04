@@ -22,7 +22,7 @@ export const VehicleGallery: React.FC<VehicleGalleryProps> = ({
       <div className={`w-full aspect-[16/10] bg-[#F7FAFF] rounded-3xl border border-[#D9EAFF] flex flex-col items-center justify-center text-[#64748B] p-6 ${className}`}>
         <ImageIcon className="w-12 h-12 text-[#1769E0] mb-2 opacity-60" />
         <span className="text-xs font-bold uppercase tracking-wider text-[#10233F]">Photography Under Verification</span>
-        <span className="text-[11px] text-[#64748B] mt-1 text-center">Images for this unit are being processed by Verban Auto Inspectors.</span>
+        <span className="text-[11px] text-[#64748B] mt-1 text-center">Images for this unit are being processed by Varban Auto Flex Inspectors.</span>
       </div>
     );
   }

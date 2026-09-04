@@ -4,7 +4,7 @@ import { EmailService } from '../lib/email/resend.js';
 
 async function runVerificationSuite() {
   console.log('====================================================');
-  console.log('RUNNING Verban Auto PLATFORM INTEGRATION TEST SUITE');
+  console.log('RUNNING Varban Auto Flex PLATFORM INTEGRATION TEST SUITE');
   console.log('====================================================\n');
 
   let passed = 0;
@@ -27,7 +27,7 @@ async function runVerificationSuite() {
       vehicleId: 'v1000000-0000-0000-0000-000000000001',
       amount: 50000,
       phone: '0712345678',
-      email: 'test@verban.co.ke',
+      email: 'test@varban.co.ke',
       fullName: 'Test Buyer'
     });
     assert(paymentRes.success === true && paymentRes.status === 'paid', 'Test Mode M-Pesa Payment Initiation');
@@ -42,7 +42,7 @@ async function runVerificationSuite() {
       vehicleId: 'v1000000-0000-0000-0000-000000000001',
       amount: 50000,
       phone: '0712340000',
-      email: 'test@verban.co.ke',
+      email: 'test@varban.co.ke',
       fullName: 'Decline Buyer'
     });
     assert(paymentRes.success === false && paymentRes.status === 'failed', 'Payment Decline Handling (0000)');

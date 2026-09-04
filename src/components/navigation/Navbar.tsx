@@ -124,17 +124,14 @@ export const Navbar: React.FC = () => {
           <div className="h-10 w-10 rounded-xl overflow-hidden bg-white border border-[#D9EAFF] p-0.5 shadow-sm group-hover:scale-105 transition-transform duration-300 flex items-center justify-center shrink-0">
             <img
               src="/logo.jpeg"
-              alt="Verban Auto Flex Logo"
+              alt="Varban Auto Flex Logo"
               className="h-full w-full object-contain rounded-lg"
             />
           </div>
           <div className="flex flex-col justify-center text-left min-w-0">
             <div className="flex items-center gap-1.5 flex-wrap">
               <span className="text-base sm:text-lg font-black tracking-tight text-[#10233F] leading-none group-hover:text-[#1769E0] transition-colors font-sans truncate">
-                Verban Auto
-              </span>
-              <span className="bg-[#1769E0] text-white text-[9px] font-black uppercase px-1.5 py-0.5 rounded tracking-widest font-sans shrink-0">
-                FLEX
+                {siteConfig.name}
               </span>
             </div>
             <span className="text-[10px] sm:text-[11px] font-bold text-[#1769E0] tracking-wide mt-0.5 font-sans truncate">

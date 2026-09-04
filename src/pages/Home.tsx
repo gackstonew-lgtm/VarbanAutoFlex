@@ -96,7 +96,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* How Verban Auto Works 3-Step Guide */}
+      {/* How Varban Auto Flex Works 3-Step Guide */}
       <section className="py-16 bg-white border-y border-[#D9EAFF]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
@@ -105,7 +105,7 @@ export const Home: React.FC = () => {
               Transparent & Secure
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#10233F]">
-              How Buying On Verban Auto Works
+              How Buying On Varban Auto Flex Works
             </h2>
             <p className="text-xs sm:text-sm text-[#64748B]">
               We take the friction out of buying a quality vehicle in Kenya with full logbook verification and secure M-Pesa holding deposits.

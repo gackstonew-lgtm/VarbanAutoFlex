@@ -110,7 +110,7 @@ export const AdminDashboard: React.FC = () => {
   const [vDescription, setVDescription] = useState('');
   const [vImageUrl, setVImageUrl] = useState('');
   const [vImages, setVImages] = useState<string[]>([]);
-  const [vDealerName, setVDealerName] = useState('Verban Certified');
+  const [vDealerName, setVDealerName] = useState('Varban Certified');
 
   // Photo File Upload Handlers for Admin
   const handleAdminPhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -219,7 +219,7 @@ export const AdminDashboard: React.FC = () => {
     setVDescription('');
     setVImageUrl('');
     setVImages([]);
-    setVDealerName('Verban Certified');
+    setVDealerName('Varban Certified');
     setShowVehicleModal(true);
   };
 
@@ -238,7 +238,7 @@ export const AdminDashboard: React.FC = () => {
     setVDescription(v.description);
     setVImageUrl(v.images?.[0]?.image_url || '');
     setVImages(v.images?.map(img => img.image_url) || []);
-    setVDealerName(v.dealer_name || 'Verban Certified');
+    setVDealerName(v.dealer_name || 'Varban Certified');
     setShowVehicleModal(true);
   };
 
@@ -393,7 +393,7 @@ export const AdminDashboard: React.FC = () => {
           <div>
             <div className="flex items-center gap-2 text-xs font-bold text-[#2D8CFF] uppercase tracking-wider">
               <ShieldCheck className="w-4 h-4" />
-              <span>Verban Auto EXECUTIVE MANAGEMENT CONSOLE</span>
+              <span>Varban Auto Flex EXECUTIVE MANAGEMENT CONSOLE</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight mt-1">Marketplace Operations & Control</h1>
             {currentUser && (

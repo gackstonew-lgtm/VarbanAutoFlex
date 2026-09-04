@@ -40,7 +40,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     featured: true,
     is_demo: false,
     data_source: 'local_image_library',
-    source_reference: 'Verban Verified Asset',
+    source_reference: 'Varban Verified Asset',
     category: 'mainstream',
     market_status: 'importable_subject_to_requirements',
     import_eligibility: 'eligible',
@@ -739,7 +739,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     featured: true,
     is_demo: false,
     data_source: 'local_image_library',
-    source_reference: 'Verban Verified Asset',
+    source_reference: 'Varban Verified Asset',
     category: 'sports',
     market_status: 'locally_available',
     import_eligibility: 'eligible',
@@ -818,7 +818,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     featured: true,
     is_demo: false,
     data_source: 'local_image_library',
-    source_reference: 'Verban Verified Asset',
+    source_reference: 'Varban Verified Asset',
     category: 'mainstream',
     market_status: 'importable_subject_to_requirements',
     import_eligibility: 'eligible',
@@ -890,7 +890,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
     featured: true,
     is_demo: false,
     data_source: 'local_image_library',
-    source_reference: 'Verban Verified Asset',
+    source_reference: 'Varban Verified Asset',
     category: 'premium',
     market_status: 'premium_import',
     import_eligibility: 'eligible',
@@ -1559,7 +1559,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
   },
   {
     id: 'v1000000-0000-0000-0000-000000000027',
-    dealer_name: 'Verban Auto Premium Motors',
+    dealer_name: 'Varban Auto Flex Premium Motors',
     seller_type: 'dealer',
     make: 'BMW',
     model: '520i',
@@ -1675,7 +1675,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
   },
   {
     id: 'v1000000-0000-0000-0000-000000000029',
-    dealer_name: 'Verban Auto Auto Hub',
+    dealer_name: 'Varban Auto Flex Auto Hub',
     seller_type: 'dealer',
     make: 'Toyota',
     model: 'Hilux',
@@ -1800,7 +1800,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
   },
   {
     id: 'v1000000-0000-0000-0000-000000000031',
-    dealer_name: 'Verban Auto Motors',
+    dealer_name: 'Varban Auto Flex Motors',
     seller_type: 'dealer',
     make: 'Honda',
     model: 'Accord',
@@ -2593,7 +2593,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
   },
   {
     id: 'v1000000-0000-0000-0000-000000000045',
-    dealer_name: 'Verban Auto Luxury Hub',
+    dealer_name: 'Varban Auto Flex Luxury Hub',
     seller_type: 'dealer',
     make: 'Mercedes-Benz',
     model: 'GLC-Class',
@@ -2928,7 +2928,7 @@ export const INITIAL_MOCK_VEHICLES: Vehicle[] = [
   },
   {
     id: 'v1000000-0000-0000-0000-000000000051',
-    dealer_name: 'Verban Auto Exclusive Imports',
+    dealer_name: 'Varban Auto Flex Exclusive Imports',
     seller_type: 'dealer',
     make: 'Land Rover',
     model: 'Defender',
@@ -3453,7 +3453,7 @@ export const INITIAL_MOCK_INQUIRIES: VehicleInquiry[] = [
 export const INITIAL_MOCK_BUYERS: Profile[] = [
   {
     id: 'buyer-001',
-    email: 'buyer@verban.co.ke',
+    email: 'buyer@varban.co.ke',
     full_name: 'Maina Kamau',
     phone: '+254 712 987 654',
     role: 'buyer',
@@ -3509,9 +3509,9 @@ export const INITIAL_MOCK_AUCTIONS: any[] = [
     status: 'live',
     created_at: '2026-08-30T10:00:00Z',
     bids: [
-      { id: 'b-1', auction_id: 'auc-001', buyer_id: 'buyer-001', buyer_name: 'Maina Kamau', buyer_email: 'buyer@verban.co.ke', amount: 6600000, created_at: '2026-08-30T11:00:00Z' },
+      { id: 'b-1', auction_id: 'auc-001', buyer_id: 'buyer-001', buyer_name: 'Maina Kamau', buyer_email: 'buyer@varban.co.ke', amount: 6600000, created_at: '2026-08-30T11:00:00Z' },
       { id: 'b-2', auction_id: 'auc-001', buyer_id: 'buyer-002', buyer_name: 'Grace Njeri', buyer_email: 'grace.njeri@gmail.com', amount: 6800000, created_at: '2026-08-30T14:00:00Z' },
-      { id: 'b-3', auction_id: 'auc-001', buyer_id: 'buyer-001', buyer_name: 'Maina Kamau', buyer_email: 'buyer@verban.co.ke', amount: 7100000, created_at: '2026-08-31T09:00:00Z' }
+      { id: 'b-3', auction_id: 'auc-001', buyer_id: 'buyer-001', buyer_name: 'Maina Kamau', buyer_email: 'buyer@varban.co.ke', amount: 7100000, created_at: '2026-08-31T09:00:00Z' }
     ]
   },
   {

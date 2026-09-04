@@ -250,7 +250,7 @@ export const HeroSearch: React.FC = () => {
           </form>
         ) : (
           <div className="py-6 text-center space-y-4">
-            <h3 className="text-2xl font-black text-[#10233F]">Ready to list your vehicle on Verban Auto?</h3>
+            <h3 className="text-2xl font-black text-[#10233F]">Ready to list your vehicle on Varban Auto Flex?</h3>
             <p className="text-sm text-[#64748B] max-w-md mx-auto">
               Get maximum exposure to serious buyers across Kenya. Verified car-yard approval in less than 24 hours.
             </p>

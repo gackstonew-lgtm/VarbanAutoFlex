@@ -124,7 +124,7 @@ export const TradeIn: React.FC = () => {
             <span>INSTANT VEHICLE TRADE-IN & VALUATION</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
-            Trade In Your Vehicle with Verban Auto
+            Trade In Your Vehicle with Varban Auto Flex
           </h1>
           <p className="text-sm sm:text-base text-[#D9EAFF] max-w-2xl mx-auto">
             Upgrade your ride effortlessly. Submit your vehicle details to get a fair market valuation from verified Kenyan car yards and apply the value directly towards your next car.

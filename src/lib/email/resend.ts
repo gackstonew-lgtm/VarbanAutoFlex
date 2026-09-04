@@ -9,7 +9,7 @@ export interface EmailOptions {
 export const EmailService = {
   async sendEmail(options: EmailOptions): Promise<{ success: boolean; id?: string; error?: string }> {
     const apiKey = process.env.RESEND_API_KEY;
-    const from = process.env.EMAIL_FROM || `${siteConfig.name} <notifications@verban.co.ke>`;
+    const from = process.env.EMAIL_FROM || `${siteConfig.name} <notifications@varban.co.ke>`;
 
     if (!apiKey) {
       console.log(`[Email Service - Dev Mode] To: ${options.to} | Subject: ${options.subject}`);

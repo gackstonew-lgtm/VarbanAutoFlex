@@ -144,7 +144,7 @@ export const AccountDashboard: React.FC = () => {
             <div>
               <div className="flex items-center gap-2 text-xs font-bold text-[#2D8CFF] uppercase tracking-wider">
                 <ShieldCheck className="w-4 h-4" />
-                <span>Verban Auto USER PORTAL</span>
+                <span>Varban Auto Flex USER PORTAL</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
                 {currentUser?.full_name}

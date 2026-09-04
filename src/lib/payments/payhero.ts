@@ -38,7 +38,7 @@ export class PayHeroProvider implements PaymentProvider {
           phone_number: request.phone,
           channel_id: 1, // M-Pesa Express
           provider: 'm-pesa',
-          external_reference: request.idempotencyKey || `Verban Auto-${Date.now()}`
+          external_reference: request.idempotencyKey || `Varban Auto Flex-${Date.now()}`
         })
       });
       const data = await response.json();
