@@ -15,7 +15,7 @@ export class MpesaProvider implements PaymentProvider {
     this.consumerSecret = process.env.MPESA_CONSUMER_SECRET || '';
     this.shortcode = process.env.MPESA_SHORTCODE || '174379';
     this.passkey = process.env.MPESA_PASSKEY || '';
-    this.callbackUrl = process.env.MPESA_CALLBACK_URL || 'https://yardly.co.ke/api/payments/callback';
+    this.callbackUrl = process.env.MPESA_CALLBACK_URL || 'https://verban.co.ke/api/payments/callback';
   }
 
   private formatPhone(phone: string): string {
@@ -84,8 +84,8 @@ export class MpesaProvider implements PaymentProvider {
         PartyB: this.shortcode,
         PhoneNumber: formattedPhone,
         CallBackURL: this.callbackUrl,
-        AccountReference: `YARDLY-${request.vehicleId.slice(0, 8)}`,
-        TransactionDesc: 'YARDLY Vehicle Reservation Deposit'
+        AccountReference: `Verban Auto-${request.vehicleId.slice(0, 8)}`,
+        TransactionDesc: 'Verban Auto Vehicle Reservation Deposit'
       };
 
       const stkRes = await fetch('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest', {

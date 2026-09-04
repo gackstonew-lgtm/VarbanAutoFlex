@@ -130,7 +130,7 @@ export const SellCar: React.FC = () => {
             Sell Your Car Without the Hassle
           </h1>
           <p className="text-base sm:text-lg text-white/90 max-w-xl mx-auto">
-            List your vehicle with YARDLY and reach serious, verified buyers and car yards across Kenya.
+            List your vehicle with Verban Auto and reach serious, verified buyers and car yards across Kenya.
           </p>
         </div>
       </div>

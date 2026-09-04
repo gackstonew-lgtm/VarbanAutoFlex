@@ -26,7 +26,7 @@ export const CarHirePage: React.FC = () => {
             Car Hire Services
           </h1>
           <p className="text-sm sm:text-base text-[#D9EAFF] max-w-2xl mx-auto">
-            Rent fully insured, logbook-verified vehicles directly from verified YARDLY fleet partners across Kenya. Self-drive and chauffeur-driven options available.
+            Rent fully insured, logbook-verified vehicles directly from verified Verban Auto fleet partners across Kenya. Self-drive and chauffeur-driven options available.
           </p>
         </div>
       </div>
@@ -55,7 +55,7 @@ export const CarHirePage: React.FC = () => {
 
         {/* Benefits Section */}
         <div className="bg-white rounded-3xl p-8 border border-[#D9EAFF] shadow-sm max-w-4xl mx-auto space-y-6">
-          <h2 className="text-xl font-black text-[#10233F] text-center">Why Hire Through YARDLY?</h2>
+          <h2 className="text-xl font-black text-[#10233F] text-center">Why Hire Through Verban Auto?</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs">
             <div className="space-y-1">
               <div className="font-extrabold text-[#10233F] flex items-center gap-1.5">

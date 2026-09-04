@@ -53,11 +53,11 @@ export function generateModelSpecificGenericImage(
     <!-- Speed Accent Line -->
     <path d="M 80,360 L 720,360" stroke="url(#accent)" stroke-width="4" stroke-linecap="round"/>
 
-    <!-- YARDLY Model Badge Box -->
+    <!-- Verban Auto Model Badge Box -->
     <rect x="200" y="45" width="400" height="90" rx="16" fill="#0F172A" stroke="#334155" stroke-width="2" opacity="0.9"/>
     
     <text x="400" y="78" fill="#94A3B8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="800" letter-spacing="3" text-anchor="middle">
-      YARDLY VERIFIED MODEL SPEC
+      Verban Auto VERIFIED MODEL SPEC
     </text>
     
     <text x="400" y="112" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="900" letter-spacing="1" text-anchor="middle">

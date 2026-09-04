@@ -29,7 +29,7 @@ export const AccessoriesPage: React.FC = () => {
             Car Accessories & Spare Parts
           </h1>
           <p className="text-sm sm:text-base text-[#D9EAFF] max-w-2xl mx-auto">
-            Source genuine Japanese, European, and American auto spare parts, accessories, and performance upgrades verified by YARDLY partner car yards across Kenya.
+            Source genuine Japanese, European, and American auto spare parts, accessories, and performance upgrades verified by Verban Auto partner car yards across Kenya.
           </p>
         </div>
       </div>

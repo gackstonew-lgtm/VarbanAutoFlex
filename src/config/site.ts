@@ -1,8 +1,8 @@
 import { ImportEligibility, MarketStatus } from '../types/database';
 
 export const siteConfig = {
-  name: "YARDLY",
-  legalName: "YARDLY Automotive Technologies Ltd",
+  name: "Verban Auto",
+  legalName: "Verban Auto Technologies Ltd",
   tagline: "Find it. Buy it. Drive it.",
   secondaryTagline: "Kenya's smarter way to buy and sell quality vehicles.",
   description: "Browse verified vehicles, inspect with confidence, and reserve instantly from trusted car yards and private sellers across Kenya.",
@@ -11,15 +11,15 @@ export const siteConfig = {
   contact: {
     phone: "0712052104",
     whatsapp: "0712052104",
-    email: "support@yardly.co.ke",
-    address: "YARDLY Hub, Ngong Road / Karen Junction, Nairobi, Kenya",
+    email: "support@verban.co.ke",
+    address: "Verban Auto Hub, Ngong Road / Karen Junction, Nairobi, Kenya",
     hours: "Mon - Sat: 8:00 AM - 6:00 PM"
   },
   socials: {
-    facebook: "https://facebook.com/yardlykenya",
-    twitter: "https://x.com/yardlykenya",
-    instagram: "https://instagram.com/yardlykenya",
-    linkedin: "https://linkedin.com/company/yardlykenya"
+    facebook: "https://facebook.com/verbanauto",
+    twitter: "https://x.com/verbanauto",
+    instagram: "https://instagram.com/verbanauto",
+    linkedin: "https://linkedin.com/company/verbanauto"
   },
   reservation: {
     defaultDepositKES: 50000,

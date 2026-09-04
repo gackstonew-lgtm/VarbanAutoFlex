@@ -4,10 +4,10 @@ export function registerServiceWorker() {
       navigator.serviceWorker
         .register('/sw.js')
         .then((registration) => {
-          console.log('[YARDLY PWA] ServiceWorker registration successful with scope: ', registration.scope);
+          console.log('[Verban Auto PWA] ServiceWorker registration successful with scope: ', registration.scope);
         })
         .catch((err) => {
-          console.warn('[YARDLY PWA] ServiceWorker registration failed: ', err);
+          console.warn('[Verban Auto PWA] ServiceWorker registration failed: ', err);
         });
     });
   }

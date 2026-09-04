@@ -1,4 +1,4 @@
-// YARDLY Automotive Service Worker v1.0.0
+// Verban Auto Service Worker v1.0.0
 const CACHE_NAME = 'yardly-pwa-v1.0.0';
 const STATIC_ASSETS = [
   '/',
@@ -13,7 +13,7 @@ const STATIC_ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[YARDLY SW] Pre-caching core app shell');
+      console.log('[Verban Auto SW] Pre-caching core app shell');
       return cache.addAll(STATIC_ASSETS);
     }).then(() => self.skipWaiting())
   );
@@ -25,7 +25,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
-            console.log('[YARDLY SW] Removing obsolete cache:', cacheName);
+            console.log('[Verban Auto SW] Removing obsolete cache:', cacheName);
             return caches.delete(cacheName);
           }
         })

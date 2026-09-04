@@ -265,15 +265,15 @@ async function getStoredUsers(): Promise<StoredUserAccount[]> {
   const users = getStored<StoredUserAccount[]>(LOCAL_STORAGE_KEY_USERS, []);
 
   // Ensure dedicated primary admin account exists with hashed credentials
-  let adminAcc = users.find(u => u.email.toLowerCase() === 'admin@yardlyautomotivehub.com');
+  let adminAcc = users.find(u => u.email.toLowerCase() === 'admin@verbanautohub.com');
   const adminHash = await hashPassword('Admin123');
 
   if (!adminAcc) {
     adminAcc = {
       id: 'admin-primary-001',
-      email: 'admin@yardlyautomotivehub.com',
+      email: 'admin@verbanautohub.com',
       passwordHash: adminHash,
-      full_name: 'Yardly System Administrator',
+      full_name: 'Verban Auto System Administrator',
       role: 'admin'
     };
     users.unshift(adminAcc);
@@ -305,7 +305,7 @@ export const AuthService = {
         return {
           id: user.id,
           email: user.email || '',
-          full_name: user.user_metadata?.full_name || 'Yardly User',
+          full_name: user.user_metadata?.full_name || 'Verban User',
           phone: user.user_metadata?.phone,
           role: (user.user_metadata?.role as UserRole) || 'buyer',
           seller_type: user.user_metadata?.seller_type,
@@ -332,7 +332,7 @@ export const AuthService = {
         const user: AuthUser = {
           id: data.user.id,
           email: data.user.email || email,
-          full_name: data.user.user_metadata?.full_name || 'Yardly User',
+          full_name: data.user.user_metadata?.full_name || 'Verban User',
           phone: data.user.user_metadata?.phone,
           role: (data.user.user_metadata?.role as UserRole) || 'buyer',
           seller_type: data.user.user_metadata?.seller_type,
@@ -634,7 +634,7 @@ export const VehicleService = {
             logbook_verified: vehicle.logbook_verified ?? true,
             featured: vehicle.featured ?? false,
             seller_type: vehicle.seller_type || 'dealer',
-            dealer_name: vehicle.dealer_name || 'YARDLY Certified'
+            dealer_name: vehicle.dealer_name || 'Verban Certified'
           }])
           .select()
           .single();

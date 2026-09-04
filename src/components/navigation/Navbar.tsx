@@ -124,7 +124,7 @@ export const Navbar: React.FC = () => {
           <div className="h-10 w-10 rounded-xl overflow-hidden bg-white border border-[#D9EAFF] p-0.5 shadow-sm group-hover:scale-105 transition-transform duration-300 flex items-center justify-center shrink-0">
             <img
               src="/logo.jpeg"
-              alt="Yardly Automotive Logo"
+              alt="Verban Auto Logo"
               className="h-full w-full object-contain rounded-lg"
             />
           </div>

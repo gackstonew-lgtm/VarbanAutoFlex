@@ -1,4 +1,4 @@
-// Centralized YARDLY Motion System Design Tokens
+// Centralized Verban Auto Motion System Design Tokens
 export const motionTokens = {
   duration: {
     fast: 0.2,     // 200ms for micro-interactions (buttons, hovers)

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-console.log('--- YARDLY AUTOMOTIVE INVENTORY DATA INTEGRITY AUDIT ---');
+console.log('--- Verban Auto AUTOMOTIVE INVENTORY DATA INTEGRITY AUDIT ---');
 
 const carImagesDir = path.resolve('public/Car Images');
 const files = fs.readdirSync(carImagesDir).filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f));

@@ -105,7 +105,7 @@ export const VehicleDetails: React.FC = () => {
 
   // Pre-filled WhatsApp message URL generator
   const whatsappMessage = encodeURIComponent(
-    `Hi, I'm interested in the ${vehicle.year} ${vehicle.make} ${vehicle.model} listed at KES ${vehicle.price.toLocaleString()} on YARDLY.`
+    `Hi, I'm interested in the ${vehicle.year} ${vehicle.make} ${vehicle.model} listed at KES ${vehicle.price.toLocaleString()} on Verban Auto.`
   );
   const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp}?text=${whatsappMessage}`;
 
@@ -349,7 +349,7 @@ export const VehicleDetails: React.FC = () => {
               <div className="space-y-2">
                 <Badge variant="verified">
                   <ShieldCheck className="w-4 h-4 mr-1" />
-                  YARDLY Verified Vehicle
+                  Verban Verified Vehicle
                 </Badge>
                 <div className="text-2xl font-black text-[#10233F]">
                   KES {vehicle.price.toLocaleString()}
@@ -389,7 +389,7 @@ export const VehicleDetails: React.FC = () => {
               </div>
 
               <div className="p-4 rounded-2xl bg-[#F7FAFF] border border-[#D9EAFF] text-xs text-[#64748B] space-y-2">
-                <div className="font-bold text-[#10233F]">Why Reserve via YARDLY?</div>
+                <div className="font-bold text-[#10233F]">Why Reserve via Verban Auto?</div>
                 <div className="flex items-center gap-2 text-[11px]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                   <span>Logbook & Ownership document verification</span>

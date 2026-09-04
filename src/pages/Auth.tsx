@@ -100,16 +100,16 @@ export const Auth: React.FC = () => {
             <div className="w-16 h-16 rounded-2xl bg-white border border-[#D9EAFF] p-1 shadow-md mx-auto flex items-center justify-center">
               <img
                 src="/logo.jpeg"
-                alt="Yardly Automotive Logo"
+                alt="Verban Auto Logo"
                 className="w-full h-full object-contain rounded-xl"
               />
             </div>
             <h2 className="text-2xl font-extrabold text-[#10233F]">
-              {isRegister ? `Register as a ${registerRole === 'seller' ? 'Seller / Dealer' : 'Buyer'}` : 'YARDLY Partner & Buyer Sign In'}
+              {isRegister ? `Register as a ${registerRole === 'seller' ? 'Seller / Dealer' : 'Buyer'}` : 'Verban Partner & Buyer Sign In'}
             </h2>
             <p className="text-xs text-[#64748B]">
               {isRegister 
-                ? 'Create your YARDLY account to buy, bid, list cars or request imports' 
+                ? 'Create your Verban Auto account to buy, bid, list cars or request imports' 
                 : 'Access your vehicle inventory, saved cars, trade-ins & bidding portal'}
             </p>
           </div>
@@ -209,7 +209,7 @@ export const Auth: React.FC = () => {
             <Input
               label="Email Address *"
               type="email"
-              placeholder="user@yardly.co.ke"
+              placeholder="user@verban.co.ke"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               icon={<Mail className="w-4 h-4 text-[#64748B]" />}

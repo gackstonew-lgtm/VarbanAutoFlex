@@ -16,7 +16,7 @@ export const AboutPage: React.FC = () => {
             <span>KENYA'S DIGITAL CAR YARD PLATFORM</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
-            About YARDLY Automotive Hub
+            About Verban Auto Hub
           </h1>
           <p className="text-sm sm:text-base text-[#D9EAFF] max-w-2xl mx-auto">
             {siteConfig.description} We connect car yards, direct importers, and vehicle buyers across Kenya with logbook-verified listings and secure deposit holding.
@@ -34,7 +34,7 @@ export const AboutPage: React.FC = () => {
             </div>
             <h3 className="text-lg font-black text-[#10233F]">100% Logbook Audit</h3>
             <p className="text-xs text-[#64748B] leading-relaxed">
-              Every vehicle listed on YARDLY undergoes mandatory logbook, NTSA/TIMS ownership, and chassis verification to eliminate fraud.
+              Every vehicle listed on Verban Auto undergoes mandatory logbook, NTSA/TIMS ownership, and chassis verification to eliminate fraud.
             </p>
           </div>
 
@@ -61,7 +61,7 @@ export const AboutPage: React.FC = () => {
 
         {/* Contact Info Card */}
         <div className="bg-white rounded-3xl p-8 border border-[#D9EAFF] shadow-lg max-w-3xl mx-auto space-y-6 text-center">
-          <h2 className="text-2xl font-black text-[#10233F]">Contact YARDLY Headquarters</h2>
+          <h2 className="text-2xl font-black text-[#10233F]">Contact Verban Auto Headquarters</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-[#10233F] pt-2">
             <div className="p-4 rounded-2xl bg-[#F7FAFF] border border-[#D9EAFF] space-y-1">
               <MapPin className="w-5 h-5 text-[#1769E0] mx-auto mb-1" />
