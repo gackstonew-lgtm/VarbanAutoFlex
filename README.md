@@ -3,7 +3,7 @@
 > **Find it. Buy it. Drive it.**
 > Kenya's smarter way to buy and sell quality vehicles.
 
-[Visit Varban Auto Flex](https://varbanautoflex.com/?utm_source=chatgpt.com)
+[Visit Varban Auto Flex] https://varbanautoflex.com
 
 **Varban Auto Flex** is a digital automotive marketplace designed to make buying and selling vehicles in Kenya simpler, faster, and more transparent.
 
