@@ -62,13 +62,15 @@ export const Navbar: React.FC = () => {
     };
   }, [mobileMenuOpen]);
 
+  const adminRoute = user?.role === 'admin' ? '/admin' : '/admin/login';
+
   const navLinks = [
     { name: 'Buy Cars', path: '/buy', icon: Search },
     { name: 'Sell Your Car', path: '/sell', icon: PlusCircle },
     { name: 'Trade In', path: '/trade-in', icon: RefreshCw },
     { name: 'Auction', path: '/auction', icon: Gavel },
     { name: 'Import', path: '/import', icon: Globe },
-    { name: 'Car Yard Admin', path: '/admin', icon: ShieldCheck },
+    { name: 'Car Yard Admin', path: adminRoute, icon: ShieldCheck },
   ];
 
   const mobileMenuItems = [
@@ -79,7 +81,7 @@ export const Navbar: React.FC = () => {
     },
     {
       name: 'Admin Portal',
-      path: '/admin',
+      path: adminRoute,
       icon: ShieldCheck
     },
     {

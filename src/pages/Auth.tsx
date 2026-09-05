@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Lock, Mail, User, Phone, Building, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Lock, Mail, User, Phone, Building, AlertCircle, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { Navbar } from '../components/navigation/Navbar';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -243,19 +243,28 @@ export const Auth: React.FC = () => {
             </Button>
           </form>
 
-          <div className="text-center text-xs text-[#64748B] pt-3 border-t border-[#D9EAFF]">
-            {isRegister ? 'Already registered?' : "Don't have an account yet?"}{' '}
-            <button
-              type="button"
-              onClick={() => {
-                setIsRegister(!isRegister);
-                setErrorMsg('');
-                setSuccessMsg('');
-              }}
-              className="font-bold text-[#1769E0] hover:underline"
-            >
-              {isRegister ? 'Sign In Here' : 'Create Account Now'}
-            </button>
+          <div className="text-center text-xs text-[#64748B] pt-3 border-t border-[#D9EAFF] space-y-2">
+            <div>
+              {isRegister ? 'Already registered?' : "Don't have an account yet?"}{' '}
+              <button
+                type="button"
+                onClick={() => {
+                  setIsRegister(!isRegister);
+                  setErrorMsg('');
+                  setSuccessMsg('');
+                }}
+                className="font-bold text-[#1769E0] hover:underline"
+              >
+                {isRegister ? 'Sign In Here' : 'Create Account Now'}
+              </button>
+            </div>
+
+            <div className="pt-2 border-t border-[#D9EAFF]/60 flex items-center justify-center">
+              <Link to="/admin/login" className="inline-flex items-center gap-1.5 font-bold text-[#0038BC] hover:underline hover:text-[#1769E0]">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Administrator Portal Login</span>
+              </Link>
+            </div>
           </div>
 
         </div>

@@ -41,6 +41,9 @@ import {
   BuyerService, 
   SellerService, 
   RealtimeService,
+  AuditLogService,
+  AdminRoleService,
+  AuditLogEntry,
   AuthUser 
 } from '../lib/supabase/client';
 import { 
@@ -59,7 +62,8 @@ import {
   VehicleStatus, 
   TradeInStatus, 
   ImportStatus,
-  AuctionStatus 
+  AuctionStatus,
+  UserRole 
 } from '../types/database';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
@@ -81,11 +85,12 @@ export const AdminDashboard: React.FC = () => {
   const [imports, setImports] = useState<ImportRequest[]>([]);
   const [buyers, setBuyers] = useState<Profile[]>([]);
   const [sellers, setSellers] = useState<Profile[]>([]);
+  const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>([]);
 
   const [loading, setLoading] = useState(true);
 
   // Active Menu Section
-  const [activeSection, setActiveSection] = useState<'overview' | 'vehicles' | 'images' | 'auctions' | 'tradeins' | 'imports' | 'inquiries' | 'buyers' | 'sellers' | 'analytics'>('overview');
+  const [activeSection, setActiveSection] = useState<'overview' | 'vehicles' | 'images' | 'auctions' | 'tradeins' | 'imports' | 'inquiries' | 'buyers' | 'sellers' | 'auditlogs' | 'analytics'>('overview');
   
   // Search & Filter Query
   const [searchQuery, setSearchQuery] = useState('');
@@ -143,12 +148,12 @@ export const AdminDashboard: React.FC = () => {
     try {
       const user = await AuthService.getCurrentUser();
       if (!user || user.role !== 'admin') {
-        navigate('/login', { replace: true });
+        navigate('/admin/login', { replace: true });
         return;
       }
       setCurrentUser(user);
 
-      const [vList, sList, rList, pList, iList, aList, tList, impList, bList, selList] = await Promise.all([
+      const [vList, sList, rList, pList, iList, aList, tList, impList, bList, selList, logs] = await Promise.all([
         VehicleService.getAll(),
         SellerSubmissionService.getAll(),
         ReservationService.getAll(),
@@ -158,7 +163,8 @@ export const AdminDashboard: React.FC = () => {
         TradeInService.getAll(),
         ImportService.getAll(),
         BuyerService.getAll(),
-        SellerService.getAll()
+        SellerService.getAll(),
+        AuditLogService.getLogs()
       ]);
 
       setVehicles(vList);
@@ -171,9 +177,10 @@ export const AdminDashboard: React.FC = () => {
       setImports(impList);
       setBuyers(bList);
       setSellers(selList);
+      setAuditLogs(logs);
     } catch (err) {
       console.error('Failed to load admin dataset', err);
-      navigate('/login', { replace: true });
+      navigate('/admin/login', { replace: true });
     } finally {
       setLoading(false);
     }
@@ -200,7 +207,18 @@ export const AdminDashboard: React.FC = () => {
 
   const handleSignOut = async () => {
     await AuthService.signOut();
-    navigate('/login');
+    navigate('/admin/login');
+  };
+
+  const handleUpdateRole = async (targetUserId: string, newRole: UserRole) => {
+    if (confirm(`Are you sure you want to update role for user #${targetUserId} to ${newRole.toUpperCase()}?`)) {
+      const res = await AdminRoleService.updateUserRole(targetUserId, newRole);
+      if (!res.success) {
+        alert(res.error || 'Failed to update user role.');
+      } else {
+        await loadData();
+      }
+    }
   };
 
   // Vehicle CRUD Handlers
@@ -523,7 +541,7 @@ export const AdminDashboard: React.FC = () => {
             </button>
 
             <div className="text-[10px] font-extrabold uppercase tracking-widest text-[#64748B] px-3 py-1 pt-2 border-t border-[#D9EAFF]">
-              Users & Partners
+              Users & Security
             </div>
             <button
               onClick={() => setActiveSection('buyers')}
@@ -549,6 +567,19 @@ export const AdminDashboard: React.FC = () => {
                 <span>Sellers & Dealers</span>
               </div>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/20 font-bold">{sellers.length}</span>
+            </button>
+
+            <button
+              onClick={() => setActiveSection('auditlogs')}
+              className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center justify-between transition-all ${
+                activeSection === 'auditlogs' ? 'bg-[#1769E0] text-white shadow-sm' : 'text-[#10233F] hover:bg-[#F7FAFF]'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <ShieldCheck className="w-4 h-4" />
+                <span>Audit & Activity Logs</span>
+              </div>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 font-bold">{auditLogs.length}</span>
             </button>
 
           </div>
@@ -882,41 +913,148 @@ export const AdminDashboard: React.FC = () => {
             </div>
           )}
 
-          {/* SECTION 8: Buyers Directory */}
+          {/* SECTION 8: Buyers Directory & Role Controls */}
           {activeSection === 'buyers' && (
             <div className="bg-white rounded-3xl border border-[#D9EAFF] p-6 shadow-sm space-y-6">
-              <h3 className="text-xl font-black text-[#10233F]">Registered Buyers Directory ({buyers.length})</h3>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h3 className="text-xl font-black text-[#10233F]">Registered Buyers Directory ({buyers.length})</h3>
+                  <p className="text-xs text-[#64748B]">Manage account statuses and assign administrator privileges.</p>
+                </div>
+              </div>
+
               <div className="space-y-3">
                 {buyers.map(b => (
-                  <div key={b.id} className="p-4 rounded-2xl border border-[#D9EAFF] bg-[#F7FAFF] flex items-center justify-between text-xs">
+                  <div key={b.id} className="p-4 rounded-2xl border border-[#D9EAFF] bg-[#F7FAFF] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
                     <div>
-                      <div className="font-bold text-[#10233F]">{b.full_name}</div>
-                      <div className="text-[#64748B]">{b.email} • {b.phone || 'No phone provided'}</div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-[#10233F] text-sm">{b.full_name}</span>
+                        <Badge variant={b.role === 'admin' ? 'verified' : 'secondary'}>
+                          {b.role ? b.role.toUpperCase() : 'BUYER'}
+                        </Badge>
+                      </div>
+                      <div className="text-[#64748B] mt-0.5">{b.email} • {b.phone || 'No phone provided'}</div>
                     </div>
-                    <Button size="sm" variant={b.status === 'active' ? 'danger' : 'success'} onClick={() => handleToggleBuyerStatus(b.id, b.status)}>
-                      {b.status === 'active' ? 'Suspend Account' : 'Activate Account'}
-                    </Button>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      <select
+                        value={b.role || 'buyer'}
+                        onChange={(e) => handleUpdateRole(b.id, e.target.value as UserRole)}
+                        className="px-2.5 py-1.5 rounded-xl border border-[#D9EAFF] text-xs font-bold text-[#10233F] bg-white focus:outline-none focus:ring-2 focus:ring-[#1769E0]"
+                      >
+                        <option value="buyer">Role: Buyer</option>
+                        <option value="seller">Role: Seller</option>
+                        <option value="dealer">Role: Dealer</option>
+                        <option value="admin">Role: ADMIN</option>
+                      </select>
+
+                      <Button size="sm" variant={b.status === 'active' ? 'danger' : 'success'} onClick={() => handleToggleBuyerStatus(b.id, b.status)}>
+                        {b.status === 'active' ? 'Suspend' : 'Activate'}
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
           )}
 
-          {/* SECTION 9: Sellers Directory */}
+          {/* SECTION 9: Sellers Directory & Privilege Control */}
           {activeSection === 'sellers' && (
             <div className="bg-white rounded-3xl border border-[#D9EAFF] p-6 shadow-sm space-y-6">
-              <h3 className="text-xl font-black text-[#10233F]">Verified Sellers & Dealers ({sellers.length})</h3>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h3 className="text-xl font-black text-[#10233F]">Verified Sellers & Dealers ({sellers.length})</h3>
+                  <p className="text-xs text-[#64748B]">Manage dealer profiles and executive privileges.</p>
+                </div>
+              </div>
+
               <div className="space-y-3">
                 {sellers.map(s => (
-                  <div key={s.id} className="p-4 rounded-2xl border border-[#D9EAFF] bg-[#F7FAFF] flex items-center justify-between text-xs">
+                  <div key={s.id} className="p-4 rounded-2xl border border-[#D9EAFF] bg-[#F7FAFF] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
                     <div>
-                      <div className="font-bold text-[#10233F]">{s.business_name || s.full_name}</div>
-                      <div className="text-[#64748B]">Type: {s.seller_type || 'dealer'} • {s.email}</div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-[#10233F] text-sm">{s.business_name || s.full_name}</span>
+                        <Badge variant={s.role === 'admin' ? 'verified' : 'secondary'}>
+                          {s.role ? s.role.toUpperCase() : 'SELLER'}
+                        </Badge>
+                      </div>
+                      <div className="text-[#64748B] mt-0.5">Type: {s.seller_type || 'dealer'} • {s.email}</div>
                     </div>
-                    <Badge variant="verified">Verified Seller</Badge>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      <select
+                        value={s.role || 'seller'}
+                        onChange={(e) => handleUpdateRole(s.id, e.target.value as UserRole)}
+                        className="px-2.5 py-1.5 rounded-xl border border-[#D9EAFF] text-xs font-bold text-[#10233F] bg-white focus:outline-none focus:ring-2 focus:ring-[#1769E0]"
+                      >
+                        <option value="seller">Role: Seller</option>
+                        <option value="dealer">Role: Dealer</option>
+                        <option value="buyer">Role: Buyer</option>
+                        <option value="admin">Role: ADMIN</option>
+                      </select>
+                      <Badge variant="verified">Verified</Badge>
+                    </div>
                   </div>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* SECTION 10: Audit & Activity Logs */}
+          {activeSection === 'auditlogs' && (
+            <div className="bg-white rounded-3xl border border-[#D9EAFF] p-6 shadow-sm space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h3 className="text-xl font-black text-[#10233F]">Admin Audit & Activity Logs ({auditLogs.length})</h3>
+                  <p className="text-xs text-[#64748B]">Complete chronological record of administrator operations, status changes, and privilege updates.</p>
+                </div>
+                <Badge variant="verified" size="md">
+                  Tamper-Evident System Log
+                </Badge>
+              </div>
+
+              {auditLogs.length === 0 ? (
+                <div className="p-8 text-center bg-[#F7FAFF] rounded-2xl border border-[#D9EAFF]">
+                  <p className="text-xs font-semibold text-[#64748B]">No audit events recorded yet.</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead className="bg-[#F7FAFF] text-[#64748B] uppercase font-bold border-b border-[#D9EAFF]">
+                      <tr>
+                        <th className="p-3">Timestamp</th>
+                        <th className="p-3">Action</th>
+                        <th className="p-3">Administrator / Account</th>
+                        <th className="p-3">Details</th>
+                        <th className="p-3">Record ID</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[#D9EAFF]">
+                      {auditLogs.map(log => (
+                        <tr key={log.id} className="hover:bg-[#F7FAFF]">
+                          <td className="p-3 text-[11px] font-mono text-[#64748B] whitespace-nowrap">
+                            {new Date(log.created_at).toLocaleString()}
+                          </td>
+                          <td className="p-3">
+                            <span className="font-extrabold uppercase text-[10px] px-2 py-0.5 rounded bg-blue-50 text-[#0038BC] border border-blue-200">
+                              {log.action}
+                            </span>
+                          </td>
+                          <td className="p-3 font-bold text-[#10233F]">
+                            {log.user_email || 'System'}
+                          </td>
+                          <td className="p-3 text-[#10233F] font-medium max-w-md">
+                            {log.details}
+                          </td>
+                          <td className="p-3 font-mono text-[10px] text-[#64748B]">
+                            {log.record_id || log.table_name || '-'}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           )}
 

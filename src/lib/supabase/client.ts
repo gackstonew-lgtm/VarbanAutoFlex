@@ -60,6 +60,7 @@ const LOCAL_STORAGE_KEY_TRADE_INS = 'yardly_demo_trade_ins';
 const LOCAL_STORAGE_KEY_IMPORTS = 'yardly_demo_imports';
 const LOCAL_STORAGE_KEY_FAVORITES = 'yardly_demo_favorites';
 const LOCAL_STORAGE_KEY_NOTIFICATIONS = 'yardly_demo_notifications';
+const LOCAL_STORAGE_KEY_AUDIT_LOGS = 'yardly_demo_audit_logs';
 
 const MOCK_DATASET_VERSION = 'v2026_09_02_new_vehicles_batch_v5';
 
@@ -228,6 +229,80 @@ export interface AuthUser {
   business_name?: string;
 }
 
+export interface AuditLogEntry {
+  id: string;
+  user_id?: string;
+  user_email?: string;
+  action: string;
+  details: string;
+  table_name?: string;
+  record_id?: string;
+  created_at: string;
+}
+
+// Audit Logging Service
+export const AuditLogService = {
+  async getLogs(): Promise<AuditLogEntry[]> {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('audit_logs')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (!error && data) {
+          return data.map((item: any) => ({
+            id: item.id,
+            user_id: item.user_id,
+            user_email: item.new_data?.user_email || 'admin',
+            action: item.action,
+            details: item.new_data?.details || item.action,
+            table_name: item.table_name,
+            record_id: item.record_id,
+            created_at: item.created_at
+          }));
+        }
+      } catch (err) {
+        console.warn('Supabase audit log fetch notice:', err);
+      }
+    }
+    const logs = getStored<AuditLogEntry[]>(LOCAL_STORAGE_KEY_AUDIT_LOGS, []);
+    return logs.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  },
+
+  async logAction(action: string, details: string, recordId?: string, tableName?: string): Promise<AuditLogEntry> {
+    const currentUser = getStored<AuthUser | null>(LOCAL_STORAGE_KEY_CURRENT_USER, null);
+    const log: AuditLogEntry = {
+      id: 'audit-' + Date.now() + '-' + Math.random().toString(36).substring(2, 6),
+      user_id: currentUser?.id,
+      user_email: currentUser?.email || 'system',
+      action,
+      details,
+      table_name: tableName,
+      record_id: recordId,
+      created_at: new Date().toISOString()
+    };
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase.from('audit_logs').insert([{
+          user_id: currentUser?.id || null,
+          action,
+          table_name: tableName || null,
+          record_id: recordId || null,
+          new_data: { details, user_email: currentUser?.email }
+        }]);
+      } catch (err) {
+        console.warn('Supabase audit log insert notice:', err);
+      }
+    }
+
+    const logs = getStored<AuditLogEntry[]>(LOCAL_STORAGE_KEY_AUDIT_LOGS, []);
+    logs.unshift(log);
+    setStored(LOCAL_STORAGE_KEY_AUDIT_LOGS, logs);
+    return log;
+  }
+};
+
 // Secure Password Hashing Helper
 async function hashPassword(password: string): Promise<string> {
   const salted = 'yardly_auth_salt_2026:' + password;
@@ -263,25 +338,43 @@ interface StoredUserAccount extends AuthUser {
 
 async function getStoredUsers(): Promise<StoredUserAccount[]> {
   const users = getStored<StoredUserAccount[]>(LOCAL_STORAGE_KEY_USERS, []);
-
-  // Ensure dedicated primary admin account exists with hashed credentials
-  let adminAcc = users.find(u => u.email.toLowerCase() === 'admin@varbanautohub.com');
   const adminHash = await hashPassword('Admin123');
 
-  if (!adminAcc) {
-    adminAcc = {
-      id: 'admin-primary-001',
-      email: 'admin@varbanautohub.com',
+  // 1. Ensure dedicated primary admin account (Varbanauto@admin.com) exists with Admin123 password
+  let primaryAdmin = users.find(u => u.email.toLowerCase() === 'varbanauto@admin.com');
+  if (!primaryAdmin) {
+    primaryAdmin = {
+      id: 'admin-primary-varbanauto-001',
+      email: 'Varbanauto@admin.com',
       passwordHash: adminHash,
       full_name: 'Varban Auto Flex System Administrator',
       role: 'admin'
     };
-    users.unshift(adminAcc);
+    users.unshift(primaryAdmin);
     setStored(LOCAL_STORAGE_KEY_USERS, users);
-  } else if (!adminAcc.passwordHash || adminAcc.passwordHash !== adminHash) {
-    adminAcc.passwordHash = adminHash;
-    adminAcc.role = 'admin';
-    delete adminAcc.password;
+  } else if (!primaryAdmin.passwordHash || primaryAdmin.passwordHash !== adminHash || primaryAdmin.role !== 'admin') {
+    primaryAdmin.passwordHash = adminHash;
+    primaryAdmin.role = 'admin';
+    delete primaryAdmin.password;
+    setStored(LOCAL_STORAGE_KEY_USERS, users);
+  }
+
+  // 2. Ensure legacy admin account exists for backwards compatibility
+  let legacyAdmin = users.find(u => u.email.toLowerCase() === 'admin@varbanautohub.com');
+  if (!legacyAdmin) {
+    legacyAdmin = {
+      id: 'admin-primary-001',
+      email: 'admin@varbanautohub.com',
+      passwordHash: adminHash,
+      full_name: 'Varban Auto Hub Administrator',
+      role: 'admin'
+    };
+    users.push(legacyAdmin);
+    setStored(LOCAL_STORAGE_KEY_USERS, users);
+  } else if (!legacyAdmin.passwordHash || legacyAdmin.passwordHash !== adminHash || legacyAdmin.role !== 'admin') {
+    legacyAdmin.passwordHash = adminHash;
+    legacyAdmin.role = 'admin';
+    delete legacyAdmin.password;
     setStored(LOCAL_STORAGE_KEY_USERS, users);
   }
 
@@ -295,6 +388,45 @@ async function getStoredUsers(): Promise<StoredUserAccount[]> {
 
   return users;
 }
+
+// User Admin Privilege Management Service
+export const AdminRoleService = {
+  async updateUserRole(targetUserId: string, newRole: UserRole): Promise<{ success: boolean; error?: string }> {
+    const adminUser = await requireAdminRole();
+
+    const users = getStored<StoredUserAccount[]>(LOCAL_STORAGE_KEY_USERS, []);
+    const target = users.find(u => u.id === targetUserId);
+    if (target) {
+      const oldRole = target.role;
+      target.role = newRole;
+      setStored(LOCAL_STORAGE_KEY_USERS, users);
+
+      if (adminUser.id === targetUserId) {
+        setStored(LOCAL_STORAGE_KEY_CURRENT_USER, { ...adminUser, role: newRole });
+      }
+
+      if (isSupabaseConfigured && supabase) {
+        try {
+          await supabase.from('profiles').update({ role: newRole }).eq('id', targetUserId);
+        } catch (err) {
+          console.warn('Supabase profile role update notice:', err);
+        }
+      }
+
+      await AuditLogService.logAction(
+        'user_role_changed',
+        `Administrator ${adminUser.email} changed role of user ${target.email} (${target.full_name}) from ${oldRole} to ${newRole}`,
+        targetUserId,
+        'profiles'
+      );
+
+      return { success: true };
+    }
+
+    return { success: false, error: 'Target user profile not found.' };
+  }
+};
+
 
 // Authentication Service
 export const AuthService = {
@@ -448,7 +580,25 @@ export const AuthService = {
     return { success: true, user: userSession };
   },
 
+  async adminSignIn(email: string, password: string): Promise<{ success: boolean; user?: AuthUser; error?: string }> {
+    const res = await this.signIn(email, password);
+    if (!res.success || !res.user) {
+      return { success: false, error: 'Invalid administrator email or password.' };
+    }
+    if (res.user.role !== 'admin') {
+      // Reject authenticated non-admin user
+      await this.signOut();
+      return { success: false, error: 'Access denied: Account does not have administrator privileges.' };
+    }
+    await AuditLogService.logAction('admin_login', `Administrator ${res.user.email} logged in successfully.`);
+    return { success: true, user: res.user };
+  },
+
   async signOut(): Promise<void> {
+    const currentUser = getStored<AuthUser | null>(LOCAL_STORAGE_KEY_CURRENT_USER, null);
+    if (currentUser && currentUser.role === 'admin') {
+      await AuditLogService.logAction('admin_logout', `Administrator ${currentUser.email} logged out.`);
+    }
     if (isSupabaseConfigured && supabase) {
       await supabase.auth.signOut();
     }
@@ -664,6 +814,13 @@ export const VehicleService = {
     list.unshift(newVehicle);
     setStored(LOCAL_STORAGE_KEY_VEHICLES, list);
 
+    await AuditLogService.logAction(
+      'vehicle_created',
+      `Added new vehicle listing: ${newVehicle.year} ${newVehicle.make} ${newVehicle.model} (KES ${newVehicle.price.toLocaleString()})`,
+      newVehicle.id,
+      'vehicles'
+    );
+
     RealtimeService.broadcastLocalEvent('vehicles', newVehicle);
     return newVehicle;
   },
@@ -743,6 +900,14 @@ export const VehicleService = {
         ...mergedUpdates
       };
       setStored(LOCAL_STORAGE_KEY_VEHICLES, list);
+
+      await AuditLogService.logAction(
+        'vehicle_updated',
+        `Updated vehicle listing: ${list[index].year} ${list[index].make} ${list[index].model}`,
+        id,
+        'vehicles'
+      );
+
       RealtimeService.broadcastLocalEvent('vehicles', list[index]);
       return list[index];
     }
@@ -763,15 +928,27 @@ export const VehicleService = {
     const list = getStored<Vehicle[]>(LOCAL_STORAGE_KEY_VEHICLES, INITIAL_MOCK_VEHICLES);
     const item = list.find(v => v.id === id);
     if (item) {
+      const oldStatus = item.status;
       item.status = status;
       item.updated_at = new Date().toISOString();
       setStored(LOCAL_STORAGE_KEY_VEHICLES, list);
+
+      await AuditLogService.logAction(
+        'vehicle_status_changed',
+        `Changed vehicle status of #${id} from ${oldStatus} to ${status}`,
+        id,
+        'vehicles'
+      );
+
       RealtimeService.broadcastLocalEvent('vehicles', item);
     }
   },
 
   async deleteVehicle(id: string): Promise<void> {
     await requireAdminRole();
+
+    const list = getStored<Vehicle[]>(LOCAL_STORAGE_KEY_VEHICLES, INITIAL_MOCK_VEHICLES);
+    const target = list.find(v => v.id === id);
 
     if (isSupabaseConfigured && supabase) {
       try {
@@ -782,9 +959,16 @@ export const VehicleService = {
       }
     }
 
-    const list = getStored<Vehicle[]>(LOCAL_STORAGE_KEY_VEHICLES, INITIAL_MOCK_VEHICLES);
     const updated = list.filter(v => v.id !== id);
     setStored(LOCAL_STORAGE_KEY_VEHICLES, updated);
+
+    await AuditLogService.logAction(
+      'vehicle_deleted',
+      `Deleted vehicle listing #${id} (${target ? `${target.year} ${target.make} ${target.model}` : 'Unknown'})`,
+      id,
+      'vehicles'
+    );
+
     RealtimeService.broadcastLocalEvent('vehicles', { id, deleted: true });
   }
 };
@@ -816,6 +1000,13 @@ export const SellerSubmissionService = {
       item.status = status;
       if (rejection_reason) item.rejection_reason = rejection_reason;
       setStored(LOCAL_STORAGE_KEY_SUBMISSIONS, list);
+
+      await AuditLogService.logAction(
+        status === 'approved' ? 'submission_approved' : 'submission_rejected',
+        `${status === 'approved' ? 'Approved' : 'Rejected'} seller listing submission from ${item.seller_name} (${item.year} ${item.make} ${item.model})`,
+        id,
+        'seller_listings'
+      );
 
       if (status === 'approved') {
         await VehicleService.addVehicle({

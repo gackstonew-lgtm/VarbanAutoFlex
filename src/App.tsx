@@ -5,6 +5,7 @@ import { BuyCars } from './pages/BuyCars';
 import { SellCar } from './pages/SellCar';
 import { VehicleDetails } from './pages/VehicleDetails';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { AdminLogin } from './pages/AdminLogin';
 import { Auth } from './pages/Auth';
 import { TradeIn } from './pages/TradeIn';
 import { AuctionMarketplace } from './pages/Auction';
@@ -28,6 +29,7 @@ export const App: React.FC = () => {
         <Route path="/sell" element={<SellCar />} />
         <Route path="/vehicles/:id" element={<VehicleDetails />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/register" element={<Auth />} />
         <Route path="/trade-in" element={<TradeIn />} />

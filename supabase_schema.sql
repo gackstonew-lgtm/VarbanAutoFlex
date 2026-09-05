@@ -210,6 +210,7 @@ end $$;
 -- 3. PROFILES & USER ACCOUNTS
 -- ============================================================
 -- Supabase Auth owns credentials. This table stores app user metadata.
+-- Dedicated Primary Administrator Email: Varbanauto@admin.com (Role: admin)
 
 create table if not exists public.profiles (
     id uuid primary key references auth.users(id) on delete cascade,
